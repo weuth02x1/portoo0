@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Apple Memoji style avatar">
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#2a2a2a"/>
+      <stop offset="100%" stop-color="#000"/>
+    </radialGradient>
+    <radialGradient id="skin" cx="38%" cy="32%" r="68%">
+      <stop offset="0%" stop-color="#fff8f0"/>
+      <stop offset="45%" stop-color="#edd5c0"/>
+      <stop offset="100%" stop-color="#c9a88a"/>
+    </radialGradient>
+    <radialGradient id="skinShadow" cx="65%" cy="75%" r="45%">
+      <stop offset="0%" stop-color="#a07860" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#a07860" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="cheekBlush" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e8a090" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#e8a090" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hairMain" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#3d3d3d"/>
+      <stop offset="40%" stop-color="#1a1a1a"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </linearGradient>
+    <linearGradient id="hairShine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="45%" stop-color="#fff" stop-opacity="0.18"/>
+      <stop offset="55%" stop-color="#fff" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="eyeWhite" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#e8e8e8"/>
+    </radialGradient>
+    <radialGradient id="iris" cx="45%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#6b4226"/>
+      <stop offset="60%" stop-color="#3d2314"/>
+      <stop offset="100%" stop-color="#1a0f08"/>
+    </radialGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <!-- Apple Memoji = 3D bust, centered -->
+  <circle cx="120" cy="120" r="112" fill="url(#bgGlow)"/>
+
+  <g filter="url(#softShadow)">
+    <!-- hair back volume -->
+    <path d="M48 95 C48 38 78 12 120 12 C162 12 192 38 192 95 L198 130 C198 168 165 198 120 198 C75 198 42 168 42 130 Z" fill="url(#hairMain)"/>
+
+    <!-- ears -->
+    <ellipse cx="52" cy="128" rx="14" ry="18" fill="#d4ae92"/>
+    <ellipse cx="188" cy="128" rx="14" ry="18" fill="#d4ae92"/>
+    <path d="M58 122 Q52 128 58 136" fill="none" stroke="#b89070" stroke-width="2" opacity="0.5"/>
+    <path d="M182 122 Q188 128 182 136" fill="none" stroke="#b89070" stroke-width="2" opacity="0.5"/>
+
+    <!-- face -->
+    <ellipse cx="120" cy="128" rx="68" ry="72" fill="url(#skin)"/>
+    <ellipse cx="120" cy="148" rx="55" ry="45" fill="url(#skinShadow)"/>
+
+    <!-- hair front layers -->
+    <path d="M52 88 C52 42 82 22 120 22 C158 22 188 42 188 88 C188 58 158 36 120 36 C82 36 52 58 52 88 Z" fill="url(#hairMain)"/>
+    <path d="M44 98 C58 72 88 58 120 58 C152 58 182 72 196 98 C182 78 152 62 120 62 C88 62 58 78 44 98 Z" fill="#222"/>
+    <!-- bangs -->
+    <path d="M72 68 C88 52 152 52 168 68 C160 58 140 50 120 50 C100 50 80 58 72 68 Z" fill="#1a1a1a"/>
+    <path d="M60 82 C75 68 165 68 180 82 C170 74 145 66 120 66 C95 66 70 74 60 82 Z" fill="#252525"/>
+    <rect x="44" y="78" width="152" height="18" fill="url(#hairShine)" opacity="0.6"/>
+
+    <!-- cheeks -->
+    <ellipse cx="78" cy="148" rx="16" ry="11" fill="url(#cheekBlush)"/>
+    <ellipse cx="162" cy="148" rx="16" ry="11" fill="url(#cheekBlush)"/>
+
+    <!-- eyes — big Apple style -->
+    <ellipse cx="88" cy="122" rx="18" ry="20" fill="url(#eyeWhite)"/>
+    <ellipse cx="152" cy="122" rx="18" ry="20" fill="url(#eyeWhite)"/>
+    <circle cx="90" cy="124" r="11" fill="url(#iris)"/>
+    <circle cx="154" cy="124" r="11" fill="url(#iris)"/>
+    <circle cx="90" cy="124" r="5.5" fill="#0a0a0a"/>
+    <circle cx="154" cy="124" r="5.5" fill="#0a0a0a"/>
+    <!-- eye highlights -->
+    <circle cx="94" cy="119" r="3.5" fill="#fff" opacity="0.95"/>
+    <circle cx="158" cy="119" r="3.5" fill="#fff" opacity="0.95"/>
+    <circle cx="86" cy="127" r="1.8" fill="#fff" opacity="0.6"/>
+    <circle cx="150" cy="127" r="1.8" fill="#fff" opacity="0.6"/>
+    <!-- upper lid line -->
+    <path d="M72 112 Q88 104 104 112" fill="none" stroke="#b88870" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M136 112 Q152 104 168 112" fill="none" stroke="#b88870" stroke-width="2.5" stroke-linecap="round"/>
+
+    <!-- brows -->
+    <path d="M68 104 Q88 96 108 102" fill="none" stroke="#2a2018" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M132 102 Q152 96 172 104" fill="none" stroke="#2a2018" stroke-width="4.5" stroke-linecap="round"/>
+
+    <!-- nose -->
+    <path d="M120 132 Q114 142 120 148 Q126 142 120 132" fill="#c89880" opacity="0.55"/>
+    <ellipse cx="117" cy="144" rx="2" ry="3" fill="#b08068" opacity="0.4"/>
+
+    <!-- lips — glossy smile -->
+    <path d="M96 162 Q120 178 144 162" fill="#c87078" opacity="0.85"/>
+    <path d="M96 162 Q120 172 144 162" fill="#e89098" opacity="0.7"/>
+    <path d="M102 163 Q120 168 138 163" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.25" stroke-linecap="round"/>
+  </g>
+</svg>
