@@ -633,6 +633,104 @@
             color: var(--muted);
         }
 
+        .me-about {
+            position: relative;
+            margin-bottom: 2rem;
+            padding: 1.4rem 1.25rem 1.35rem 1.45rem;
+            border: 1px solid var(--line);
+            border-left: 2px solid var(--accent);
+            border-radius: 0 calc(var(--radius) + 2px) calc(var(--radius) + 2px) 0;
+            background:
+                linear-gradient(118deg, rgba(196, 165, 116, 0.09) 0%, transparent 52%),
+                var(--surface);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(12px);
+        }
+
+        .me-about.visible-block {
+            animation: meSpotIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .me-about::after {
+            content: '“';
+            position: absolute;
+            top: 0.15rem;
+            right: 1rem;
+            font-family: var(--font-serif);
+            font-size: 4.5rem;
+            line-height: 1;
+            color: var(--accent);
+            opacity: 0.12;
+            pointer-events: none;
+        }
+
+        .me-about-label {
+            font-size: 0.62rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.85rem;
+        }
+
+        .me-about-lead {
+            font-family: var(--font-serif);
+            font-size: clamp(1.28rem, 4.2vw, 1.62rem);
+            line-height: 1.32;
+            letter-spacing: -0.015em;
+            margin-bottom: 1rem;
+            max-width: 26ch;
+        }
+
+        .me-about-lead em {
+            font-style: normal;
+            color: var(--accent);
+        }
+
+        .me-about-body {
+            display: grid;
+            gap: 0.85rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.68;
+            max-width: 52ch;
+        }
+
+        .me-about-body strong {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .me-about-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-top: 1.15rem;
+        }
+
+        .me-about-chip {
+            padding: 0.38rem 0.78rem;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            font-size: 0.64rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.45s ease, transform 0.45s ease, border-color 0.2s, color 0.2s;
+        }
+
+        .me-about-chip.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .me-about-chip:hover {
+            border-color: rgba(196, 165, 116, 0.45);
+            color: var(--text);
+        }
+
         .me-block { margin-bottom: 2.25rem; }
 
         .me-block-label {
@@ -1560,6 +1658,8 @@
                 text-align: center;
             }
 
+            .me-about-lead { max-width: none; }
+
             .me-edu-grid { grid-template-columns: 1fr; }
 
             .me-stats { grid-template-columns: repeat(3, 1fr); }
@@ -1661,6 +1761,23 @@
                                 </div>
                             </div>
                         </div>
+
+                        <section class="me-about" id="meAbout" aria-label="About Shahad">
+                            <p class="me-about-label">About me</p>
+                            <p class="me-about-lead">I turn ideas into apps people can <em>open, touch, and keep.</em></p>
+                            <div class="me-about-body">
+                                <p>I'm an iOS & full-stack developer from Saudi Arabia — the kind who sketches in Figma, ships in SwiftUI, and wires up the API when the screen needs data behind it.</p>
+                                <p><strong>6+ products shipped.</strong> Top 3 capstone at Apple Developer Academy for <strong>Sensic</strong> — haptic music for deaf & hard-of-hearing users. Now at <strong>CoreTechSolution</strong>, building real startup features from prototype to release.</p>
+                                <p>I care about accessibility, clean UI, and momentum — learning fast, shipping faster, and making work that recruiters and users actually remember.</p>
+                            </div>
+                            <div class="me-about-chips" aria-label="What I bring">
+                                <span class="me-about-chip">Ship fast</span>
+                                <span class="me-about-chip">Design-led</span>
+                                <span class="me-about-chip">Accessibility</span>
+                                <span class="me-about-chip">Full stack</span>
+                                <span class="me-about-chip">Open to roles</span>
+                            </div>
+                        </section>
 
                         <section id="about-education" class="me-block">
                             <p class="me-block-label">Education</p>
@@ -2179,6 +2296,16 @@
             document.querySelectorAll('#hub-about .me-stat').forEach((el, i) => {
                 el.classList.remove('visible');
                 setTimeout(() => el.classList.add('visible'), 120 + i * 80);
+            });
+
+            const about = document.getElementById('meAbout');
+            about?.classList.remove('visible-block');
+            void about?.offsetWidth;
+            about?.classList.add('visible-block');
+
+            document.querySelectorAll('#hub-about .me-about-chip').forEach((el, i) => {
+                el.classList.remove('visible');
+                setTimeout(() => el.classList.add('visible'), 260 + i * 70);
             });
 
             document.querySelectorAll('#hub-about .me-edu-tile').forEach((el, i) => {
