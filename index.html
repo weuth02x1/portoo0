@@ -45,6 +45,14 @@
 
         html { scroll-behavior: smooth; }
 
+        html.intro-active,
+        html.intro-active body {
+            overflow: hidden;
+            height: 100%;
+            overscroll-behavior: none;
+            touch-action: none;
+        }
+
         body {
             font-family: var(--font-ui);
             background: var(--bg);
@@ -86,6 +94,10 @@
             color: var(--intro-text);
             overflow: hidden;
             cursor: default;
+            touch-action: none;
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
             transition: background 0.55s ease, color 0.55s ease, opacity 0.65s ease, visibility 0.65s;
         }
 
@@ -1935,6 +1947,7 @@
         function bootPortfolio() {
             if (booted) return;
             booted = true;
+            document.documentElement.classList.remove('intro-active');
             bootScreen.classList.add('is-out');
             setTimeout(() => {
                 bootScreen.classList.add('hidden');
@@ -2011,12 +2024,14 @@
         }
 
         function initIntroSwipe() {
-            const threshold = 0.68;
-            const maxSwipe = () => Math.min(window.innerHeight * 0.32, 200);
+            const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches || navigator.maxTouchPoints > 0;
+            const threshold = isCoarsePointer ? 0.58 : 0.68;
+            const maxSwipe = () => Math.min(window.innerHeight * (isCoarsePointer ? 0.38 : 0.32), isCoarsePointer ? 240 : 200);
             let dragging = false;
             let startY = 0;
             let progress = 0;
             let activePointerId = null;
+            let touchActive = false;
 
             const setProgress = (ratio) => {
                 progress = Math.max(0, Math.min(1, ratio));
@@ -2025,45 +2040,96 @@
             };
 
             const reset = () => {
+                dragging = false;
+                touchActive = false;
+                activePointerId = null;
                 bootScreen.classList.remove('is-dragging');
                 setProgress(0);
             };
 
             const complete = () => launchPortfolio();
 
-            bootScreen.addEventListener('pointerdown', (e) => {
-                if (booted) return;
-                dragging = true;
-                startY = e.clientY;
-                activePointerId = e.pointerId;
-                bootScreen.classList.add('is-dragging');
-                bootScreen.setPointerCapture(e.pointerId);
-            });
-
-            bootScreen.addEventListener('pointermove', (e) => {
-                if (!dragging) return;
-                const dy = startY - e.clientY;
+            const updateDrag = (clientY) => {
+                if (!dragging || booted) return;
+                const dy = startY - clientY;
                 if (dy > 0) setProgress(dy / maxSwipe());
-            });
+            };
 
             const endDrag = () => {
                 if (!dragging) return;
+                const shouldComplete = progress >= threshold;
                 dragging = false;
+                touchActive = false;
                 if (activePointerId != null) {
                     try { bootScreen.releasePointerCapture(activePointerId); } catch (_) {}
                     activePointerId = null;
                 }
-                if (progress >= threshold) complete();
+                bootScreen.classList.remove('is-dragging');
+                if (shouldComplete) complete();
                 else reset();
             };
 
-            bootScreen.addEventListener('pointerup', endDrag);
-            bootScreen.addEventListener('pointercancel', endDrag);
+            const beginDrag = (clientY, pointerId = null) => {
+                if (booted || dragging) return;
+                dragging = true;
+                startY = clientY;
+                activePointerId = pointerId;
+                bootScreen.classList.add('is-dragging');
+                if (pointerId != null) {
+                    try { bootScreen.setPointerCapture(pointerId); } catch (_) {}
+                }
+            };
+
+            bootScreen.addEventListener('pointerdown', (e) => {
+                if (booted || touchActive) return;
+                if (e.pointerType === 'mouse' && e.button !== 0) return;
+                beginDrag(e.clientY, e.pointerId);
+            });
+
+            bootScreen.addEventListener('pointermove', (e) => {
+                if (touchActive || !dragging || e.pointerId !== activePointerId) return;
+                updateDrag(e.clientY);
+            });
+
+            bootScreen.addEventListener('pointerup', (e) => {
+                if (touchActive || e.pointerId !== activePointerId) return;
+                endDrag();
+            });
+
+            bootScreen.addEventListener('pointercancel', (e) => {
+                if (touchActive || e.pointerId !== activePointerId) return;
+                endDrag();
+            });
+
+            bootScreen.addEventListener('touchstart', (e) => {
+                if (booted) return;
+                if (e.touches.length !== 1) return;
+                touchActive = true;
+                beginDrag(e.touches[0].clientY);
+            }, { passive: true });
+
+            bootScreen.addEventListener('touchmove', (e) => {
+                if (!touchActive || !dragging || booted) return;
+                if (e.touches.length !== 1) return;
+                e.preventDefault();
+                updateDrag(e.touches[0].clientY);
+            }, { passive: false });
+
+            bootScreen.addEventListener('touchend', () => {
+                if (!touchActive) return;
+                endDrag();
+            }, { passive: true });
+
+            bootScreen.addEventListener('touchcancel', () => {
+                if (!touchActive) return;
+                endDrag();
+            }, { passive: true });
         }
 
         function initIntro() {
             if (!bootScreen) return;
 
+            document.documentElement.classList.add('intro-active');
             initIntroSwipe();
 
             bootScreen.addEventListener('keydown', (e) => {
