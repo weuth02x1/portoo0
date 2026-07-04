@@ -539,10 +539,6 @@
             transform: translateY(10px);
         }
 
-        .me-spotlight.visible-block {
-            animation: meSpotIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        }
-
         @keyframes meSpotIn {
             to { opacity: 1; transform: translateY(0); }
         }
@@ -567,12 +563,22 @@
 
         .me-logo { flex-shrink: 0; }
 
+        .me-spotlight-meta { min-width: 0; }
+
+        .me-name {
+            font-family: var(--font-serif);
+            font-size: clamp(1.45rem, 4vw, 1.85rem);
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 0.35rem;
+        }
+
         .me-line {
-            font-size: 0.78rem;
-            letter-spacing: 0.16em;
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
             color: var(--muted);
-            margin-bottom: 0.85rem;
+            margin-bottom: 0.9rem;
         }
 
         .me-cv {
@@ -633,102 +639,109 @@
             color: var(--muted);
         }
 
-        .me-about {
+        .me-pitch {
             position: relative;
-            margin-bottom: 2rem;
-            padding: 1.4rem 1.25rem 1.35rem 1.45rem;
-            border: 1px solid var(--line);
-            border-left: 2px solid var(--accent);
-            border-radius: 0 calc(var(--radius) + 2px) calc(var(--radius) + 2px) 0;
-            background:
-                linear-gradient(118deg, rgba(196, 165, 116, 0.09) 0%, transparent 52%),
-                var(--surface);
-            overflow: hidden;
-            opacity: 0;
-            transform: translateY(12px);
+            margin-top: 1.25rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--line);
         }
 
-        .me-about.visible-block {
-            animation: meSpotIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        }
-
-        .me-about::after {
-            content: '“';
-            position: absolute;
-            top: 0.15rem;
-            right: 1rem;
-            font-family: var(--font-serif);
-            font-size: 4.5rem;
-            line-height: 1;
-            color: var(--accent);
-            opacity: 0.12;
-            pointer-events: none;
-        }
-
-        .me-about-label {
+        .me-pitch-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
             font-size: 0.62rem;
-            letter-spacing: 0.22em;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
             color: var(--accent);
-            margin-bottom: 0.85rem;
+            margin-bottom: 0.75rem;
         }
 
-        .me-about-lead {
+        .me-pitch-label::before {
+            content: '';
+            width: 1.1rem;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        .me-pitch-lead {
             font-family: var(--font-serif);
-            font-size: clamp(1.28rem, 4.2vw, 1.62rem);
-            line-height: 1.32;
-            letter-spacing: -0.015em;
+            font-size: clamp(1.12rem, 3.4vw, 1.35rem);
+            line-height: 1.38;
+            letter-spacing: -0.01em;
             margin-bottom: 1rem;
-            max-width: 26ch;
+            max-width: 34ch;
         }
 
-        .me-about-lead em {
+        .me-pitch-lead em {
             font-style: normal;
             color: var(--accent);
         }
 
-        .me-about-body {
+        .me-hire-grid {
             display: grid;
+            gap: 0.65rem;
+        }
+
+        .me-hire-item {
+            display: grid;
+            grid-template-columns: 4.5rem 1fr;
             gap: 0.85rem;
-            color: var(--muted);
-            font-size: 0.9rem;
-            line-height: 1.68;
-            max-width: 52ch;
-        }
-
-        .me-about-body strong {
-            color: var(--text);
-            font-weight: 500;
-        }
-
-        .me-about-chips {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.45rem;
-            margin-top: 1.15rem;
-        }
-
-        .me-about-chip {
-            padding: 0.38rem 0.78rem;
+            align-items: start;
+            padding: 0.85rem 0.95rem;
             border: 1px solid var(--line);
-            border-radius: 999px;
-            font-size: 0.64rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--muted);
+            border-radius: var(--radius);
+            background: rgba(196, 165, 116, 0.03);
             opacity: 0;
             transform: translateY(8px);
-            transition: opacity 0.45s ease, transform 0.45s ease, border-color 0.2s, color 0.2s;
+            transition: opacity 0.45s ease, transform 0.45s ease, border-color 0.2s;
         }
 
-        .me-about-chip.visible {
+        .me-hire-item.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .me-about-chip:hover {
-            border-color: rgba(196, 165, 116, 0.45);
+        .me-hire-item:hover {
+            border-color: rgba(196, 165, 116, 0.35);
+        }
+
+        .me-hire-tag {
+            font-size: 0.58rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            padding-top: 0.15rem;
+        }
+
+        .me-hire-item p {
+            font-size: 0.84rem;
+            line-height: 1.58;
+            color: var(--muted);
+        }
+
+        .me-hire-item strong {
             color: var(--text);
+            font-weight: 500;
+        }
+
+        .me-pitch-foot {
+            margin-top: 1rem;
+            font-size: 0.78rem;
+            letter-spacing: 0.06em;
+            color: var(--muted);
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.45s ease, transform 0.45s ease;
+        }
+
+        .me-pitch-foot.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .me-spotlight.visible-block {
+            animation: meSpotIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
         .me-block { margin-bottom: 2.25rem; }
@@ -1658,7 +1671,18 @@
                 text-align: center;
             }
 
-            .me-about-lead { max-width: none; }
+            .me-spotlight-meta {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .me-pitch-lead { max-width: none; }
+
+            .me-hire-item {
+                grid-template-columns: 1fr;
+                gap: 0.35rem;
+            }
 
             .me-edu-grid { grid-template-columns: 1fr; }
 
@@ -1729,7 +1753,7 @@
                     <div class="container">
                         <header class="section-hero section-hero--tight">
                             <span class="section-hero-tag">Me</span>
-                            <h2 class="section-hero-title">Shahad Alqahtani</h2>
+                            <p class="section-hero-lead">Profile, background & skills</p>
                         </header>
 
                         <div class="me-spotlight" id="meSpotlight">
@@ -1738,8 +1762,9 @@
                                 <div class="brand-mark brand-mark--lg me-logo">
                                     <img src="assets/logo.png" alt="Shahad Alqahtani">
                                 </div>
-                                <div>
-                                    <p class="me-line">iOS · Full Stack · CS</p>
+                                <div class="me-spotlight-meta">
+                                    <h3 class="me-name">Shahad Alqahtani</h3>
+                                    <p class="me-line">iOS · Full Stack · B.S. Computer Science</p>
                                     <a class="me-cv" href="assets/Shahad_Alqahtani_Resume.pdf" download="Shahad_Alqahtani_Resume.pdf" target="_blank" rel="noopener noreferrer">
                                         <i class="fas fa-file-arrow-down" aria-hidden="true"></i>
                                         Resume
@@ -1749,35 +1774,38 @@
                             <div class="me-stats">
                                 <div class="me-stat">
                                     <span class="me-stat-val">6+</span>
-                                    <span class="me-stat-lbl">apps</span>
+                                    <span class="me-stat-lbl">apps shipped</span>
                                 </div>
                                 <div class="me-stat">
-                                    <span class="me-stat-val">Apple</span>
-                                    <span class="me-stat-lbl">Academy</span>
+                                    <span class="me-stat-val">Top 3</span>
+                                    <span class="me-stat-lbl">Apple Academy</span>
                                 </div>
                                 <div class="me-stat">
-                                    <span class="me-stat-val">CoreTech</span>
-                                    <span class="me-stat-lbl">now</span>
+                                    <span class="me-stat-val">Now</span>
+                                    <span class="me-stat-lbl">@ CoreTech</span>
                                 </div>
+                            </div>
+
+                            <div class="me-pitch" id="mePitch" aria-label="Why hire Shahad">
+                                <p class="me-pitch-label">If I were HR</p>
+                                <p class="me-pitch-lead">I'd shortlist this profile for interview — <em>no hesitation.</em></p>
+                                <div class="me-hire-grid">
+                                    <article class="me-hire-item">
+                                        <span class="me-hire-tag">Ships</span>
+                                        <p><strong>6+ live products</strong>, not coursework — SwiftUI, Flutter, REST APIs, and admin dashboards already in the wild.</p>
+                                    </article>
+                                    <article class="me-hire-item">
+                                        <span class="me-hire-tag">Proof</span>
+                                        <p><strong>Top 3 capstone</strong> at Apple Developer Academy — Sensic, an accessibility product with real impact, not a class demo.</p>
+                                    </article>
+                                    <article class="me-hire-item">
+                                        <span class="me-hire-tag">Ready</span>
+                                        <p><strong>Full-stack range</strong> — Figma to Firebase, prototype to production. Already building at an early-stage startup. Week-one contributor.</p>
+                                    </article>
+                                </div>
+                                <p class="me-pitch-foot">Open to iOS, mobile & full-stack roles · Saudi Arabia · Remote-friendly</p>
                             </div>
                         </div>
-
-                        <section class="me-about" id="meAbout" aria-label="About Shahad">
-                            <p class="me-about-label">About me</p>
-                            <p class="me-about-lead">I turn ideas into apps people can <em>open, touch, and keep.</em></p>
-                            <div class="me-about-body">
-                                <p>I'm an iOS & full-stack developer from Saudi Arabia — the kind who sketches in Figma, ships in SwiftUI, and wires up the API when the screen needs data behind it.</p>
-                                <p><strong>6+ products shipped.</strong> Top 3 capstone at Apple Developer Academy for <strong>Sensic</strong> — haptic music for deaf & hard-of-hearing users. Now at <strong>CoreTechSolution</strong>, building real startup features from prototype to release.</p>
-                                <p>I care about accessibility, clean UI, and momentum — learning fast, shipping faster, and making work that recruiters and users actually remember.</p>
-                            </div>
-                            <div class="me-about-chips" aria-label="What I bring">
-                                <span class="me-about-chip">Ship fast</span>
-                                <span class="me-about-chip">Design-led</span>
-                                <span class="me-about-chip">Accessibility</span>
-                                <span class="me-about-chip">Full stack</span>
-                                <span class="me-about-chip">Open to roles</span>
-                            </div>
-                        </section>
 
                         <section id="about-education" class="me-block">
                             <p class="me-block-label">Education</p>
@@ -2298,15 +2326,14 @@
                 setTimeout(() => el.classList.add('visible'), 120 + i * 80);
             });
 
-            const about = document.getElementById('meAbout');
-            about?.classList.remove('visible-block');
-            void about?.offsetWidth;
-            about?.classList.add('visible-block');
-
-            document.querySelectorAll('#hub-about .me-about-chip').forEach((el, i) => {
+            document.querySelectorAll('#hub-about .me-hire-item').forEach((el, i) => {
                 el.classList.remove('visible');
-                setTimeout(() => el.classList.add('visible'), 260 + i * 70);
+                setTimeout(() => el.classList.add('visible'), 220 + i * 90);
             });
+
+            const pitchFoot = document.querySelector('#hub-about .me-pitch-foot');
+            pitchFoot?.classList.remove('visible');
+            setTimeout(() => pitchFoot?.classList.add('visible'), 520);
 
             document.querySelectorAll('#hub-about .me-edu-tile').forEach((el, i) => {
                 el.classList.remove('visible');
