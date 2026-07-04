@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shahad Alqahtani — Resume</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Instrument+Serif&display=swap" rel="stylesheet">
     <style>
         :root {
             --ink: #1a1816;
             --muted: #5c5650;
-            --line: #d8d0c6;
+            --line: #ddd6cc;
             --accent: #8a6a3e;
         }
 
@@ -16,95 +17,75 @@
 
         @page {
             size: A4 portrait;
-            margin: 7mm 9mm;
-        }
-
-        html, body {
-            width: 210mm;
-            height: 297mm;
+            margin: 10mm 12mm;
         }
 
         body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: 8.25pt;
-            line-height: 1.32;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            font-size: 9pt;
+            line-height: 1.4;
             color: var(--ink);
-            background: #fff;
+            background: #ece8e2;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
         }
 
-        .screen-wrap {
-            background: #ece8e2;
-            min-height: 100vh;
-            padding: 16px 0;
-        }
+        .screen-wrap { padding: 18px 0 28px; }
 
         .page {
-            width: 210mm;
-            height: 297mm;
-            max-height: 297mm;
+            max-width: 210mm;
             margin: 0 auto;
-            padding: 7mm 9mm 6mm;
+            padding: 11mm 12mm 10mm;
             background: #fff;
-            overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
         }
 
         @media print {
-            html, body {
-                width: auto;
-                height: auto;
-            }
-            .screen-wrap {
-                background: #fff;
-                padding: 0;
-            }
+            body { background: #fff; }
+            .screen-wrap { padding: 0; }
             .page {
-                width: auto;
-                height: auto;
-                max-height: none;
+                max-width: none;
                 margin: 0;
                 padding: 0;
                 box-shadow: none;
-                overflow: visible;
             }
             .print-bar { display: none !important; }
         }
 
         .print-bar {
-            width: 210mm;
-            margin: 0 auto 8px;
+            max-width: 210mm;
+            margin: 0 auto 10px;
+            padding: 0 12px;
             display: flex;
             justify-content: flex-end;
         }
 
         .print-btn {
-            padding: 0.45rem 0.85rem;
+            padding: 0.5rem 1rem;
             border: 1px solid var(--line);
-            border-radius: 4px;
+            border-radius: 6px;
             background: #fff;
             font: inherit;
-            font-size: 8pt;
+            font-size: 0.8rem;
             cursor: pointer;
         }
 
         .head {
             display: grid;
-            grid-template-columns: 40px 1fr auto;
-            gap: 9px;
+            grid-template-columns: 48px 1fr auto;
+            gap: 12px;
             align-items: center;
-            padding-bottom: 6px;
-            border-bottom: 1.2px solid var(--ink);
-            margin-bottom: 7px;
+            padding-bottom: 10px;
+            border-bottom: 1.5px solid var(--ink);
+            margin-bottom: 11px;
         }
 
         .mark {
-            width: 40px;
-            height: 40px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             border: 1px solid var(--line);
-            padding: 5px;
+            padding: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -113,102 +94,141 @@
         .mark img { width: 100%; height: 100%; object-fit: contain; }
 
         h1 {
-            font-size: 17pt;
-            font-weight: 700;
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-size: 22pt;
+            font-weight: 400;
             letter-spacing: -0.02em;
             line-height: 1.05;
         }
 
         .headline {
-            font-size: 8.25pt;
+            font-size: 9.5pt;
             font-weight: 600;
             color: var(--accent);
-            margin-top: 1px;
+            margin-top: 2px;
         }
 
         .contact-col {
             text-align: right;
-            font-size: 7.25pt;
+            font-size: 8pt;
             color: var(--muted);
-            line-height: 1.45;
+            line-height: 1.55;
         }
 
         .contact-col a { color: inherit; text-decoration: none; }
 
-        section { margin-bottom: 6px; }
-
-        h2 {
-            font-size: 6.75pt;
-            letter-spacing: 0.14em;
+        .contact-col strong {
+            display: block;
+            font-size: 7pt;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 3px;
-            font-weight: 700;
-            border-bottom: 1px solid var(--line);
-            padding-bottom: 1px;
+            color: var(--ink);
+            margin-bottom: 2px;
         }
 
-        .summary { font-size: 8.25pt; line-height: 1.35; }
+        section { margin-bottom: 10px; }
+
+        h2 {
+            font-size: 7.25pt;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 5px;
+            font-weight: 700;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 3px;
+        }
+
+        .summary {
+            font-size: 9pt;
+            line-height: 1.45;
+        }
+
+        .highlights {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 6px;
+        }
+
+        .highlight {
+            font-size: 7.5pt;
+            font-weight: 600;
+            padding: 2px 7px;
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            color: var(--muted);
+        }
 
         .grid {
             display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: 11px;
+            grid-template-columns: 1.12fr 0.88fr;
+            gap: 16px;
         }
 
-        .entry { margin-bottom: 5px; }
+        .entry { margin-bottom: 8px; }
         .entry:last-child { margin-bottom: 0; }
 
         .entry-head {
             display: flex;
             justify-content: space-between;
-            gap: 6px;
+            gap: 8px;
             align-items: baseline;
         }
 
         .entry-head h3 {
-            font-size: 8.5pt;
+            font-size: 9.5pt;
             font-weight: 700;
         }
 
         .date {
-            font-size: 7.25pt;
+            font-size: 7.75pt;
             color: var(--muted);
             white-space: nowrap;
+            font-variant-numeric: tabular-nums;
         }
 
         .role {
-            font-size: 7.5pt;
+            font-size: 8.25pt;
             color: var(--muted);
-            margin: 0 0 1px;
+            font-weight: 500;
+            margin: 1px 0 3px;
         }
 
         ul {
-            padding-left: 11px;
-            font-size: 7.75pt;
+            padding-left: 13px;
+            font-size: 8.5pt;
         }
 
-        li { margin-bottom: 0; }
+        li { margin-bottom: 1.5px; }
+        li::marker { color: var(--accent); }
 
-        .skills-grid { display: grid; gap: 2px; }
+        .skills-grid { display: grid; gap: 4px; }
 
         .skill-row {
             display: grid;
-            grid-template-columns: 52px 1fr;
-            gap: 4px;
-            font-size: 7.5pt;
+            grid-template-columns: 62px 1fr;
+            gap: 5px;
+            font-size: 8.25pt;
+            align-items: start;
         }
 
         .skill-row strong {
-            font-size: 6.5pt;
-            letter-spacing: 0.05em;
+            font-size: 7pt;
+            letter-spacing: 0.07em;
             text-transform: uppercase;
             color: var(--accent);
             font-weight: 700;
         }
 
-        .lang-row { font-size: 7.5pt; }
+        .lang-row { font-size: 8.5pt; }
         .lang-row span { color: var(--muted); }
+
+        @media (max-width: 640px) {
+            .head { grid-template-columns: 1fr; }
+            .contact-col { text-align: left; }
+            .grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -227,17 +247,24 @@
                     <p class="headline">iOS Developer · Full Stack Engineer</p>
                 </div>
                 <div class="contact-col">
-                    Shahad0x66@gmail.com<br>
-                    github.com/weuth02x1<br>
-                    LinkedIn · Saudi Arabia
+                    <strong>Contact</strong>
+                    <a href="mailto:Shahad0x66@gmail.com">Shahad0x66@gmail.com</a><br>
+                    <a href="https://github.com/weuth02x1">github.com/weuth02x1</a><br>
+                    <a href="https://www.linkedin.com/in/shahd-al-qahtani-992693382">LinkedIn</a> · Saudi Arabia
                 </div>
             </header>
 
             <section>
-                <h2>Summary</h2>
+                <h2>Professional Summary</h2>
                 <p class="summary">
-                    iOS & full-stack developer with 6+ shipped products (SwiftUI, Flutter, REST). Apple Developer Academy graduate — Top 3 capstone (Sensic). B.S. Computer Science. MVVM, Firebase, product design & end-to-end delivery.
+                    iOS and full-stack developer with 6+ shipped mobile and web products — SwiftUI, Flutter, REST APIs, and admin dashboards. Apple Developer Academy graduate with a Top 3 capstone (Sensic). Strong in MVVM, Firebase, product design, and end-to-end delivery.
                 </p>
+                <div class="highlights">
+                    <span class="highlight">6+ apps shipped</span>
+                    <span class="highlight">Top 3 · Apple Academy</span>
+                    <span class="highlight">SwiftUI · Flutter · REST</span>
+                    <span class="highlight">B.S. Computer Science</span>
+                </div>
             </section>
 
             <div class="grid">
@@ -250,10 +277,11 @@
                                 <h3>CoreTechSolution</h3>
                                 <span class="date">Jun 2026 — Present</span>
                             </div>
-                            <p class="role">Mobile & Full Stack · Startup</p>
+                            <p class="role">Mobile & Full Stack Developer · Early-stage startup</p>
                             <ul>
-                                <li>Flutter & SwiftUI apps; Figma UI; APIs, backend & admin delivery</li>
-                                <li>Prototype-to-release in a fast-paced startup environment</li>
+                                <li>Build production mobile apps with Flutter and SwiftUI for startup product lines</li>
+                                <li>Design UI in Figma; deliver APIs, backend integration, and admin flows</li>
+                                <li>Ship iteratively from prototype to release-ready builds</li>
                             </ul>
                         </div>
 
@@ -264,8 +292,8 @@
                             </div>
                             <p class="role">Graduate · iOS Developer</p>
                             <ul>
-                                <li>5+ team apps — Sensic (Top 3 · haptics), Wessal (PECS), ORBIT (Firebase), Moviasme (REST CRUD)</li>
-                                <li>SwiftUI, MVVM, CloudKit, Firebase, accessibility, research & pitching</li>
+                                <li>Shipped 5+ team apps — <strong>Sensic</strong> (Top 3 · Core Haptics), <strong>Wessal</strong> (PECS · offline), <strong>ORBIT</strong> (Firebase), <strong>Moviasme</strong> (REST CRUD)</li>
+                                <li>SwiftUI, MVVM, CloudKit, Firebase, accessibility, user research & pitching</li>
                             </ul>
                         </div>
 
@@ -276,7 +304,7 @@
                             </div>
                             <p class="role">Developer Intern</p>
                             <ul>
-                                <li>Citizen chatbot & internal automation for municipal services</li>
+                                <li>Developed citizen-facing chatbot and internal workflow automation</li>
                             </ul>
                         </div>
                     </section>
@@ -297,23 +325,23 @@
                                 <h3>King Khalid University</h3>
                                 <span class="date">2020 — 2025</span>
                             </div>
-                            <p class="role">B.S. Computer Science</p>
+                            <p class="role">Bachelor of Science · Computer Science</p>
                         </div>
                     </section>
 
                     <section>
                         <h2>Technical Skills</h2>
                         <div class="skills-grid">
-                            <div class="skill-row"><strong>iOS</strong><span>Swift, SwiftUI, UIKit, Xcode, Core Data, Core Haptics, CloudKit, MVVM</span></div>
-                            <div class="skill-row"><strong>Stack</strong><span>Flutter, Dart, REST, Firebase, ASP.NET, C#, SQL, JS, HTML/CSS</span></div>
-                            <div class="skill-row"><strong>Tools</strong><span>Git, GitHub, Figma, VS Code, Postman, AI tools</span></div>
-                            <div class="skill-row"><strong>Soft</strong><span>UI/UX, product design, Agile, teamwork, research, pitching</span></div>
+                            <div class="skill-row"><strong>iOS</strong><span>Swift, SwiftUI, UIKit, Xcode, Core Data, Core Haptics, CloudKit, MVVM, Accessibility</span></div>
+                            <div class="skill-row"><strong>Stack</strong><span>Flutter, Dart, REST APIs, Firebase, ASP.NET, C#, SQL, JavaScript, HTML/CSS</span></div>
+                            <div class="skill-row"><strong>Tools</strong><span>Git, GitHub, Figma, VS Code, Postman, AI-assisted development</span></div>
+                            <div class="skill-row"><strong>Soft</strong><span>UI/UX, product design, Agile, teamwork, research, pitching, problem solving</span></div>
                         </div>
                     </section>
 
                     <section>
                         <h2>Languages</h2>
-                        <p class="lang-row"><strong>Arabic</strong> <span>Native</span> · <strong>English</strong> <span>Professional</span></p>
+                        <p class="lang-row"><strong>Arabic</strong> <span>— Native</span> · <strong>English</strong> <span>— Professional</span></p>
                     </section>
                 </div>
             </div>
