@@ -1152,78 +1152,155 @@
             transform: translateX(0);
         }
 
-        /* Experience timeline */
-        .timeline { position: relative; padding-left: 1.25rem; }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0.4rem;
-            bottom: 0.4rem;
-            width: 1px;
-            background: var(--line);
-        }
-
-        .timeline-item {
+        /* Path — trail cards */
+        .path-trail {
             position: relative;
-            padding-bottom: 2rem;
-            opacity: 0;
-            transform: translateY(8px);
-            transition: opacity 0.4s ease, transform 0.4s ease;
+            display: grid;
+            gap: 0.85rem;
+            padding-bottom: 0.5rem;
         }
 
-        .timeline-item.visible { opacity: 1; transform: translateY(0); }
+        .path-step {
+            position: relative;
+            display: grid;
+            grid-template-columns: 2.4rem 1fr;
+            gap: 0.85rem;
+            align-items: start;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.45s ease, transform 0.45s ease;
+        }
 
-        .timeline-item::before {
+        .path-step.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .path-step-marker {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 1.15rem;
+        }
+
+        .path-step:not(:last-child) .path-step-marker::after {
             content: '';
             position: absolute;
-            left: -1.25rem;
-            top: 0.45rem;
-            width: 7px;
-            height: 7px;
-            margin-left: -3px;
+            top: 2.35rem;
+            bottom: -1.15rem;
+            left: 50%;
+            width: 1px;
+            transform: translateX(-50%);
+            background: linear-gradient(180deg, var(--accent), transparent);
+            opacity: 0.45;
+        }
+
+        .path-step-dot {
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
+            background: var(--bg);
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 0 4px rgba(196, 165, 116, 0.08);
+            flex-shrink: 0;
+        }
+
+        .path-step--current .path-step-dot {
             background: var(--accent);
-            border: 2px solid var(--bg);
+            box-shadow: 0 0 0 5px rgba(196, 165, 116, 0.16);
         }
 
-        .timeline-date {
-            font-size: 0.72rem;
-            letter-spacing: 0.06em;
+        .path-step-card {
+            padding: 1.05rem 1.1rem;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .path-step:hover .path-step-card {
+            border-color: rgba(196, 165, 116, 0.28);
+        }
+
+        .path-step--current .path-step-card {
+            border-color: rgba(196, 165, 116, 0.35);
+            background: linear-gradient(135deg, rgba(196, 165, 116, 0.07), transparent 55%);
+        }
+
+        .path-step-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            margin-bottom: 0.45rem;
+        }
+
+        .path-step-when {
+            font-size: 0.62rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
             color: var(--muted);
-            margin-bottom: 0.35rem;
         }
 
-        .timeline-content h3 {
+        .path-step-badge {
+            padding: 0.18rem 0.5rem;
+            border-radius: 999px;
+            font-size: 0.56rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            background: rgba(196, 165, 116, 0.12);
+            border: 1px solid rgba(196, 165, 116, 0.22);
+            flex-shrink: 0;
+        }
+
+        .path-step-card h3 {
             font-family: var(--font-ui);
-            font-size: 1.2rem;
-            margin-bottom: 0.15rem;
+            font-size: 1.12rem;
+            line-height: 1.2;
+            margin-bottom: 0.2rem;
         }
 
-        .timeline-role {
-            font-size: 0.82rem;
+        .path-step-role {
+            font-size: 0.8rem;
             color: var(--muted);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.65rem;
         }
 
-        .timeline-achievements {
+        .path-step-points {
             list-style: none;
-            font-size: 0.84rem;
-            color: var(--muted);
+            display: grid;
+            gap: 0.35rem;
         }
 
-        .timeline-achievements li {
+        .path-step-points li {
             position: relative;
             padding-left: 0.85rem;
-            margin-bottom: 0.25rem;
+            font-size: 0.82rem;
+            line-height: 1.45;
+            color: var(--muted);
         }
 
-        .timeline-achievements li::before {
-            content: '·';
+        .path-step-points li::before {
+            content: '';
             position: absolute;
             left: 0;
-            color: var(--accent);
+            top: 0.58em;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        @media (max-width: 520px) {
+            .path-step {
+                grid-template-columns: 1.75rem 1fr;
+                gap: 0.65rem;
+            }
+
+            .path-step-card { padding: 0.95rem; }
         }
 
         /* Connect */
@@ -1870,41 +1947,62 @@
             <div class="hub-screen" id="experience" data-hub-page="experience" role="tabpanel">
                 <div class="hub-screen-inner">
                     <div class="container">
-                        <h2 class="page-title">Path</h2>
-                        <p class="page-lead">Where I've been</p>
-                        <div class="timeline">
-                            <div class="timeline-item">
-                                <div class="timeline-date">June 2026 — Present</div>
-                                <div class="timeline-content">
+                        <header class="section-hero section-hero--tight">
+                            <span class="section-hero-tag">Path</span>
+                            <p class="section-hero-lead">Where I've been — step by step</p>
+                        </header>
+
+                        <div class="path-trail" id="pathTrail">
+                            <article class="path-step path-step--current">
+                                <div class="path-step-marker" aria-hidden="true">
+                                    <span class="path-step-dot"></span>
+                                </div>
+                                <div class="path-step-card">
+                                    <div class="path-step-head">
+                                        <span class="path-step-when">Jun 2026 — now</span>
+                                        <span class="path-step-badge">current</span>
+                                    </div>
                                     <h3>CoreTechSolution</h3>
-                                    <p class="timeline-role">Early-stage startup · Flutter & iOS</p>
-                                    <ul class="timeline-achievements">
+                                    <p class="path-step-role">Early-stage startup · Flutter & iOS</p>
+                                    <ul class="path-step-points">
                                         <li>Building mobile apps with Flutter and SwiftUI</li>
                                         <li>Product design, APIs & full stack delivery</li>
                                     </ul>
                                 </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-date">September 2025 — June 2026</div>
-                                <div class="timeline-content">
+                            </article>
+
+                            <article class="path-step">
+                                <div class="path-step-marker" aria-hidden="true">
+                                    <span class="path-step-dot"></span>
+                                </div>
+                                <div class="path-step-card">
+                                    <div class="path-step-head">
+                                        <span class="path-step-when">Sep 2025 — Jun 2026</span>
+                                    </div>
                                     <h3>Apple Developer Academy</h3>
-                                    <p class="timeline-role">Graduate · iOS Developer</p>
-                                    <ul class="timeline-achievements">
+                                    <p class="path-step-role">Graduate · iOS Developer</p>
+                                    <ul class="path-step-points">
                                         <li>Team-built iOS products end to end</li>
                                         <li>SwiftUI, Firebase & accessibility</li>
                                     </ul>
                                 </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-date">January 2024 — March 2024</div>
-                                <div class="timeline-content">
+                            </article>
+
+                            <article class="path-step">
+                                <div class="path-step-marker" aria-hidden="true">
+                                    <span class="path-step-dot"></span>
+                                </div>
+                                <div class="path-step-card">
+                                    <div class="path-step-head">
+                                        <span class="path-step-when">Jan — Mar 2024</span>
+                                    </div>
                                     <h3>Asir Region Municipality</h3>
-                                    <p class="timeline-role">Developer Intern</p>
-                                    <ul class="timeline-achievements">
+                                    <p class="path-step-role">Developer Intern</p>
+                                    <ul class="path-step-points">
                                         <li>Chatbot & internal automation</li>
                                     </ul>
                                 </div>
-                            </div>
+                            </article>
                         </div>
                     </div>
                 </div>
@@ -2289,9 +2387,9 @@
         }
 
         function revealExperiencePage() {
-            document.querySelectorAll('#experience .timeline-item').forEach((el, i) => {
+            document.querySelectorAll('#experience .path-step').forEach((el, i) => {
                 el.classList.remove('visible');
-                setTimeout(() => el.classList.add('visible'), 80 + i * 120);
+                setTimeout(() => el.classList.add('visible'), 90 + i * 110);
             });
         }
 
