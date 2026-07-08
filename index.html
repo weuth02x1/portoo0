@@ -1000,30 +1000,33 @@
         .work-item-thumb {
             width: 5.25rem;
             height: 5.25rem;
-            border-radius: calc(var(--radius) - 2px);
+            border-radius: 1.15rem;
             overflow: hidden;
             background: #ebe6df;
             border: 1px solid var(--line);
             flex-shrink: 0;
+            box-shadow: 0 8px 20px rgba(26, 24, 22, 0.07);
         }
 
         html[data-theme="dark"] .work-item-thumb {
             background: #0f0e0d;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
         }
 
         .work-item-thumb img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: top center;
+            display: block;
         }
 
-        .work-item-thumb--secret {
+        .work-item-thumb--fallback {
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--muted);
             font-size: 1.1rem;
+            background: var(--surface);
         }
 
         .work-item-body { min-width: 0; }
@@ -2622,6 +2625,7 @@
                 title: 'Stock Market AI Prediction',
                 desc: 'Web app that predicts stock market moves — profit or loss — built for beginners.',
                 image: 'assets/projects/stockmarket-ai.png',
+                appIcon: 'assets/projects/icons/stockmarket-ai.png',
                 cat: 'web',
                 icon: 'fa-chart-line',
                 theme: 'theme-ai',
@@ -2647,6 +2651,7 @@
                 title: 'Sensic',
                 desc: 'Feel the music — haptic app for deaf & hard-of-hearing users to experience music through touch.',
                 image: 'assets/projects/sensic-home.png',
+                appIcon: 'assets/projects/icons/sensic.png',
                 screens: [
                     { src: 'assets/projects/sensic-home.png', label: 'welcome · choose instrument' },
                     { src: 'assets/projects/sensic-practice.png', label: 'practice · haptic pulses' }
@@ -2676,6 +2681,7 @@
                 title: 'Confidential · From Investor',
                 desc: 'Investor-backed admin panel — live location on a map. Built with Flutter, backend, frontend & REST API. UI designed in Figma.',
                 secret: true,
+                appIcon: 'assets/projects/icons/confidential.png',
                 cat: 'web',
                 icon: 'fa-map-location-dot',
                 theme: 'theme-web',
@@ -2702,6 +2708,7 @@
                 title: 'Learning Journey',
                 desc: 'Habit tracker for learners — set a goal, build streaks, and use freeze days when life gets busy.',
                 image: 'assets/projects/learningj-activity.png',
+                appIcon: 'assets/projects/icons/learning-journey.png',
                 screens: [
                     { src: 'assets/projects/learningj-onboarding.png', label: 'setup' },
                     { src: 'assets/projects/learningj-activity.png', label: 'daily track' }
@@ -2730,6 +2737,7 @@
                 title: 'Wessal',
                 desc: 'PECS communication app for autism — custom picture cards with your own images & voice.',
                 image: 'assets/projects/wessal-categories.png',
+                appIcon: 'assets/projects/icons/wessal.png',
                 screens: [
                     { src: 'assets/projects/wessal-categories.png', label: 'الفئات · categories' },
                     { src: 'assets/projects/wessal-splash.png', label: 'splash · connect' }
@@ -2760,6 +2768,7 @@
                 title: 'ORBIT',
                 desc: 'Every goal is a planet — daily check-ins, orbs galaxy & Challenge Friends powered by Firebase.',
                 image: 'assets/projects/orbit-orbs.png',
+                appIcon: 'assets/projects/icons/orbit.png',
                 screens: [
                     { src: 'assets/projects/orbit-orbs.png', label: 'orbs · goal worlds' },
                     { src: 'assets/projects/orbit-today.png', label: 'today · daily goals' }
@@ -2789,6 +2798,7 @@
                 title: 'Moviasme',
                 desc: 'Movie discovery app — browse, search, review & manage your profile over a live REST API.',
                 image: 'assets/projects/moviasme-browse.png',
+                appIcon: 'assets/projects/icons/moviasme.png',
                 screens: [
                     { src: 'assets/projects/moviasme-browse.png', label: 'movies center · browse' },
                     { src: 'assets/projects/moviasme-detail.png', label: 'movie detail · story' }
@@ -2839,11 +2849,11 @@
         }
 
         function projectListThumbHTML(p) {
-            if (p.secret) {
-                return `<div class="work-item-thumb work-item-thumb--secret" aria-hidden="true"><i class="fas fa-lock"></i></div>`;
+            const icon = p.appIcon || p.image || p.screens?.[0]?.src || '';
+            if (!icon) {
+                return `<div class="work-item-thumb work-item-thumb--fallback" aria-hidden="true"><i class="fas fa-lock"></i></div>`;
             }
-            const src = p.image || p.screens?.[0]?.src || '';
-            return `<div class="work-item-thumb"><img src="${src}" alt="${p.title}" loading="lazy"></div>`;
+            return `<div class="work-item-thumb"><img src="${icon}" alt="${p.title} app icon" loading="lazy"></div>`;
         }
 
         function renderProjects() {
