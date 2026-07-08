@@ -5,24 +5,21 @@
       <stop offset="100%" stop-color="#0c0a09"/>
     </linearGradient>
     <linearGradient id="f1" x1="50%" y1="100%" x2="50%" y2="0%">
-      <stop offset="0%" stop-color="#b45309"/>
-      <stop offset="55%" stop-color="#f97316"/>
+      <stop offset="0%" stop-color="#c2410c"/>
+      <stop offset="50%" stop-color="#f97316"/>
       <stop offset="100%" stop-color="#fde68a"/>
     </linearGradient>
     <linearGradient id="f2" x1="50%" y1="100%" x2="50%" y2="0%">
       <stop offset="0%" stop-color="#ea580c"/>
-      <stop offset="100%" stop-color="#fdba74"/>
+      <stop offset="100%" stop-color="#fed7aa"/>
     </linearGradient>
   </defs>
   <rect width="512" height="512" rx="112" fill="url(#bg)"/>
-  <!-- main flame -->
-  <path fill="url(#f1)" d="M256 96c18 38 24 62 20 96-2 18-10 34-20 46-10-12-18-28-20-46-4-34 2-58 20-96z"/>
-  <path fill="url(#f2)" d="M256 132c12 24 16 42 14 64-2 14-8 24-14 32-6-8-12-18-14-32-2-22 2-40 14-64z"/>
-  <!-- left flicker -->
-  <path fill="#fb923c" d="M214 198c-8 18-10 34-6 48 6-10 10-24 8-38-2-8-1-6-2-10z"/>
-  <!-- right flicker -->
-  <path fill="#fdba74" d="M298 192c8 16 10 30 6 42-6-8-10-20-8-32 2-6 1-4 2-10z"/>
-  <!-- hot core -->
-  <ellipse cx="256" cy="228" rx="22" ry="30" fill="#fff7ed" opacity="0.95"/>
-  <ellipse cx="256" cy="236" rx="12" ry="16" fill="#ffedd5"/>
+  <ellipse cx="256" cy="360" rx="120" ry="28" fill="#f97316" opacity="0.12"/>
+  <path fill="url(#f1)" d="M256 72c42 78 54 132 46 196-6 42-26 78-46 98-20-20-40-56-46-98-8-64 4-118 46-196z"/>
+  <path fill="url(#f2)" d="M256 128c28 52 36 88 30 132-4 28-18 50-30 64-12-14-26-36-30-64-6-44 2-80 30-132z"/>
+  <path fill="#fb923c" d="M176 250c-14 34-18 64-10 92 10-18 16-42 12-66-4-14-1-8-2-26z"/>
+  <path fill="#fdba74" d="M336 242c14 32 18 58 10 84-10-16-16-38-12-60 4-12 1-8 2-24z"/>
+  <ellipse cx="256" cy="286" rx="38" ry="52" fill="#fff7ed" opacity="0.95"/>
+  <ellipse cx="256" cy="298" rx="22" ry="30" fill="#ffedd5"/>
 </svg>
