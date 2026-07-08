@@ -2850,7 +2850,7 @@
 
         function projectListThumbHTML(p) {
             const raw = p.appIcon || p.image || p.screens?.[0]?.src || '';
-            const icon = raw ? `${raw}?v=${p.id === '1' ? 'lj3' : '1'}` : '';
+            const icon = raw ? `${raw}?v=${p.id === '1' ? 'fire1' : '1'}` : '';
             if (!icon) {
                 return `<div class="work-item-thumb work-item-thumb--fallback" aria-hidden="true"><i class="fas fa-lock"></i></div>`;
             }
