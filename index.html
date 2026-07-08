@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" data-theme="light">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,26 +12,12 @@
     <script>
         (function () {
             if (localStorage.getItem('portfolio-theme') === 'dark') {
-                document.documentElement.removeAttribute('data-theme');
+                document.documentElement.setAttribute('data-theme', 'dark');
             }
         })();
     </script>
     <style>
         :root {
-            --bg: #121110;
-            --surface: #1a1816;
-            --text: #f0ebe4;
-            --muted: #8a827a;
-            --accent: #c4a574;
-            --line: rgba(255, 255, 255, 0.08);
-            --nav-bg: rgba(18, 17, 16, 0.92);
-            --nav-h: 56px;
-            --dock-h: 72px;
-            --radius: 12px;
-            --font-ui: 'DM Sans', system-ui, -apple-system, sans-serif;
-        }
-
-        html[data-theme="light"] {
             --bg: #faf7f2;
             --surface: #ffffff;
             --text: #1a1816;
@@ -39,19 +25,32 @@
             --accent: #9a7848;
             --line: rgba(26, 24, 22, 0.1);
             --nav-bg: rgba(250, 247, 242, 0.92);
+            --nav-h: 56px;
+            --dock-h: 72px;
+            --radius: 12px;
+            --font-ui: 'DM Sans', system-ui, -apple-system, sans-serif;
             color-scheme: light;
         }
 
-        html:not([data-theme="light"]) { color-scheme: dark; }
+        html[data-theme="dark"] {
+            --bg: #121110;
+            --surface: #1a1816;
+            --text: #f0ebe4;
+            --muted: #8a827a;
+            --accent: #c4a574;
+            --line: rgba(255, 255, 255, 0.08);
+            --nav-bg: rgba(18, 17, 16, 0.92);
+            color-scheme: dark;
+        }
 
-        html[data-theme="light"] #boot-screen {
-            --intro-bg: #faf7f2;
-            --intro-text: #1a1816;
-            --intro-muted: #6b645c;
-            --intro-accent: #9a7848;
-            --intro-glow: rgba(154, 120, 72, 0.14);
-            --intro-ring: rgba(154, 120, 72, 0.32);
-            --intro-ring-soft: rgba(154, 120, 72, 0.05);
+        html[data-theme="dark"] #boot-screen {
+            --intro-bg: #121110;
+            --intro-text: #f0ebe4;
+            --intro-muted: #8a827a;
+            --intro-accent: #c4a574;
+            --intro-glow: rgba(196, 165, 116, 0.14);
+            --intro-ring: rgba(196, 165, 116, 0.32);
+            --intro-ring-soft: rgba(196, 165, 116, 0.05);
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -90,13 +89,13 @@
 
         /* Intro — simple bloom */
         #boot-screen {
-            --intro-bg: #121110;
-            --intro-text: #f0ebe4;
-            --intro-muted: #8a827a;
-            --intro-accent: #c4a574;
-            --intro-glow: rgba(196, 165, 116, 0.14);
-            --intro-ring: rgba(196, 165, 116, 0.32);
-            --intro-ring-soft: rgba(196, 165, 116, 0.05);
+            --intro-bg: #faf7f2;
+            --intro-text: #1a1816;
+            --intro-muted: #6b645c;
+            --intro-accent: #9a7848;
+            --intro-glow: rgba(154, 120, 72, 0.14);
+            --intro-ring: rgba(154, 120, 72, 0.32);
+            --intro-ring-soft: rgba(154, 120, 72, 0.05);
             position: fixed;
             inset: 0;
             z-index: 10000;
@@ -239,12 +238,13 @@
             height: 100%;
             object-fit: contain;
             display: block;
-            mix-blend-mode: lighten;
-        }
-
-        html[data-theme="light"] .brand-mark img {
             mix-blend-mode: multiply;
             filter: invert(1);
+        }
+
+        html[data-theme="dark"] .brand-mark img {
+            mix-blend-mode: lighten;
+            filter: none;
         }
 
         .brand-mark--lg {
@@ -860,15 +860,15 @@
 
         .skill-filter.active,
         .project-filter.active {
-            background: rgba(196, 165, 116, 0.12);
-            border-color: rgba(196, 165, 116, 0.35);
+            background: rgba(154, 120, 72, 0.1);
+            border-color: rgba(154, 120, 72, 0.28);
             color: var(--text);
         }
 
-        html[data-theme="light"] .skill-filter.active,
-        html[data-theme="light"] .project-filter.active {
-            background: rgba(154, 120, 72, 0.1);
-            border-color: rgba(154, 120, 72, 0.28);
+        html[data-theme="dark"] .skill-filter.active,
+        html[data-theme="dark"] .project-filter.active {
+            background: rgba(196, 165, 116, 0.12);
+            border-color: rgba(196, 165, 116, 0.35);
             color: var(--text);
         }
 
@@ -995,15 +995,15 @@
             font-size: 0.62rem;
             letter-spacing: 0.14em;
             color: var(--accent);
-            background: rgba(18, 17, 16, 0.72);
+            background: rgba(250, 247, 242, 0.85);
             border: 1px solid rgba(196, 165, 116, 0.25);
             border-radius: 999px;
             padding: 0.2rem 0.55rem;
             backdrop-filter: blur(8px);
         }
 
-        html[data-theme="light"] .project-idx {
-            background: rgba(250, 247, 242, 0.85);
+        html[data-theme="dark"] .project-idx {
+            background: rgba(18, 17, 16, 0.72);
         }
 
         .project-thumb {
@@ -1555,15 +1555,15 @@
             bottom: 4px;
             left: 0;
             border-radius: 999px;
-            background: rgba(196, 165, 116, 0.15);
-            border: 1px solid rgba(196, 165, 116, 0.25);
+            background: rgba(154, 120, 72, 0.12);
+            border: 1px solid rgba(154, 120, 72, 0.2);
             transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
             pointer-events: none;
         }
 
-        html[data-theme="light"] .hub-dock-indicator {
-            background: rgba(154, 120, 72, 0.12);
-            border-color: rgba(154, 120, 72, 0.2);
+        html[data-theme="dark"] .hub-dock-indicator {
+            background: rgba(196, 165, 116, 0.15);
+            border-color: rgba(196, 165, 116, 0.25);
         }
 
         .hub-dock-btn {
@@ -1832,14 +1832,14 @@
             gap: 0.45rem;
             padding: 0.6rem 1.1rem;
             background: var(--accent);
-            color: #121110;
+            color: #faf7f2;
             border-radius: 999px;
             font-size: 0.78rem;
             font-weight: 500;
             transition: opacity 0.2s;
         }
 
-        html[data-theme="light"] .modal-link { color: #faf7f2; }
+        html[data-theme="dark"] .modal-link { color: #121110; }
         .modal-link:hover { opacity: 0.88; }
 
         /* Responsive */
@@ -2260,11 +2260,11 @@
         const THEME_KEY = 'portfolio-theme';
 
         function applyTheme(theme) {
-            if (theme === 'light') {
-                document.documentElement.setAttribute('data-theme', 'light');
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
             } else {
                 document.documentElement.removeAttribute('data-theme');
-                theme = 'dark';
+                theme = 'light';
             }
             if (themeToggle) {
                 themeToggle.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
@@ -2280,7 +2280,7 @@
 
         if (themeToggle) {
             themeToggle.addEventListener('click', () => {
-                const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+                const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
                 applyTheme(next);
             });
         }
