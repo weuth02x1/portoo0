@@ -921,13 +921,46 @@
 
         .section-hero--tight .section-hero-title { margin-bottom: 0; }
 
-        /* Projects — bento showcase */
+        /* Work — showcase stage */
+        .work-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.35rem;
+        }
+
+        .work-count {
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            color: var(--muted);
+            text-transform: uppercase;
+        }
+
+        .work-stage {
+            position: relative;
+        }
+
+        .work-stage-glow {
+            position: absolute;
+            top: -8%;
+            right: -12%;
+            width: 55%;
+            height: 35%;
+            background: radial-gradient(circle, rgba(154, 120, 72, 0.1), transparent 68%);
+            pointer-events: none;
+        }
+
+        html[data-theme="dark"] .work-stage-glow {
+            background: radial-gradient(circle, rgba(196, 165, 116, 0.08), transparent 68%);
+        }
+
         .project-filters {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             gap: 0.45rem;
-            margin-bottom: 1.75rem;
             padding: 0.35rem;
             border: 1px solid var(--line);
             border-radius: 999px;
@@ -936,29 +969,24 @@
             max-width: 100%;
         }
 
-        #projectFilterCount {
-            margin-left: 0.35rem;
-            padding-left: 0.65rem;
-            border-left: 1px solid var(--line);
-            font-size: 0.68rem;
-            color: var(--muted);
-        }
-
         .projects-grid {
+            position: relative;
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
+            gap: 0.85rem;
         }
 
         .project-card {
             position: relative;
+            display: flex;
+            flex-direction: column;
             background: var(--surface);
             border: 1px solid var(--line);
-            border-radius: calc(var(--radius) + 2px);
+            border-radius: calc(var(--radius) + 4px);
             overflow: hidden;
             cursor: pointer;
             opacity: 0;
-            transform: translateY(18px) scale(0.98);
+            transform: translateY(16px) scale(0.98);
             transition: opacity 0.45s ease, transform 0.45s ease, border-color 0.25s ease, box-shadow 0.25s ease;
         }
 
@@ -971,53 +999,148 @@
             grid-column: 1 / -1;
         }
 
-        .project-card--feature .project-thumb {
-            aspect-ratio: 21 / 9;
+        @media (min-width: 700px) {
+            .project-card--feature {
+                display: grid;
+                grid-template-columns: 1.12fr 1fr;
+                grid-template-rows: 1fr;
+            }
+
+            .project-card--feature .project-thumb {
+                aspect-ratio: auto;
+                min-height: 250px;
+            }
+
+            .project-card--feature .project-body {
+                justify-content: center;
+                padding: 1.35rem 1.4rem;
+            }
         }
 
         .project-card:hover {
+            border-color: rgba(154, 120, 72, 0.32);
+            box-shadow: 0 16px 42px rgba(26, 24, 22, 0.08);
+            transform: translateY(-4px) scale(1.005);
+        }
+
+        html[data-theme="dark"] .project-card:hover {
             border-color: rgba(196, 165, 116, 0.35);
-            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.18);
-            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 16px 42px rgba(0, 0, 0, 0.22);
         }
 
         .project-card.visible:hover {
-            transform: translateY(-3px) scale(1.01);
+            transform: translateY(-4px) scale(1.005);
         }
 
         .project-card.filter-hidden { display: none; }
 
+        .project-card-shine {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(154, 120, 72, 0.06), transparent 48%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        html[data-theme="dark"] .project-card-shine {
+            background: linear-gradient(135deg, rgba(196, 165, 116, 0.08), transparent 48%);
+        }
+
+        .project-card:hover .project-card-shine { opacity: 1; }
+
         .project-idx {
             position: absolute;
-            top: 0.75rem;
-            left: 0.75rem;
+            top: 0.7rem;
+            left: 0.7rem;
             z-index: 3;
-            font-size: 0.62rem;
+            font-size: 0.58rem;
+            font-weight: 600;
             letter-spacing: 0.14em;
             color: var(--accent);
-            background: rgba(250, 247, 242, 0.85);
-            border: 1px solid rgba(196, 165, 116, 0.25);
+            background: rgba(250, 247, 242, 0.9);
+            border: 1px solid rgba(154, 120, 72, 0.22);
             border-radius: 999px;
-            padding: 0.2rem 0.55rem;
+            padding: 0.22rem 0.55rem;
             backdrop-filter: blur(8px);
         }
 
         html[data-theme="dark"] .project-idx {
-            background: rgba(18, 17, 16, 0.72);
+            background: rgba(18, 17, 16, 0.78);
+            border-color: rgba(196, 165, 116, 0.25);
+        }
+
+        .project-cat {
+            position: absolute;
+            top: 0.7rem;
+            right: 0.7rem;
+            z-index: 3;
+            font-size: 0.56rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            background: rgba(250, 247, 242, 0.9);
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 0.2rem 0.5rem;
+            backdrop-filter: blur(8px);
+        }
+
+        html[data-theme="dark"] .project-cat {
+            background: rgba(18, 17, 16, 0.78);
+        }
+
+        .project-card--feature .project-idx,
+        .project-card--feature .project-cat { top: 0.85rem; }
+
+        .project-card--feature .project-idx { left: 0.85rem; }
+        .project-card--feature .project-cat { right: 0.85rem; }
+
+        .project-card--feature .project-thumb {
+            aspect-ratio: 21 / 9;
         }
 
         .project-thumb {
             position: relative;
             aspect-ratio: 16 / 10;
-            background: #0a0908;
+            background: #ebe6df;
             overflow: hidden;
+            flex-shrink: 0;
         }
+
+        html[data-theme="dark"] .project-thumb {
+            background: #0a0908;
+        }
+
+        .project-thumb::after {
+            content: '';
+            position: absolute;
+            inset: auto 0 0 0;
+            height: 50%;
+            background: linear-gradient(180deg, transparent, rgba(26, 24, 22, 0.18));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        html[data-theme="dark"] .project-thumb::after {
+            background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.45));
+        }
+
+        .project-card:hover .project-thumb::after { opacity: 1; }
 
         .project-thumb img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             object-position: top center;
+            transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .project-card:hover .project-thumb img {
+            transform: scale(1.04);
         }
 
         .project-thumb.is-fallback img { display: none; }
@@ -1098,69 +1221,119 @@
         .project-thumb--showcase--triple .project-phone--slot-2 { transform: translateY(-4%) scale(1.04); z-index: 3; }
         .project-thumb--showcase--triple .project-phone--slot-3 { transform: rotate(8deg) translate(-8%, 5%); }
 
-        .project-header {
+        .project-body {
+            position: relative;
+            z-index: 2;
+            padding: 0.85rem 1rem 1.05rem;
+            flex: 1;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+        }
+
+        .project-meta {
+            display: flex;
             align-items: center;
-            padding: 0.75rem 1rem 0;
-            font-size: 0.62rem;
-            letter-spacing: 0.08em;
+            justify-content: space-between;
+            gap: 0.5rem;
+            margin-bottom: 0.45rem;
+        }
+
+        .project-file {
+            font-size: 0.58rem;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
             color: var(--muted);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .project-icon {
+            flex-shrink: 0;
             color: var(--accent);
-            font-size: 0.9rem;
+            font-size: 0.82rem;
+            width: 1.65rem;
+            height: 1.65rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid rgba(154, 120, 72, 0.2);
+            background: rgba(154, 120, 72, 0.06);
+        }
+
+        html[data-theme="dark"] .project-icon {
+            border-color: rgba(196, 165, 116, 0.22);
+            background: rgba(196, 165, 116, 0.08);
+        }
+
+        .project-body h3 {
+            font-family: var(--font-ui);
+            font-size: 1.1rem;
+            line-height: 1.2;
+            margin-bottom: 0.35rem;
+        }
+
+        .project-card--feature .project-body h3 {
+            font-size: 1.35rem;
+        }
+
+        .project-body p {
+            font-size: 0.8rem;
+            color: var(--muted);
+            line-height: 1.5;
+            flex: 1;
+        }
+
+        .project-foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.65rem;
+            margin-top: 0.75rem;
+        }
+
+        .project-tags { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+
+        .tag {
+            padding: 0.2rem 0.5rem;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            font-size: 0.58rem;
+            letter-spacing: 0.04em;
+            color: var(--muted);
+            background: rgba(154, 120, 72, 0.04);
+        }
+
+        html[data-theme="dark"] .tag {
+            background: rgba(196, 165, 116, 0.05);
+        }
+
+        .project-open {
+            flex-shrink: 0;
             width: 1.75rem;
             height: 1.75rem;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            border: 1px solid rgba(196, 165, 116, 0.2);
-        }
-
-        .project-content { padding: 0.35rem 1rem 1.15rem; }
-
-        .project-content h3 {
-            font-family: var(--font-ui);
-            font-size: 1.2rem;
-            margin-bottom: 0.35rem;
-        }
-
-        .project-content p {
-            font-size: 0.82rem;
-            color: var(--muted);
-            margin-bottom: 0.75rem;
-            line-height: 1.5;
-        }
-
-        .project-tags { display: flex; gap: 0.35rem; flex-wrap: wrap; }
-
-        .tag {
-            padding: 0.22rem 0.55rem;
             border: 1px solid var(--line);
-            border-radius: 999px;
-            font-size: 0.62rem;
-            letter-spacing: 0.04em;
-            color: var(--muted);
-        }
-
-        .project-tap-hint {
-            margin-top: 0.75rem;
-            font-size: 0.6rem;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
             color: var(--accent);
+            font-size: 0.9rem;
+            line-height: 1;
             opacity: 0;
-            transform: translateX(-4px);
-            transition: opacity 0.25s, transform 0.25s;
+            transform: translate(-3px, 3px);
+            transition: opacity 0.25s ease, transform 0.25s ease, border-color 0.2s, background 0.2s;
         }
 
-        .project-card:hover .project-tap-hint {
+        .project-card:hover .project-open {
             opacity: 1;
-            transform: translateX(0);
+            transform: translate(0, 0);
+        }
+
+        .project-card:hover .project-open {
+            border-color: rgba(154, 120, 72, 0.35);
+            background: rgba(154, 120, 72, 0.08);
         }
 
         /* Path — trail cards */
@@ -2077,18 +2250,24 @@
             <div class="hub-screen" id="projects" data-hub-page="projects" role="tabpanel">
                 <div class="hub-screen-inner">
                     <div class="container">
-                        <header class="section-hero">
+                        <header class="section-hero section-hero--tight">
                             <span class="section-hero-tag">Work</span>
-                            <h2 class="section-hero-title">Things I've shipped</h2>
-                            <p class="section-hero-lead">Apps, experiments, and products — tap any card to explore.</p>
+                            <p class="section-hero-lead">Things I've shipped — tap any card to explore</p>
                         </header>
-                        <div class="project-filters" role="tablist" aria-label="Filter projects">
-                            <button class="project-filter active" type="button" data-cat="all" role="tab" aria-selected="true">all</button>
-                            <button class="project-filter" type="button" data-cat="ios" role="tab" aria-selected="false">ios</button>
-                            <button class="project-filter" type="button" data-cat="web" role="tab" aria-selected="false">web</button>
-                            <span id="projectFilterCount">7 projects</span>
+
+                        <div class="work-toolbar">
+                            <div class="project-filters" role="tablist" aria-label="Filter projects">
+                                <button class="project-filter active" type="button" data-cat="all" role="tab" aria-selected="true">all</button>
+                                <button class="project-filter" type="button" data-cat="ios" role="tab" aria-selected="false">ios</button>
+                                <button class="project-filter" type="button" data-cat="web" role="tab" aria-selected="false">web</button>
+                            </div>
+                            <span class="work-count" id="projectFilterCount">7 projects</span>
                         </div>
-                        <div class="projects-grid" id="projectsGrid"></div>
+
+                        <div class="work-stage">
+                            <div class="work-stage-glow" aria-hidden="true"></div>
+                            <div class="projects-grid" id="projectsGrid"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2934,18 +3113,22 @@
         function renderProjects() {
             if (!projectsGrid) return;
             projectsGrid.innerHTML = projects.map((p, i) => `
-                <article class="project-card${i === 0 ? ' project-card--feature' : ''}" data-project="${p.id}" data-cat="${p.cat}"${p.theme ? ` data-theme="${p.theme}"` : ''}>
+                <article class="project-card${i === 0 ? ' project-card--feature' : ''}" data-project="${p.id}" data-cat="${p.cat}">
+                    <div class="project-card-shine" aria-hidden="true"></div>
                     <span class="project-idx">${String(i + 1).padStart(2, '0')}</span>
+                    <span class="project-cat">${p.cat}</span>
                     ${projectThumbHTML(p)}
-                    <div class="project-header">
-                        <span>${p.file}</span>
-                        <i class="fas ${p.icon} project-icon"></i>
-                    </div>
-                    <div class="project-content">
+                    <div class="project-body">
+                        <div class="project-meta">
+                            <span class="project-file">${p.file}</span>
+                            <span class="project-icon"><i class="fas ${p.icon}" aria-hidden="true"></i></span>
+                        </div>
                         <h3>${p.title}</h3>
                         <p>${p.desc}</p>
-                        <div class="project-tags">${p.stack.slice(0, 2).map(t => `<span class="tag">${t}</span>`).join('')}</div>
-                        <p class="project-tap-hint">Open →</p>
+                        <div class="project-foot">
+                            <div class="project-tags">${p.stack.slice(0, 3).map(t => `<span class="tag">${t}</span>`).join('')}</div>
+                            <span class="project-open" aria-hidden="true">↗</span>
+                        </div>
                     </div>
                 </article>
             `).join('');
