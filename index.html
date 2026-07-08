@@ -582,26 +582,8 @@
             letter-spacing: 0.13em;
             text-transform: uppercase;
             color: var(--muted);
-            margin-bottom: 0.85rem;
+            margin-bottom: 0;
         }
-
-        .me-cv {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0.48rem 0.9rem;
-            background: var(--accent);
-            color: #121110;
-            border-radius: 999px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            transition: opacity 0.2s, transform 0.2s;
-        }
-
-        html[data-theme="light"] .me-cv { color: #faf7f2; }
-
-        .me-cv:hover { opacity: 0.9; transform: translateY(-1px); }
 
         .me-about {
             position: relative;
@@ -2275,6 +2257,10 @@
             spotlight?.classList.remove('visible-block');
             void spotlight?.offsetWidth;
             spotlight?.classList.add('visible-block');
+
+            const aboutLead = document.querySelector('#hub-about .me-about-lead');
+            aboutLead?.classList.remove('visible');
+            setTimeout(() => aboutLead?.classList.add('visible'), 90);
 
             document.querySelectorAll('#hub-about .me-about-list li').forEach((el, i) => {
                 el.classList.remove('visible');
