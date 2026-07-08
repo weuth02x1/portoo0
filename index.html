@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,8 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
     <script>
         (function () {
-            var saved = localStorage.getItem('portfolio-theme');
-            if (saved !== 'dark') document.documentElement.setAttribute('data-theme', 'light');
+            if (localStorage.getItem('portfolio-theme') === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+            }
         })();
     </script>
     <style>
@@ -42,6 +43,16 @@
         }
 
         html:not([data-theme="light"]) { color-scheme: dark; }
+
+        html[data-theme="light"] #boot-screen {
+            --intro-bg: #faf7f2;
+            --intro-text: #1a1816;
+            --intro-muted: #6b645c;
+            --intro-accent: #9a7848;
+            --intro-glow: rgba(154, 120, 72, 0.14);
+            --intro-ring: rgba(154, 120, 72, 0.32);
+            --intro-ring-soft: rgba(154, 120, 72, 0.05);
+        }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -1303,34 +1314,128 @@
             .path-step-card { padding: 0.95rem; }
         }
 
-        /* Connect */
-        .connect-layout {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        /* Hello — connect spotlight */
+        .connect-spotlight {
+            position: relative;
+            padding: 1.35rem 1.25rem 1.2rem;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: calc(var(--radius) + 4px);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .connect-spotlight.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .connect-spotlight-glow {
+            position: absolute;
+            top: -35%;
+            left: 50%;
+            width: 70%;
+            height: 70%;
+            transform: translateX(-50%);
+            background: radial-gradient(circle, rgba(196, 165, 116, 0.12), transparent 68%);
+            pointer-events: none;
+        }
+
+        .connect-pitch {
+            position: relative;
             text-align: center;
-            padding: 0.5rem 0 2rem;
+            font-size: 1.05rem;
+            font-weight: 600;
+            line-height: 1.4;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.15rem;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
         }
 
-        .connect-email-wrap {
-            margin-bottom: 2.5rem;
+        .connect-pitch.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .connect-email {
-            font-family: var(--font-ui);
-            font-size: clamp(1.5rem, 5vw, 2.25rem);
+        .connect-pitch span {
+            color: var(--accent);
+        }
+
+        .connect-email-card {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            padding: 0.95rem 1rem;
+            margin-bottom: 1rem;
+            background: rgba(196, 165, 116, 0.06);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.45s ease, transform 0.45s ease, border-color 0.2s;
+        }
+
+        .connect-email-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .connect-email-card:hover {
+            border-color: rgba(196, 165, 116, 0.3);
+        }
+
+        .connect-email-icon {
+            flex-shrink: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(196, 165, 116, 0.14);
+            color: var(--accent);
+            font-size: 1rem;
+        }
+
+        .connect-email-body {
+            min-width: 0;
+            flex: 1;
+            text-align: left;
+        }
+
+        .connect-email-label {
+            font-size: 0.58rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 0.2rem;
+        }
+
+        .connect-email-address {
+            display: block;
+            font-size: clamp(0.82rem, 3.2vw, 0.95rem);
+            font-weight: 600;
             letter-spacing: -0.01em;
-            margin-bottom: 0.75rem;
+            line-height: 1.3;
+            word-break: break-all;
+            transition: color 0.2s;
         }
 
-        .connect-email a:hover { color: var(--accent); }
+        .connect-email-address:hover { color: var(--accent); }
 
         .connect-copy-btn {
-            padding: 0.45rem 1rem;
+            flex-shrink: 0;
+            padding: 0.42rem 0.75rem;
             border: 1px solid var(--line);
             border-radius: 999px;
-            font-size: 0.72rem;
-            letter-spacing: 0.08em;
+            font-size: 0.62rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
             color: var(--muted);
             transition: all 0.2s;
@@ -1340,40 +1445,80 @@
         .connect-copy-btn.is-copied {
             border-color: var(--accent);
             color: var(--text);
+            background: rgba(196, 165, 116, 0.1);
         }
 
-        .connect-social {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
+        .connect-grid {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.55rem;
+            margin-bottom: 1rem;
         }
 
-        .connect-link {
+        .connect-tile {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.25rem;
+            justify-content: center;
+            gap: 0.45rem;
+            padding: 0.95rem 0.5rem;
+            background: var(--bg);
             border: 1px solid var(--line);
             border-radius: var(--radius);
-            font-size: 0.82rem;
-            color: var(--muted);
+            text-align: center;
             opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.2s, color 0.2s;
+            transform: translateY(10px) scale(0.97);
+            transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.2s, background 0.2s;
         }
 
-        .connect-link.visible {
+        .connect-tile.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .connect-tile:hover {
+            border-color: rgba(196, 165, 116, 0.35);
+            background: rgba(196, 165, 116, 0.05);
+        }
+
+        .connect-tile-icon {
+            width: 2.1rem;
+            height: 2.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(196, 165, 116, 0.12);
+            color: var(--accent);
+            font-size: 1rem;
+        }
+
+        .connect-tile-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .connect-tile:hover .connect-tile-label { color: var(--text); }
+
+        .connect-footnote {
+            position: relative;
+            text-align: center;
+            font-size: 0.72rem;
+            color: var(--muted);
+            letter-spacing: 0.04em;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .connect-footnote.visible {
             opacity: 1;
             transform: translateY(0);
         }
-
-        .connect-link:hover {
-            border-color: rgba(196, 165, 116, 0.35);
-            color: var(--text);
-        }
-
-        .connect-link i { font-size: 1rem; color: var(--accent); }
 
         /* Dock */
         .hub-dock {
@@ -1718,9 +1863,13 @@
 
             .project-card--feature .project-thumb { aspect-ratio: 16 / 10; }
 
-            .connect-social { flex-direction: column; width: 100%; max-width: 280px; }
+            .connect-grid { grid-template-columns: 1fr; }
 
-            .connect-link { justify-content: center; }
+            .connect-email-card {
+                flex-wrap: wrap;
+            }
+
+            .connect-copy-btn { margin-left: auto; }
 
             .modal-icon { display: none; }
         }
@@ -2011,29 +2160,45 @@
             <div class="hub-screen" id="connect" data-hub-page="connect" role="tabpanel">
                 <div class="hub-screen-inner">
                     <div class="container">
-                        <h2 class="page-title">Hello</h2>
-                        <p class="page-lead">Get in touch</p>
-                        <div class="connect-layout">
-                            <div class="connect-email-wrap">
-                                <p class="connect-email">
-                                    <a href="mailto:Shahad0x66@gmail.com">Shahad0x66@gmail.com</a>
-                                </p>
+                        <header class="section-hero section-hero--tight">
+                            <span class="section-hero-tag">Hello</span>
+                            <p class="section-hero-lead">Projects, collabs, or just saying hi</p>
+                        </header>
+
+                        <div class="connect-spotlight" id="connectSpotlight">
+                            <div class="connect-spotlight-glow" aria-hidden="true"></div>
+
+                            <p class="connect-pitch" id="connectPitch">
+                                Got an idea? <span>Let's build it.</span>
+                            </p>
+
+                            <div class="connect-email-card" id="connectEmailCard">
+                                <div class="connect-email-icon" aria-hidden="true">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="connect-email-body">
+                                    <p class="connect-email-label">Email me</p>
+                                    <a class="connect-email-address" href="mailto:Shahad0x66@gmail.com">Shahad0x66@gmail.com</a>
+                                </div>
                                 <button class="connect-copy-btn" type="button" id="connectCopyEmail" aria-label="Copy email">copy</button>
                             </div>
-                            <nav class="connect-social" aria-label="Social links">
-                                <a class="connect-link" href="https://github.com/weuth02x1" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                                    <i class="fab fa-github"></i> GitHub
+
+                            <nav class="connect-grid" aria-label="Social links">
+                                <a class="connect-tile" href="https://github.com/weuth02x1" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                                    <span class="connect-tile-icon"><i class="fab fa-github"></i></span>
+                                    <span class="connect-tile-label">GitHub</span>
                                 </a>
-                                <a class="connect-link" href="mailto:Shahad0x66@gmail.com" aria-label="Email">
-                                    <i class="fas fa-envelope"></i> Email
+                                <a class="connect-tile" href="https://www.linkedin.com/in/shahd-al-qahtani-992693382" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                                    <span class="connect-tile-icon"><i class="fab fa-linkedin"></i></span>
+                                    <span class="connect-tile-label">LinkedIn</span>
                                 </a>
-                                <a class="connect-link" href="https://www.linkedin.com/in/shahd-al-qahtani-992693382" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                                    <i class="fab fa-linkedin"></i> LinkedIn
-                                </a>
-                                <a class="connect-link" href="https://www.tiktok.com/@shahd0xo" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
-                                    <i class="fab fa-tiktok"></i> TikTok
+                                <a class="connect-tile" href="https://www.tiktok.com/@shahd0xo" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                                    <span class="connect-tile-icon"><i class="fab fa-tiktok"></i></span>
+                                    <span class="connect-tile-label">TikTok</span>
                                 </a>
                             </nav>
+
+                            <p class="connect-footnote" id="connectFootnote">Saudi Arabia · open to iOS & full-stack roles</p>
                         </div>
                     </div>
                 </div>
@@ -2394,10 +2559,24 @@
         }
 
         function revealConnectPage() {
-            document.querySelectorAll('.connect-link').forEach((el, i) => {
-                el.classList.remove('visible');
-                setTimeout(() => el.classList.add('visible'), 100 + i * 80);
+            const spotlight = document.getElementById('connectSpotlight');
+            const pitch = document.getElementById('connectPitch');
+            const emailCard = document.getElementById('connectEmailCard');
+            const footnote = document.getElementById('connectFootnote');
+
+            spotlight?.classList.remove('visible');
+            pitch?.classList.remove('visible');
+            emailCard?.classList.remove('visible');
+            footnote?.classList.remove('visible');
+            document.querySelectorAll('#connect .connect-tile').forEach(el => el.classList.remove('visible'));
+
+            setTimeout(() => spotlight?.classList.add('visible'), 40);
+            setTimeout(() => pitch?.classList.add('visible'), 120);
+            setTimeout(() => emailCard?.classList.add('visible'), 200);
+            document.querySelectorAll('#connect .connect-tile').forEach((el, i) => {
+                setTimeout(() => el.classList.add('visible'), 300 + i * 90);
             });
+            setTimeout(() => footnote?.classList.add('visible'), 620);
         }
 
         function revealProjectsPage() {
