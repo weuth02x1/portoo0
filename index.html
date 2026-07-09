@@ -125,7 +125,7 @@
         }
 
         .field-canvas {
-            mask-image: radial-gradient(ellipse 96% 92% at 50% 48%, #000 36%, transparent 94%);
+            mask-image: radial-gradient(ellipse 100% 100% at 50% 50%, #000 70%, transparent 100%);
         }
 
         #main-content,
@@ -2183,53 +2183,39 @@
         const mainContent = document.getElementById('main-content');
         let booted = false;
 
-        function initBubbleGarden(canvasId, opts = {}) {
+        function initAmbientField(canvasId, opts = {}) {
             const canvas = document.getElementById(canvasId);
             if (!canvas) return null;
 
             const ctx = canvas.getContext('2d');
             const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            const count = opts.count ?? 16;
             let w = 0;
             let h = 0;
             let dpr = 1;
             let time = 0;
             let raf = 0;
-            let bubbles = [];
-            const pointer = { x: -9999, y: -9999, on: false };
+            const pointer = { x: 0, y: 0, on: false };
+            const smooth = { x: 0, y: 0 };
+            const washes = [
+                { ox: 0.78, oy: 0.12, tone: 0, phase: 0.2, amp: 0.04 },
+                { ox: 0.14, oy: 0.82, tone: 1, phase: 1.8, amp: 0.05 },
+                { ox: 0.52, oy: 0.48, tone: 2, phase: 3.4, amp: 0.03 },
+            ];
 
             const palette = () => {
                 const dark = document.documentElement.getAttribute('data-theme') === 'dark';
                 return dark
                     ? [
-                        [196, 165, 116, 0.14],
-                        [214, 181, 140, 0.11],
-                        [168, 196, 165, 0.1],
-                        [196, 168, 184, 0.09],
+                        [196, 165, 116, 0.1],
+                        [168, 148, 120, 0.08],
+                        [140, 132, 118, 0.06],
                     ]
                     : [
-                        [255, 214, 190, 0.42],
-                        [247, 220, 186, 0.38],
-                        [232, 210, 196, 0.34],
-                        [220, 236, 210, 0.28],
+                        [232, 196, 158, 0.22],
+                        [214, 186, 164, 0.18],
+                        [196, 210, 188, 0.12],
                     ];
             };
-
-            function build() {
-                bubbles = [];
-                for (let i = 0; i < count; i++) {
-                    const r = 28 + Math.random() * 56;
-                    bubbles.push({
-                        x: Math.random() * w,
-                        y: Math.random() * h,
-                        r,
-                        tone: i % 4,
-                        phase: Math.random() * Math.PI * 2,
-                        drift: 0.35 + Math.random() * 0.55,
-                        wobble: 8 + Math.random() * 18,
-                    });
-                }
-            }
 
             function resize() {
                 const rect = canvas.getBoundingClientRect();
@@ -2239,7 +2225,8 @@
                 canvas.width = Math.floor(w * dpr);
                 canvas.height = Math.floor(h * dpr);
                 ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-                build();
+                smooth.x = w * 0.5;
+                smooth.y = h * 0.5;
                 if (reduced) drawFrame();
             }
 
@@ -2247,61 +2234,57 @@
                 const rect = canvas.getBoundingClientRect();
                 pointer.x = clientX - rect.left;
                 pointer.y = clientY - rect.top;
-                pointer.on = pointer.x >= 0 && pointer.y >= 0 && pointer.x <= w && pointer.y <= h;
+                pointer.on = clientX >= rect.left && clientX <= rect.right && clientY >= rect.top && clientY <= rect.bottom;
             }
 
-            function drawBubble(x, y, r, rgba) {
-                const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+            function drawWash(x, y, radius, rgba) {
+                const g = ctx.createRadialGradient(x, y, 0, x, y, radius);
                 g.addColorStop(0, `rgba(${rgba[0]},${rgba[1]},${rgba[2]},${rgba[3]})`);
-                g.addColorStop(0.55, `rgba(${rgba[0]},${rgba[1]},${rgba[2]},${rgba[3] * 0.55})`);
+                g.addColorStop(0.45, `rgba(${rgba[0]},${rgba[1]},${rgba[2]},${rgba[3] * 0.45})`);
                 g.addColorStop(1, `rgba(${rgba[0]},${rgba[1]},${rgba[2]},0)`);
-                ctx.beginPath();
-                ctx.arc(x, y, r, 0, Math.PI * 2);
                 ctx.fillStyle = g;
-                ctx.fill();
+                ctx.fillRect(x - radius, y - radius, radius * 2, radius * 2);
             }
 
             function drawFrame() {
                 const tones = palette();
+                const baseR = Math.max(w, h) * 0.52;
                 ctx.clearRect(0, 0, w, h);
 
-                for (const b of bubbles) {
-                    let x = b.x;
-                    let y = b.y;
-                    let r = b.r;
+                if (pointer.on) {
+                    smooth.x += (pointer.x - smooth.x) * 0.045;
+                    smooth.y += (pointer.y - smooth.y) * 0.045;
+                } else {
+                    smooth.x += (w * 0.5 - smooth.x) * 0.02;
+                    smooth.y += (h * 0.5 - smooth.y) * 0.02;
+                }
+
+                for (const wash of washes) {
+                    let x = wash.ox * w;
+                    let y = wash.oy * h;
                     if (!reduced) {
-                        x += Math.sin(time * b.drift + b.phase) * b.wobble;
-                        y += Math.cos(time * b.drift * 0.9 + b.phase) * b.wobble * 0.85;
+                        x += Math.sin(time * 0.35 + wash.phase) * w * wash.amp;
+                        y += Math.cos(time * 0.28 + wash.phase) * h * wash.amp;
                     }
                     if (pointer.on && !reduced) {
-                        const dx = x - pointer.x;
-                        const dy = y - pointer.y;
-                        const dist = Math.hypot(dx, dy) || 1;
-                        const influence = 150;
-                        if (dist < influence) {
-                            const push = (1 - dist / influence) * 22;
-                            x += (dx / dist) * push;
-                            y += (dy / dist) * push;
-                            r *= 1 + (1 - dist / influence) * 0.12;
-                        }
+                        x += (smooth.x - w * 0.5) * 0.06;
+                        y += (smooth.y - h * 0.5) * 0.06;
                     }
-                    const tone = tones[b.tone];
-                    drawBubble(x, y, r, tone);
+                    drawWash(x, y, baseR, tones[wash.tone]);
                 }
 
                 if (pointer.on && !reduced) {
-                    const halo = ctx.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, 90);
-                    halo.addColorStop(0, 'rgba(255, 236, 210, 0.18)');
-                    halo.addColorStop(1, 'rgba(255, 236, 210, 0)');
-                    ctx.fillStyle = halo;
-                    ctx.beginPath();
-                    ctx.arc(pointer.x, pointer.y, 90, 0, Math.PI * 2);
-                    ctx.fill();
+                    const glow = ctx.createRadialGradient(smooth.x, smooth.y, 0, smooth.x, smooth.y, Math.min(w, h) * 0.22);
+                    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+                    glow.addColorStop(0, dark ? 'rgba(196, 165, 116, 0.09)' : 'rgba(255, 236, 210, 0.14)');
+                    glow.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                    ctx.fillStyle = glow;
+                    ctx.fillRect(smooth.x - w * 0.22, smooth.y - h * 0.22, w * 0.44, h * 0.44);
                 }
             }
 
             function loop() {
-                time += 0.012;
+                time += 0.008;
                 drawFrame();
                 raf = requestAnimationFrame(loop);
             }
@@ -2544,8 +2527,8 @@
             if (!bootScreen) return;
 
             document.documentElement.classList.add('intro-active');
-            introFieldFx = initBubbleGarden('introField', { count: 14, trackTarget: bootScreen });
-            mainFieldFx = initBubbleGarden('mainField', { count: 18 });
+            introFieldFx = initAmbientField('introField', { trackTarget: bootScreen });
+            mainFieldFx = initAmbientField('mainField');
             initIntroSwipe();
 
             bootScreen.addEventListener('keydown', (e) => {
