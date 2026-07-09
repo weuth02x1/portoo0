@@ -68,7 +68,13 @@
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
-        html.intro-active, html.intro-active body { overflow: hidden; height: 100%; touch-action: none; }
+        html.intro-active, html.intro-active body { overflow: hidden; height: 100%; }
+        html.intro-active #main-content,
+        html.intro-active #hubScreens,
+        html.intro-active .retro-dock {
+            pointer-events: none;
+            touch-action: none;
+        }
 
         body {
             font-family: var(--font-ui);
@@ -534,7 +540,26 @@
             color: var(--text);
             overflow: hidden;
             cursor: pointer;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-user-select: none;
+            user-select: none;
+            min-height: 100vh;
+            min-height: 100dvh;
             transition: opacity 0.6s ease, visibility 0.6s;
+        }
+
+        .boot-enter-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            padding: 1rem;
+            cursor: pointer;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
 
         #boot-screen.is-out, #boot-screen.hidden {
@@ -605,6 +630,7 @@
         html.intro-active .site-topbar {
             background: rgba(61, 56, 48, 0.78);
             border-bottom-color: rgba(240, 235, 227, 0.08);
+            pointer-events: none;
         }
 
         html.intro-active .topbar-theme {
@@ -836,9 +862,14 @@
             font-size: 0.72rem;
             font-weight: 500;
             padding: 0.45rem 0.7rem;
+            min-height: 44px;
+            min-width: 44px;
             color: var(--muted);
             position: relative;
             transition: color 0.2s, background 0.2s;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            cursor: pointer;
         }
 
         .hub-dock-btn.active,
@@ -1531,11 +1562,13 @@
         </div>
     </header>
 
-    <div id="boot-screen" data-i18n-aria="boot.aria" aria-label="Portfolio intro — tap or press Enter to start" tabindex="0">
-        <div class="boot-splash">
-            <img class="boot-logo" src="assets/logo.png" alt="Shahad Alqahtani">
-            <p class="boot-hint" data-i18n="boot.tap">Tap to enter</p>
-        </div>
+    <div id="boot-screen" data-i18n-aria="boot.aria" aria-label="Portfolio intro — tap or press Enter to start">
+        <button type="button" class="boot-enter-btn" id="bootEnterBtn" data-i18n-aria="boot.aria" aria-label="Tap to enter">
+            <div class="boot-splash">
+                <img class="boot-logo" src="assets/logo.png" alt="Shahad Alqahtani">
+                <p class="boot-hint" data-i18n="boot.tap">Tap to enter</p>
+            </div>
+        </button>
     </div>
 
 <div id="main-content">
@@ -2275,6 +2308,7 @@
         const bootScreen = document.getElementById('boot-screen');
         const mainContent = document.getElementById('main-content');
         let booted = false;
+        let launching = false;
 
         function initAmbientField(canvasId, opts = {}) {
             const canvas = document.getElementById(canvasId);
@@ -2590,10 +2624,33 @@
         }
 
         function launchPortfolio() {
-            if (booted) return;
+            if (booted || launching) return;
+            launching = true;
             playIntroSound();
             bootScreen.classList.add('is-launching');
             setTimeout(bootPortfolio, 400);
+        }
+
+        function bindTapAction(el, handler) {
+            if (!el) return;
+            let lastTouch = 0;
+            const run = (e) => {
+                e.preventDefault();
+                handler(e);
+            };
+            el.addEventListener('touchend', (e) => {
+                lastTouch = Date.now();
+                run(e);
+            }, { passive: false });
+            el.addEventListener('pointerup', (e) => {
+                if (e.pointerType === 'mouse' && e.button !== 0) return;
+                if (Date.now() - lastTouch < 400) return;
+                handler(e);
+            });
+            el.addEventListener('click', (e) => {
+                if (Date.now() - lastTouch < 400) return;
+                handler(e);
+            });
         }
 
         function initIntro() {
@@ -2603,7 +2660,9 @@
             const heroEl = document.querySelector('.retro-hero');
             if (heroEl) mainFieldFx = initAmbientField('heroStars', { starCount: 22, trackTarget: heroEl, heroOnly: true });
 
-            bootScreen.addEventListener('click', () => launchPortfolio());
+            const bootEnterBtn = document.getElementById('bootEnterBtn');
+            bindTapAction(bootEnterBtn || bootScreen, () => launchPortfolio());
+
             bootScreen.addEventListener('keydown', (e) => {
                 if (booted) return;
                 if (e.key === 'Enter' || e.key === ' ') {
@@ -2861,16 +2920,30 @@
             if (target === 'connect') revealConnectPage();
         }
 
+        function activateHubTab(tabId, e) {
+            if (e?.cancelable) e.preventDefault();
+            if (!booted) {
+                pendingHubTab = tabId;
+                bootPortfolio();
+                return;
+            }
+            switchHubTab(tabId);
+            history.replaceState(null, '', `#${tabId}`);
+        }
+
         hubTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const tabId = tab.dataset.hubTab;
-                if (!booted) {
-                    pendingHubTab = tabId;
-                    bootPortfolio();
-                    return;
-                }
-                switchHubTab(tabId);
-                history.replaceState(null, '', `#${tabId}`);
+            let lastTouch = 0;
+            const onTap = (e) => {
+                if (e?.cancelable) e.preventDefault();
+                activateHubTab(tab.dataset.hubTab, e);
+            };
+            tab.addEventListener('touchend', (e) => {
+                lastTouch = Date.now();
+                onTap(e);
+            }, { passive: false });
+            tab.addEventListener('click', (e) => {
+                if (Date.now() - lastTouch < 400) return;
+                onTap(e);
             });
         });
 
