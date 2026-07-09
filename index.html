@@ -1734,7 +1734,7 @@
                 </div>
             </div>
 
-            <div class="hub-screen" id="projects" data-hub-page="projects" role="tabpanel" aria-labelledby="hub-tab-projects">
+            <div class="hub-screen active" id="projects" data-hub-page="projects" role="tabpanel" aria-labelledby="hub-tab-projects">
                 <div class="hub-screen-inner">
                     <div class="container">
                         <header class="section-hero">
@@ -1870,7 +1870,7 @@
             <div class="hub-dock-shell">
                 <div class="hub-dock-inner">
                     <button class="hub-dock-btn" id="hub-tab-about" type="button" data-hub-tab="about" role="tab" aria-selected="false" aria-controls="hub-about"><span class="hub-dock-dot"></span><span data-i18n="dock.me">me</span></button>
-                    <button class="hub-dock-btn" id="hub-tab-projects" type="button" data-hub-tab="projects" role="tab" aria-selected="false" aria-controls="projects"><span class="hub-dock-dot"></span><span data-i18n="dock.work">work</span></button>
+                    <button class="hub-dock-btn active" id="hub-tab-projects" type="button" data-hub-tab="projects" role="tab" aria-selected="true" aria-controls="projects"><span class="hub-dock-dot"></span><span data-i18n="dock.work">work</span></button>
                     <button class="hub-dock-btn" id="hub-tab-experience" type="button" data-hub-tab="experience" role="tab" aria-selected="false" aria-controls="experience"><span class="hub-dock-dot"></span><span data-i18n="dock.path">path</span></button>
                     <button class="hub-dock-btn" id="hub-tab-connect" type="button" data-hub-tab="connect" role="tab" aria-selected="false" aria-controls="connect"><span class="hub-dock-dot"></span><span data-i18n="dock.hello">hello</span></button>
                 </div>
@@ -2233,7 +2233,7 @@
             }
 
             if (typeof updateHeroHeader === 'function') {
-                const activeTab = document.querySelector('.hub-dock [data-hub-tab].active')?.dataset.hubTab || 'about';
+                const activeTab = document.querySelector('.hub-dock [data-hub-tab].active')?.dataset.hubTab || 'projects';
                 const hubPage = typeof hubTabMap !== 'undefined' ? (hubTabMap[activeTab] || activeTab) : activeTab;
                 updateHeroHeader(hubPage, { animate: false });
             }
@@ -2497,15 +2497,12 @@
             document.documentElement.classList.remove('intro-active');
             if (mainFieldFx) mainFieldFx.resize();
             bootScreen.classList.add('is-out');
+            switchHubTab('projects');
             setTimeout(() => {
                 bootScreen.classList.add('hidden');
                 mainContent.classList.add('visible');
-                const hash = location.hash.slice(1);
-                const tabId = hubTabMap[hash] ? hash : 'projects';
-                switchHubTab(tabId);
-                history.replaceState(null, '', `#${tabId}`);
-                if (tabId === 'skills') setTimeout(scrollToHubSkills, 150);
-                if (tabId === 'education') setTimeout(() => scrollToAboutSection('about-education'), 150);
+                switchHubTab('projects');
+                history.replaceState(null, '', '#projects');
             }, 720);
         }
 
@@ -3524,9 +3521,8 @@
             });
         });
 
-        moveDockIndicator(document.querySelector('.hub-dock [data-hub-tab="projects"]'));
+        switchHubTab('projects');
         applyLang(currentLang);
-        updateHeroHeader('projects', { animate: false });
         initHeroProjectsStrip();
         initOsWindowObserver();
         revealOsWindows(document.getElementById('projects'));
