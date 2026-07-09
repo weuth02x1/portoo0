@@ -22,6 +22,20 @@
             }
             localStorage.setItem('portfolio-lang', 'en');
         })();
+        window.__bootDismissed = false;
+        window.__pendingTab = 'projects';
+        window.startSite = function (tab) {
+            window.__pendingTab = tab || 'projects';
+            window.__bootDismissed = true;
+            document.documentElement.classList.remove('intro-active');
+            var boot = document.getElementById('boot-screen');
+            var main = document.getElementById('main-content');
+            if (boot) boot.classList.add('is-out', 'hidden');
+            if (main) main.classList.add('visible');
+            if (typeof window.__onBootDismiss === 'function') {
+                window.__onBootDismiss(window.__pendingTab);
+            }
+        };
     </script>
     <style>
         :root {
@@ -538,40 +552,13 @@
             background: #3d3830;
             color: var(--text);
             overflow: hidden;
-            cursor: pointer;
             touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
             -webkit-user-select: none;
             user-select: none;
             min-height: 100vh;
             min-height: 100dvh;
             transition: opacity 0.6s ease, visibility 0.6s;
-        }
-
-        .boot-enter-btn {
-            position: absolute;
-            inset: 0;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-            padding: 1rem;
-            margin: 0;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-            -webkit-appearance: none;
-            appearance: none;
-        }
-
-        .boot-enter-btn .boot-splash,
-        .boot-enter-btn .boot-splash * {
-            pointer-events: none;
+            pointer-events: auto;
         }
 
         #boot-screen.is-out, #boot-screen.hidden {
@@ -582,15 +569,17 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1.5rem;
+            gap: 1.75rem;
             text-align: center;
-            padding: 1rem;
+            padding: 1.5rem;
+            pointer-events: none;
         }
 
         .boot-logo {
             width: min(120px, 28vw);
             height: auto;
             animation: boot-pulse 2.8s ease-in-out infinite;
+            pointer-events: none;
         }
 
         @keyframes boot-pulse {
@@ -598,12 +587,47 @@
             50% { opacity: 1; transform: scale(1.04); }
         }
 
+        .boot-start-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: min(220px, 72vw);
+            min-height: 58px;
+            padding: 1rem 2.75rem;
+            font-family: var(--font-ui);
+            font-size: 0.92rem;
+            font-weight: 600;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: #f0ebe3;
+            background: #7c3aed;
+            border: 2px solid #a78bfa;
+            border-radius: 6px;
+            box-shadow: 0 10px 32px rgba(124, 58, 237, 0.4);
+            cursor: pointer;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: rgba(167, 139, 250, 0.35);
+            -webkit-appearance: none;
+            appearance: none;
+            pointer-events: auto;
+            position: relative;
+            z-index: 3;
+            transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .boot-start-btn:active {
+            transform: scale(0.97);
+            background: #6d28d9;
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.3);
+        }
+
         .boot-hint {
             font-family: var(--font-ui);
-            font-size: 0.68rem;
-            letter-spacing: 0.18em;
+            font-size: 0.62rem;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: rgba(245, 240, 232, 0.45);
+            color: rgba(245, 240, 232, 0.4);
+            pointer-events: none;
         }
 
         /* Top toolbar */
@@ -640,9 +664,7 @@
         }
 
         html.intro-active .site-topbar {
-            background: rgba(61, 56, 48, 0.78);
-            border-bottom-color: rgba(240, 235, 227, 0.08);
-            pointer-events: none;
+            display: none;
         }
 
         html.intro-active .topbar-theme {
@@ -1743,13 +1765,12 @@
         </div>
     </header>
 
-    <div id="boot-screen" data-i18n-aria="boot.aria" aria-label="Portfolio intro — tap or press Enter to start">
-        <button type="button" class="boot-enter-btn" id="bootEnterBtn" data-i18n-aria="boot.aria" aria-label="Tap to enter">
-            <div class="boot-splash">
-                <img class="boot-logo" src="assets/logo.png" alt="Shahad Alqahtani">
-                <p class="boot-hint" data-i18n="boot.tap">Tap to enter</p>
-            </div>
-        </button>
+    <div id="boot-screen" data-i18n-aria="boot.aria" aria-label="Portfolio intro — press Start to enter">
+        <div class="boot-splash">
+            <img class="boot-logo" src="assets/logo.png" alt="Shahad Alqahtani">
+            <button type="button" class="boot-start-btn" id="bootStartBtn" data-i18n="boot.start" aria-label="Start portfolio" onclick="window.startSite('projects'); return false;">START</button>
+            <p class="boot-hint" data-i18n="boot.hint">Portfolio · projects · connect</p>
+        </div>
     </div>
 
 <div id="main-content">
@@ -2080,7 +2101,6 @@
             </div>
         </div>
     </div>
-    </div>
 
     <nav class="hub-dock retro-dock" id="hubDock" role="tablist" data-i18n-aria="aria.dock" aria-label="Portfolio pages">
         <div class="hub-dock-shell">
@@ -2174,7 +2194,9 @@
         const i18n = {
             en: {
                 'page.title': 'Shahad Alqahtani — iOS & Full Stack',
-                'boot.tap': 'Tap to enter',
+                'boot.start': 'START',
+                'boot.hint': 'Portfolio · projects · connect',
+                'boot.tap': 'START',
                 'hero.title': 'Portfolio <span class="retro-star" aria-hidden="true">✦</span>',
                 'hero.about.title': 'Inside the studio <span class="hero-inline-accent hero-inline-accent--star" aria-hidden="true">✦</span>',
                 'hero.about.sub': 'profile · skills · education',
@@ -2266,7 +2288,7 @@
                 'project.open': 'Open {title} project details',
                 'theme.dark': 'dark',
                 'theme.light': 'light',
-                'boot.aria': 'Portfolio intro — tap or press Enter to start',
+                'boot.aria': 'Portfolio intro — press Start to enter',
                 'modal.close': 'Close',
                 'aria.language': 'Language',
                 'connect.copyAria': 'Copy email',
@@ -2509,8 +2531,7 @@
 
         const bootScreen = document.getElementById('boot-screen');
         const mainContent = document.getElementById('main-content');
-        let booted = false;
-        let launching = false;
+        let booted = !!window.__bootDismissed;
 
         function initAmbientField(canvasId, opts = {}) {
             const canvas = document.getElementById(canvasId);
@@ -2728,27 +2749,26 @@
         let mainFieldFx = null;
         let pendingHubTab = null;
 
-        function finishBootNavigation(tabId) {
-            const target = hubTabMap[tabId] ? tabId : 'projects';
-            switchHubTab(target);
-            if (target === 'projects') {
+        function dismissBoot(tabId) {
+            booted = true;
+            window.__bootDismissed = true;
+            document.documentElement.classList.remove('intro-active');
+            if (bootScreen) bootScreen.classList.add('is-out', 'hidden');
+            if (mainContent) mainContent.classList.add('visible');
+            const tab = (tabId && hubTabMap[tabId]) ? tabId : 'projects';
+            switchHubTab(tab);
+            if (tab === 'projects') {
                 applyProjectFilter(document.querySelector('.project-filter.active')?.dataset.cat || 'all');
             }
-            history.replaceState(null, '', `#${target}`);
+            history.replaceState(null, '', `#${tab}`);
+        }
+
+        function enterPortfolio(tabId) {
+            dismissBoot(tabId);
         }
 
         function bootPortfolio() {
-            if (booted) return;
-            booted = true;
-            document.documentElement.classList.remove('intro-active');
-            if (mainFieldFx) mainFieldFx.resize();
-            bootScreen.classList.add('is-out');
-            setTimeout(() => {
-                bootScreen.classList.add('hidden');
-                mainContent.classList.add('visible');
-                finishBootNavigation(pendingHubTab || 'projects');
-                pendingHubTab = null;
-            }, 720);
+            dismissBoot('projects');
         }
 
         function playIntroSound() {
@@ -2825,49 +2845,22 @@
             } catch (_) { /* audio blocked or unsupported */ }
         }
 
-        function launchPortfolio() {
-            if (booted || launching) return;
-            launching = true;
-            playIntroSound();
-            bootScreen.classList.add('is-launching');
-            setTimeout(bootPortfolio, 400);
-        }
-
-        function bindPress(el, handler) {
-            if (!el) return;
-            let lastTouch = 0;
-            let lock = false;
-            const go = () => {
-                if (lock) return;
-                lock = true;
-                setTimeout(() => { lock = false; }, 320);
-                handler();
-            };
-            el.addEventListener('touchend', () => {
-                lastTouch = Date.now();
-                go();
-            }, { passive: true });
-            el.addEventListener('click', () => {
-                if (Date.now() - lastTouch < 500) return;
-                go();
-            });
-        }
-
         function initIntro() {
             if (!bootScreen) return;
 
-            document.documentElement.classList.add('intro-active');
             const heroEl = document.querySelector('.retro-hero');
             if (heroEl) mainFieldFx = initAmbientField('heroStars', { starCount: 22, trackTarget: heroEl, heroOnly: true });
 
-            const bootEnterBtn = document.getElementById('bootEnterBtn');
-            bindPress(bootEnterBtn, () => launchPortfolio());
+            if (window.__bootDismissed) return;
+
+            document.documentElement.classList.add('intro-active');
 
             bootScreen.addEventListener('keydown', (e) => {
-                if (booted) return;
+                if (booted || window.__bootDismissed) return;
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    launchPortfolio();
+                    try { playIntroSound(); } catch (_) {}
+                    window.startSite('projects');
                 }
             });
         }
@@ -3129,24 +3122,58 @@
         }
 
         function activateHubTab(tabId) {
-            if (!booted) {
-                pendingHubTab = tabId;
-                bootPortfolio();
-                return;
-            }
-            switchHubTab(tabId);
-            history.replaceState(null, '', `#${tabId}`);
+            enterPortfolio(tabId);
         }
 
-        hubTabs.forEach(tab => {
-            bindPress(tab, () => activateHubTab(tab.dataset.hubTab));
-        });
+        function setupSafariTap() {
+            const bootBtn = document.getElementById('bootStartBtn');
+            if (bootBtn) {
+                bootBtn.onclick = function (e) {
+                    if (e) e.preventDefault();
+                    try { playIntroSound(); } catch (_) {}
+                    window.startSite('projects');
+                    return false;
+                };
+            }
+
+            hubTabs.forEach(tab => {
+                tab.onclick = function (e) {
+                    if (e) e.preventDefault();
+                    if (!booted && !window.__bootDismissed) {
+                        try { playIntroSound(); } catch (_) {}
+                        window.startSite(tab.dataset.hubTab);
+                    } else {
+                        switchHubTab(tab.dataset.hubTab);
+                        history.replaceState(null, '', `#${tab.dataset.hubTab}`);
+                    }
+                    return false;
+                };
+            });
+        }
+
+        function initSiteContent() {
+            if (mainContent) mainContent.classList.add('visible');
+            if (mainFieldFx) mainFieldFx.resize();
+            switchHubTab('projects');
+            applyProjectFilter(document.querySelector('.project-filter.active')?.dataset.cat || 'all');
+            const projectsTab = document.querySelector('.hub-dock [data-hub-tab="projects"]');
+            if (projectsTab) moveDockIndicator(projectsTab);
+        }
+
+        window.__onBootDismiss = function (tab) {
+            if (mainFieldFx) mainFieldFx.resize();
+            const target = (tab && hubTabMap[tab]) ? tab : 'projects';
+            switchHubTab(target);
+            if (target === 'projects') {
+                applyProjectFilter(document.querySelector('.project-filter.active')?.dataset.cat || 'all');
+            }
+            history.replaceState(null, '', `#${target}`);
+        };
 
         window.addEventListener('hashchange', () => {
             const hash = location.hash.slice(1);
             if (!hubTabMap[hash]) return;
-            if (!booted) bootPortfolio();
-            else switchHubTab(hash);
+            enterPortfolio(hash);
         });
 
         window.addEventListener('resize', () => {
@@ -3532,8 +3559,7 @@
             heroProjectsTrack.addEventListener('click', (e) => {
                 const btn = e.target.closest('[data-project-id]');
                 if (!btn) return;
-                if (!booted) bootPortfolio();
-                switchHubTab('projects');
+                enterPortfolio('projects');
                 setTimeout(() => openProjectModal(btn.dataset.projectId), 180);
             });
         }
@@ -3789,8 +3815,7 @@
                 const hash = href.slice(1);
                 if (hubTabMap[hash]) {
                     e.preventDefault();
-                    if (!booted) bootPortfolio();
-                    switchHubTab(hash);
+                    enterPortfolio(hash);
                     if (hash === 'skills') {
                         setTimeout(scrollToHubSkills, 150);
                         history.replaceState(null, '', '#skills');
@@ -3808,6 +3833,14 @@
         applyLang(currentLang);
         initHeroProjectsStrip();
         initOsWindowObserver();
+        setupSafariTap();
+        initSiteContent();
+
+        if (window.__bootDismissed) {
+            booted = true;
+            if (bootScreen) bootScreen.classList.add('is-out', 'hidden');
+            window.__onBootDismiss(window.__pendingTab || 'projects');
+        }
     
     
     </script>
