@@ -1734,7 +1734,7 @@
                 </div>
             </div>
 
-            <div class="hub-screen active" id="projects" data-hub-page="projects" role="tabpanel" aria-labelledby="hub-tab-projects">
+            <div class="hub-screen" id="projects" data-hub-page="projects" role="tabpanel" aria-labelledby="hub-tab-projects">
                 <div class="hub-screen-inner">
                     <div class="container">
                         <header class="section-hero">
@@ -1870,7 +1870,7 @@
             <div class="hub-dock-shell">
                 <div class="hub-dock-inner">
                     <button class="hub-dock-btn" id="hub-tab-about" type="button" data-hub-tab="about" role="tab" aria-selected="false" aria-controls="hub-about"><span class="hub-dock-dot"></span><span data-i18n="dock.me">me</span></button>
-                    <button class="hub-dock-btn active" id="hub-tab-projects" type="button" data-hub-tab="projects" role="tab" aria-selected="true" aria-controls="projects"><span class="hub-dock-dot"></span><span data-i18n="dock.work">work</span></button>
+                    <button class="hub-dock-btn" id="hub-tab-projects" type="button" data-hub-tab="projects" role="tab" aria-selected="false" aria-controls="projects"><span class="hub-dock-dot"></span><span data-i18n="dock.work">work</span></button>
                     <button class="hub-dock-btn" id="hub-tab-experience" type="button" data-hub-tab="experience" role="tab" aria-selected="false" aria-controls="experience"><span class="hub-dock-dot"></span><span data-i18n="dock.path">path</span></button>
                     <button class="hub-dock-btn" id="hub-tab-connect" type="button" data-hub-tab="connect" role="tab" aria-selected="false" aria-controls="connect"><span class="hub-dock-dot"></span><span data-i18n="dock.hello">hello</span></button>
                 </div>
@@ -2490,6 +2490,16 @@
         }
 
         let mainFieldFx = null;
+        let pendingHubTab = null;
+
+        function finishBootNavigation(tabId) {
+            const target = hubTabMap[tabId] ? tabId : 'projects';
+            switchHubTab(target);
+            if (target === 'projects') {
+                applyProjectFilter(document.querySelector('.project-filter.active')?.dataset.cat || 'all');
+            }
+            history.replaceState(null, '', `#${target}`);
+        }
 
         function bootPortfolio() {
             if (booted) return;
@@ -2497,12 +2507,11 @@
             document.documentElement.classList.remove('intro-active');
             if (mainFieldFx) mainFieldFx.resize();
             bootScreen.classList.add('is-out');
-            switchHubTab('projects');
             setTimeout(() => {
                 bootScreen.classList.add('hidden');
                 mainContent.classList.add('visible');
-                switchHubTab('projects');
-                history.replaceState(null, '', '#projects');
+                finishBootNavigation(pendingHubTab || 'projects');
+                pendingHubTab = null;
             }, 720);
         }
 
@@ -2854,8 +2863,14 @@
 
         hubTabs.forEach(tab => {
             tab.addEventListener('click', () => {
-                switchHubTab(tab.dataset.hubTab);
-                history.replaceState(null, '', `#${tab.dataset.hubTab}`);
+                const tabId = tab.dataset.hubTab;
+                if (!booted) {
+                    pendingHubTab = tabId;
+                    bootPortfolio();
+                    return;
+                }
+                switchHubTab(tabId);
+                history.replaceState(null, '', `#${tabId}`);
             });
         });
 
@@ -3521,11 +3536,10 @@
             });
         });
 
-        switchHubTab('projects');
+        updateHeroHeader('projects', { animate: false });
         applyLang(currentLang);
         initHeroProjectsStrip();
         initOsWindowObserver();
-        revealOsWindows(document.getElementById('projects'));
     
     
     </script>
