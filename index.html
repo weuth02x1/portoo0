@@ -6,36 +6,39 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <title>Shahad Alqahtani — iOS & Full Stack</title>
     <meta name="description" content="Shahad Alqahtani — iOS & full-stack developer. Apps, products, and shipped work.">
-    <meta name="theme-color" content="#e8dcc8">
+    <meta name="theme-color" content="#3d3830">
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="assets/logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@engdawood/thmanyah-font-web/index.css">
     <script>
         (function () {
-            if (localStorage.getItem('portfolio-theme') === 'dark') {
+            if (localStorage.getItem('portfolio-theme') !== 'light') {
                 document.documentElement.setAttribute('data-theme', 'dark');
             }
+            localStorage.setItem('portfolio-lang', 'en');
         })();
     </script>
     <style>
         :root {
+            --beige-hero: #e8dcc8;
             --beige: #e8dcc8;
-            --beige-grid: rgba(255, 255, 255, 0.55);
-            --ink: #121110;
-            --panel: #161514;
-            --panel-2: #1e1c1a;
+            --beige-body: #ddd0bc;
+            --beige-deep: #cfc3ae;
+            --ink: #1a1816;
+            --panel: #d4c7b2;
+            --panel-2: #cfc3ae;
             --cream: #f3ead8;
-            --muted: #a8a095;
-            --text: #f5f0e8;
-            --text-dark: #141210;
-            --accent: #e8dcc8;
+            --muted: rgba(26, 24, 22, 0.52);
+            --text: #1a1816;
+            --text-dark: #1a1816;
+            --accent: #1a1816;
             --star: #a78bfa;
             --select: #5b9bd5;
-            --line: rgba(232, 220, 196, 0.14);
-            --font-ui: 'IBM Plex Sans', system-ui, sans-serif;
-            --font-pixel: 'Press Start 2P', monospace;
-            --nav-h: 0px;
+            --line: rgba(26, 24, 22, 0.12);
+            --font-ui: 'Thmanyah Sans', sans-serif;
+            --font-display: 'Thmanyah Serif Display', serif;
+            --nav-h: 44px;
             --dock-h: 64px;
             --radius: 4px;
             --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -43,15 +46,19 @@
         }
 
         html[data-theme="dark"] {
-            --beige: #2a2622;
-            --beige-grid: rgba(255,255,255,0.06);
-            --ink: #0a0908;
-            --panel: #10100f;
-            --panel-2: #171615;
-            --cream: #2a2622;
+            --beige-hero: #4a443c;
+            --beige: #4a443c;
+            --beige-body: #3d3830;
+            --beige-deep: #353028;
+            --ink: #f0ebe3;
+            --panel: #454038;
+            --panel-2: #3d3830;
+            --cream: #524c44;
             --text: #f0ebe3;
             --text-dark: #f0ebe3;
-            --muted: #8f8880;
+            --muted: rgba(240, 235, 227, 0.55);
+            --accent: #f0ebe3;
+            --line: rgba(240, 235, 227, 0.14);
             color-scheme: dark;
         }
 
@@ -61,10 +68,11 @@
 
         body {
             font-family: var(--font-ui);
-            background: var(--ink);
+            background: var(--beige-body);
             color: var(--text);
             line-height: 1.55;
             -webkit-font-smoothing: antialiased;
+            padding-top: var(--nav-h);
         }
 
         body::before, body::after { content: none; }
@@ -78,7 +86,7 @@
             z-index: 1;
         }
 
-        #boot-screen .field-canvas { z-index: 1; }
+        #boot-screen .field-canvas { display: none; }
         .retro-hero .field-canvas { z-index: 1; }
 
         a { color: inherit; text-decoration: none; }
@@ -88,37 +96,83 @@
 
         .container { max-width: 920px; margin: 0 auto; padding: 0 18px; }
 
-        .retro-star { color: var(--star); font-size: 0.85em; margin-left: 0.35rem; }
-
-        .retro-pixel-title {
-            font-family: var(--font-pixel);
-            font-size: clamp(0.72rem, 2.8vw, 0.95rem);
-            line-height: 1.6;
-            color: var(--text-dark);
-            letter-spacing: 0.02em;
-            margin-bottom: 0.85rem;
+        .retro-star {
+            color: var(--star);
+            font-size: 0.85em;
+            margin-inline-start: 0.35rem;
+            display: inline-block;
+            animation: star-float 4s ease-in-out infinite;
         }
 
-        .retro-pixel-gap { display: inline-block; margin-left: 0.35rem; }
+        @keyframes star-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
 
-        .retro-hero-grid {
-            position: absolute;
-            inset: 0;
-            background-color: var(--beige);
-            background-image:
-                linear-gradient(var(--beige-grid) 1px, transparent 1px),
-                linear-gradient(90deg, var(--beige-grid) 1px, transparent 1px);
-            background-size: 42px 42px;
-            z-index: 0;
+        .retro-display-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.6rem, 5vw, 2.35rem);
+            line-height: 1.25;
+            color: var(--text-dark);
+            letter-spacing: 0.01em;
+            margin-bottom: 0.5rem;
+        }
+
+        .retro-hero-name {
+            font-family: var(--font-ui);
+            font-size: clamp(1rem, 2.8vw, 1.2rem);
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.35rem;
+            transition: opacity 0.3s var(--ease-out), max-height 0.3s var(--ease-out), margin 0.3s var(--ease-out);
+        }
+
+        .retro-hero[data-hero-tab="projects"] .retro-hero-name {
+            display: none;
+        }
+
+        .retro-hero-role {
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(20,18,16,0.65);
+            margin-bottom: 0.5rem;
         }
 
         .retro-hero {
             position: relative;
-            background: var(--beige);
+            background: var(--beige-hero);
             color: var(--text-dark);
             min-height: clamp(320px, 52vh, 460px);
             overflow: hidden;
             padding: 1.1rem 1.25rem 0;
+        }
+
+        .hero-bg-saturn {
+            position: absolute;
+            right: -4%;
+            bottom: 6%;
+            width: min(320px, 52vw);
+            height: auto;
+            z-index: 0;
+            color: var(--star);
+            opacity: 0.14;
+            pointer-events: none;
+            transform-origin: 55% 50%;
+            animation: saturn-drift 14s ease-in-out infinite;
+        }
+
+        html[data-theme="dark"] .hero-bg-saturn {
+            opacity: 0.2;
+        }
+
+        @keyframes saturn-drift {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-6px) rotate(1deg); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hero-bg-saturn { animation: none; }
         }
 
         .retro-hero-bar {
@@ -168,55 +222,193 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 1.5rem 0 2.5rem;
+            text-align: center;
+            padding: 1.25rem 0 2.25rem;
         }
 
-        .retro-portrait {
-            position: relative;
-            width: min(220px, 52vw);
-            aspect-ratio: 1;
-            margin-bottom: 0.85rem;
+        .hero-projects-strip {
+            width: 100%;
+            max-width: min(520px, 92vw);
+            margin: 0 auto 0.9rem;
+            opacity: 0;
+            transform: translateY(8px);
+            pointer-events: none;
+            transition: opacity 0.38s var(--ease-out), transform 0.38s var(--ease-out);
         }
 
-        .retro-portrait img {
+        .retro-hero[data-hero-tab="projects"] .hero-projects-strip {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .hero-projects-label {
+            font-size: 0.62rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(20, 18, 16, 0.45);
+            text-align: center;
+            margin-bottom: 0.55rem;
+        }
+
+        html[data-theme="dark"] .hero-projects-label {
+            color: rgba(240, 235, 227, 0.45);
+        }
+
+        .hero-projects-marquee {
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+        }
+
+        .hero-projects-track {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            width: max-content;
+            padding: 0.15rem 0;
+        }
+
+        .hero-project-icon {
+            flex-shrink: 0;
+            width: 2.65rem;
+            height: 2.65rem;
+            border-radius: 22%;
+            border: none;
+            background: transparent;
+            box-shadow: none;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.22s var(--ease-out);
+        }
+
+        html[data-theme="dark"] .hero-project-icon {
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .hero-project-icon img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 2px;
-            filter: grayscale(1) contrast(1.15);
-            box-shadow: 0 18px 50px rgba(0,0,0,0.18);
         }
 
-        .retro-select {
+        .hero-project-icon:hover,
+        .hero-project-icon:focus-visible {
+            transform: translateY(-3px) scale(1.08);
+        }
+
+        .hero-project-icon--fallback {
+            display: grid;
+            place-items: center;
+            font-size: 0.9rem;
+            color: rgba(20, 18, 16, 0.35);
+        }
+
+        .retro-hero-sub {
+            font-size: 0.68rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(20, 18, 16, 0.52);
+            margin-bottom: 0.6rem;
+            min-height: 1.05em;
+        }
+
+        html[data-theme="dark"] .retro-hero-sub {
+            color: rgba(240, 235, 227, 0.55);
+        }
+
+        .hero-morph {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: opacity 0.26s var(--ease-out), transform 0.26s var(--ease-out);
+        }
+
+        .hero-morph.is-exit {
+            opacity: 0;
+            transform: translateY(-7px);
+        }
+
+        .hero-morph.is-enter {
+            opacity: 0;
+            transform: translateY(9px);
+        }
+
+        .hero-title-inner { display: inline-block; }
+
+        .hero-inline-accent {
+            color: var(--star);
+            margin-inline-start: 0.28rem;
+            display: inline-block;
+        }
+
+        .retro-hero-deco {
             position: absolute;
-            left: 50%;
-            top: 38%;
-            transform: translate(-50%, -50%);
-            min-width: 7.5rem;
-            padding: 0.45rem 0.85rem;
-            border: 2px solid var(--select);
-            background: rgba(255,255,255,0.92);
-            box-shadow: 0 0 0 1px #fff inset;
+            inset: 0;
+            pointer-events: none;
+            z-index: 2;
+            overflow: hidden;
         }
 
-        .retro-select-name {
-            font-family: var(--font-pixel);
-            font-size: 0.62rem;
-            color: var(--text-dark);
-            white-space: nowrap;
-        }
-
-        .retro-handle {
+        .hero-deco-art {
             position: absolute;
-            width: 7px;
-            height: 7px;
-            background: #fff;
-            border: 1px solid var(--select);
+            opacity: 0;
+            color: var(--star);
+            transition: opacity 0.42s var(--ease-out), transform 0.42s var(--ease-out);
+            transform: scale(0.92);
         }
-        .retro-handle--tl { top: -4px; left: -4px; }
-        .retro-handle--tr { top: -4px; right: -4px; }
-        .retro-handle--bl { bottom: -4px; left: -4px; }
-        .retro-handle--br { bottom: -4px; right: -4px; }
+
+        .retro-hero[data-hero-tab="about"] .hero-deco-art--about,
+        .retro-hero[data-hero-tab="projects"] .hero-deco-art--projects,
+        .retro-hero[data-hero-tab="experience"] .hero-deco-art--experience,
+        .retro-hero[data-hero-tab="connect"] .hero-deco-art--connect {
+            opacity: 0.38;
+            transform: scale(1);
+        }
+
+        html[data-theme="dark"] .hero-deco-art {
+            opacity: 0;
+        }
+
+        html[data-theme="dark"] .retro-hero[data-hero-tab="about"] .hero-deco-art--about,
+        html[data-theme="dark"] .retro-hero[data-hero-tab="projects"] .hero-deco-art--projects,
+        html[data-theme="dark"] .retro-hero[data-hero-tab="experience"] .hero-deco-art--experience,
+        html[data-theme="dark"] .retro-hero[data-hero-tab="connect"] .hero-deco-art--connect {
+            opacity: 0.45;
+        }
+
+        .hero-deco-art--about {
+            top: 14%;
+            inset-inline-end: 8%;
+            width: clamp(3.5rem, 8vw, 4.8rem);
+            height: auto;
+        }
+
+        .hero-deco-art--projects {
+            top: 18%;
+            inset-inline-start: 7%;
+            width: clamp(3.8rem, 9vw, 5rem);
+            height: auto;
+        }
+
+        .hero-deco-art--experience {
+            bottom: 22%;
+            inset-inline-end: 6%;
+            width: clamp(4rem, 10vw, 5.5rem);
+            height: auto;
+        }
+
+        .hero-deco-art--connect {
+            top: 17%;
+            inset-inline-start: 10%;
+            width: clamp(3.2rem, 7vw, 4.2rem);
+            height: auto;
+        }
+
+        .hero-deco-shape {
+            display: none;
+        }
 
         .retro-meta-line {
             font-size: 0.72rem;
@@ -225,19 +417,52 @@
             color: rgba(20,18,16,0.65);
         }
 
-        .retro-torn {
+        .hero-edge {
             position: absolute;
             left: 0;
             right: 0;
-            bottom: -1px;
-            width: 100%;
-            height: 48px;
+            bottom: 0;
+            height: 80px;
             z-index: 4;
-            fill: var(--ink);
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .hero-edge-fade {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 0%, var(--beige-body) 82%);
+        }
+
+        .hero-edge-orbs {
+            position: absolute;
+            inset: 0;
+        }
+
+        .hero-orb {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--star);
+            opacity: 0;
+            animation: hero-orb-drift 4.8s ease-in-out infinite;
+        }
+
+        .hero-orb--1 { left: 18%; bottom: 28px; animation-delay: 0s; }
+        .hero-orb--2 { left: 42%; bottom: 36px; animation-delay: 1.1s; width: 4px; height: 4px; }
+        .hero-orb--3 { left: 68%; bottom: 22px; animation-delay: 2.3s; }
+        .hero-orb--4 { left: 86%; bottom: 40px; animation-delay: 0.65s; width: 3px; height: 3px; }
+
+        @keyframes hero-orb-drift {
+            0% { transform: translateY(0) scale(0.6); opacity: 0; }
+            25% { opacity: 0.55; }
+            75% { transform: translateY(32px) scale(1.1); opacity: 0.35; }
+            100% { transform: translateY(56px) scale(0.5); opacity: 0; }
         }
 
         .retro-dark {
-            background: var(--ink);
+            background: linear-gradient(180deg, var(--beige-body) 0%, var(--beige-deep) 100%);
             min-height: calc(100vh - 200px);
             padding-bottom: calc(var(--dock-h) + 1.5rem);
         }
@@ -249,16 +474,7 @@
             margin-bottom: 1rem;
         }
 
-        .me-spotlight {
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.45s var(--ease-out), transform 0.45s var(--ease-out);
-        }
-
-        .me-spotlight.visible-block {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .me-spotlight { max-width: 100%; }
 
         .me-edu-tile {
             opacity: 0;
@@ -298,9 +514,8 @@
         #main-content { position: relative; z-index: 1; opacity: 0; transition: opacity 0.55s ease; }
         #main-content.visible { opacity: 1; visibility: visible; }
 
-        /* Intro */
+        /* Boot splash */
         #boot-screen {
-            --reveal: 0;
             position: fixed;
             inset: 0;
             z-index: 10000;
@@ -308,11 +523,10 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: var(--beige);
-            color: var(--text-dark);
+            background: #3d3830;
+            color: var(--text);
             overflow: hidden;
-            touch-action: none;
-            user-select: none;
+            cursor: pointer;
             transition: opacity 0.6s ease, visibility 0.6s;
         }
 
@@ -320,78 +534,263 @@
             opacity: 0; visibility: hidden; pointer-events: none;
         }
 
-        .retro-intro {
-            position: relative;
-            z-index: 3;
-            text-align: center;
-            transform: translateY(calc(var(--reveal, 0) * -48px));
-            opacity: calc(1 - var(--reveal, 0) * 0.9);
-        }
-
-        .retro-pixel-title--intro { margin-bottom: 1.25rem; color: var(--text-dark); text-shadow: none; }
-
-        .retro-portrait--intro { margin: 0 auto 0.75rem; }
-
-        .intro-role {
-            font-size: 0.7rem;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: rgba(20,18,16,0.6);
-        }
-
-        .intro-launch {
-            position: absolute;
-            bottom: calc(28px + env(safe-area-inset-bottom, 0px));
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 4;
-            width: min(260px, calc(100% - 40px));
-            opacity: calc(1 - var(--reveal, 0) * 0.9);
-        }
-
-        .intro-launch-track {
-            height: 3px;
-            background: rgba(20,18,16,0.12);
-            border-radius: 999px;
-            margin-bottom: 0.7rem;
-            overflow: hidden;
-        }
-
-        .intro-launch-fill {
-            height: 100%;
-            width: calc(var(--reveal, 0) * 100%);
-            background: var(--star);
-        }
-
-        .intro-launch-hint {
+        .boot-splash {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
-            font-size: 0.58rem;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            color: rgba(20,18,16,0.55);
+            gap: 1.5rem;
+            text-align: center;
+            padding: 1rem;
         }
 
-        .intro-launch-hint svg { width: 18px; height: 18px; }
+        .boot-logo {
+            width: min(120px, 28vw);
+            height: auto;
+            animation: boot-pulse 2.8s ease-in-out infinite;
+        }
+
+        @keyframes boot-pulse {
+            0%, 100% { opacity: 0.88; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.04); }
+        }
+
+        .boot-hint {
+            font-family: var(--font-ui);
+            font-size: 0.68rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(245, 240, 232, 0.45);
+        }
+
+        /* Top toolbar */
+        .site-topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10001;
+            height: var(--nav-h);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 14px;
+            background: rgba(232, 220, 200, 0.82);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(26, 24, 22, 0.08);
+        }
+
+        html:not(.intro-active) .site-topbar {
+            background: rgba(221, 208, 188, 0.88);
+        }
+
+        html[data-theme="dark"] .site-topbar {
+            background: rgba(61, 56, 48, 0.9);
+            border-bottom-color: rgba(240, 235, 227, 0.08);
+        }
+
+        .topbar-inner {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+        }
+
+        html.intro-active .site-topbar {
+            background: rgba(61, 56, 48, 0.78);
+            border-bottom-color: rgba(240, 235, 227, 0.08);
+        }
+
+        html.intro-active .topbar-theme {
+            border-color: rgba(240, 235, 227, 0.14);
+            background: rgba(255, 255, 255, 0.08);
+            color: #f0ebe3;
+        }
+
+        .topbar-theme {
+            width: 2rem;
+            height: 2rem;
+            border: 1px solid rgba(26, 24, 22, 0.12);
+            background: rgba(255, 255, 255, 0.45);
+            border-radius: 4px;
+            font-size: 0.9rem;
+            display: grid;
+            place-items: center;
+            color: var(--text);
+        }
+
+        html[data-theme="dark"] .topbar-theme {
+            border-color: rgba(240, 235, 227, 0.14);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text);
+        }
+
+        .topbar-theme .theme-toggle-label { display: none; }
+
+        /* Section fade-up */
+        .hub-screen-inner {
+            animation: fade-up 0.5s var(--ease-out) both;
+        }
+
+        @keyframes fade-up {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .os-window {
+            transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out), border-color 0.2s;
+        }
+
+        .os-window:not(.window-visible) {
+            opacity: 0;
+            transform: translateY(12px);
+        }
+
+        .os-window.window-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .os-window.window-visible:hover {
+            transform: translateY(-2px);
+        }
+
+        .work-item:hover {
+            transform: translateY(-3px);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .retro-star { animation: none; }
+            .boot-logo { animation: none; }
+            .hub-screen-inner { animation: none; }
+            .os-window:not(.window-visible) { opacity: 1; transform: none; }
+            .os-window.window-visible:hover, .work-item:hover { transform: none; }
+            .os-dot { animation: none !important; }
+            html { scroll-behavior: auto; }
+            .hero-morph, .hero-deco-art { transition: none; }
+            .retro-hero[data-hero-tab="experience"] .retro-hero-sub::after,
+            .retro-hero-sub.hero-path-animate::after { width: 3rem; animation: none; }
+            .hero-inline-accent, .hero-deco-art--connect { animation: none !important; }
+            .hero-orb { animation: none !important; opacity: 0.35; }
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            .os-dot--r { animation: dot-pulse 3.2s ease-in-out infinite; }
+            .os-dot--y { animation: dot-pulse 3.2s ease-in-out 0.18s infinite; }
+            .os-dot--g { animation: dot-pulse 3.2s ease-in-out 0.36s infinite; }
+
+            .retro-hero[data-hero-tab="about"] .hero-inline-accent--star {
+                animation: hero-star-twinkle 3.4s ease-in-out infinite;
+            }
+
+            .retro-hero[data-hero-tab="projects"] .hero-inline-accent--arrow {
+                animation: hero-nudge 2.6s ease-in-out infinite;
+            }
+
+            [dir="rtl"] .retro-hero[data-hero-tab="projects"] .hero-inline-accent--arrow {
+                animation-name: hero-nudge-rtl;
+            }
+
+            .retro-hero-sub.hero-path-animate::after {
+                content: '';
+                display: block;
+                width: 0;
+                height: 1px;
+                background: var(--star);
+                margin: 0.32rem auto 0;
+                opacity: 0.55;
+                animation: hero-path-line 1.1s var(--ease-out) 0.15s forwards;
+            }
+
+            .retro-hero[data-hero-tab="connect"] .hero-deco-art--connect {
+                animation: hero-deco-pulse 3.2s ease-in-out infinite;
+            }
+
+            @keyframes hero-deco-pulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.04); }
+            }
+
+            .hero-projects-track:not(.is-static) {
+                animation: hero-marquee 34s linear infinite;
+            }
+
+            [dir="rtl"] .hero-projects-track:not(.is-static) {
+                animation-name: hero-marquee-rtl;
+            }
+
+            .hero-project-icon {
+                animation: hero-icon-float 4.8s ease-in-out infinite;
+                animation-delay: var(--float-delay, 0s);
+            }
+
+            .hero-project-icon:hover,
+            .hero-project-icon:focus-visible {
+                animation-play-state: paused;
+            }
+        }
+
+        @keyframes hero-star-twinkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.55; transform: scale(0.92); }
+        }
+
+        @keyframes hero-nudge {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(3px); }
+        }
+
+        @keyframes hero-nudge-rtl {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-3px); }
+        }
+
+        @keyframes hero-path-line {
+            to { width: 3rem; }
+        }
+
+        @keyframes hero-envelope-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.05); opacity: 0.3; }
+        }
+
+        @keyframes hero-marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        @keyframes hero-marquee-rtl {
+            from { transform: translateX(-50%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes hero-icon-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        @keyframes dot-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.72; transform: scale(0.9); }
+        }
 
         /* OS Windows */
         .os-window {
             border: 2px solid var(--accent);
             background: var(--panel-2);
-            margin-bottom: 1rem;
+            margin-bottom: 0.65rem;
+            max-width: 34rem;
         }
+
+        .hub-screen .os-window { max-width: 34rem; }
 
         .os-titlebar {
             display: flex;
             align-items: center;
             gap: 0.35rem;
-            padding: 0.45rem 0.65rem;
+            padding: 0.35rem 0.5rem;
             background: rgba(232, 220, 196, 0.08);
             border-bottom: 1px solid var(--line);
-            font-family: var(--font-pixel);
-            font-size: 0.45rem;
+            font-family: var(--font-ui);
+            font-size: 0.62rem;
             letter-spacing: 0.04em;
             text-transform: lowercase;
             color: var(--muted);
@@ -401,9 +800,9 @@
         .os-dot--r { background: #ff5f57; }
         .os-dot--y { background: #febc2e; }
         .os-dot--g { background: #28c840; }
-        .os-titlebar span:last-child { margin-left: auto; }
+        .os-titlebar span:last-child { margin-inline-start: auto; }
 
-        .os-body { padding: 1rem; }
+        .os-body { padding: 0.55rem 0.65rem; }
 
         /* Dock */
         .retro-dock {
@@ -426,9 +825,10 @@
         }
 
         .hub-dock-btn {
-            font-family: var(--font-pixel);
-            font-size: 0.48rem;
-            padding: 0.55rem 0.85rem;
+            font-family: var(--font-ui);
+            font-size: 0.72rem;
+            font-weight: 500;
+            padding: 0.45rem 0.7rem;
             color: var(--muted);
             position: relative;
             transition: color 0.2s, background 0.2s;
@@ -469,15 +869,15 @@
         }
 
         .section-hero-idx {
-            font-family: var(--font-pixel);
-            font-size: 1.4rem;
+            font-family: var(--font-display);
+            font-size: 1.25rem;
             color: transparent;
             -webkit-text-stroke: 1px var(--accent);
         }
 
         .section-hero-tag {
-            font-family: var(--font-pixel);
-            font-size: 0.48rem;
+            font-family: var(--font-ui);
+            font-size: 0.65rem;
             color: var(--star);
             letter-spacing: 0.08em;
             text-transform: uppercase;
@@ -486,7 +886,8 @@
         .section-hero-tag::before { content: '✦ '; }
 
         .section-hero-title {
-            font-size: 1.35rem;
+            font-family: var(--font-display);
+            font-size: 1.25rem;
             font-weight: 600;
             color: var(--text);
             margin: 0.15rem 0;
@@ -509,12 +910,28 @@
         .brand-mark {
             width: 3.5rem;
             height: 3.5rem;
-            border: 2px solid var(--line);
+            border: none;
             padding: 0.35rem;
-            background: #fff;
+            background: #1a1816;
+            border-radius: 12px;
         }
 
-        .brand-mark img { width: 100%; height: 100%; object-fit: contain; filter: grayscale(1); }
+        .brand-mark img { width: 100%; height: 100%; object-fit: contain; filter: none; }
+
+        .brand-mark--lg.me-logo {
+            width: 5rem;
+            height: 5rem;
+            padding: 0.65rem;
+            border-radius: 16px;
+            background: #1a1816;
+            box-shadow: 0 6px 22px rgba(26, 24, 22, 0.18);
+            flex-shrink: 0;
+        }
+
+        .me-logo img {
+            filter: none;
+            object-fit: contain;
+        }
 
         .me-name { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.2rem; }
         .me-line { font-size: 0.78rem; color: var(--muted); }
@@ -522,7 +939,7 @@
         .me-about-list { list-style: none; }
         .me-about-list li {
             position: relative;
-            padding-left: 1rem;
+            padding-inline-start: 1rem;
             margin-bottom: 0.55rem;
             font-size: 0.84rem;
             color: var(--muted);
@@ -534,7 +951,7 @@
         .me-about-list li::before {
             content: '✦';
             position: absolute;
-            left: 0;
+            inset-inline-start: 0;
             color: var(--star);
             font-size: 0.65rem;
         }
@@ -544,8 +961,8 @@
 
         .me-block { margin-top: 1.25rem; }
         .me-block-label {
-            font-family: var(--font-pixel);
-            font-size: 0.48rem;
+            font-family: var(--font-ui);
+            font-size: 0.65rem;
             color: var(--star);
             letter-spacing: 0.06em;
             margin-bottom: 0.65rem;
@@ -562,31 +979,31 @@
 
         .me-edu-tile {
             border: 1px solid var(--line);
-            padding: 0.85rem;
+            padding: 0.6rem;
             background: var(--panel);
         }
 
-        .me-edu-year { font-size: 0.62rem; color: var(--star); letter-spacing: 0.08em; }
-        .me-edu-tile h4 { font-size: 0.92rem; margin: 0.25rem 0; }
-        .me-edu-meta { font-size: 0.75rem; color: var(--muted); }
+        .me-edu-year { font-size: 0.58rem; color: var(--star); letter-spacing: 0.08em; }
+        .me-edu-tile h4 { font-size: 0.82rem; margin: 0.2rem 0; }
+        .me-edu-meta { font-size: 0.68rem; color: var(--muted); }
 
         /* Skill bars */
         .retro-tool-bars { margin-bottom: 1rem; }
         .retro-tool-row {
             display: grid;
             grid-template-columns: 1fr 1.4fr auto;
-            gap: 0.55rem;
+            gap: 0.45rem;
             align-items: center;
-            margin-bottom: 0.55rem;
-            font-size: 0.72rem;
+            margin-bottom: 0.4rem;
+            font-size: 0.68rem;
             color: var(--muted);
         }
 
         .retro-bar {
             display: grid;
             grid-template-columns: repeat(10, 1fr);
-            gap: 3px;
-            height: 14px;
+            gap: 2px;
+            height: 10px;
         }
 
         .retro-bar::before {
@@ -625,9 +1042,9 @@
         }
 
         .seg-btn {
-            font-family: var(--font-pixel);
-            font-size: 0.42rem;
-            padding: 0.45rem 0.6rem;
+            font-family: var(--font-ui);
+            font-size: 0.62rem;
+            padding: 0.35rem 0.5rem;
             color: var(--muted);
             border-right: 1px solid var(--line);
         }
@@ -662,10 +1079,10 @@
 
         .work-item {
             display: grid;
-            grid-template-columns: 4.5rem 1fr auto;
-            gap: 0.85rem;
+            grid-template-columns: 3.75rem 1fr auto;
+            gap: 0.65rem;
             align-items: start;
-            padding: 0.85rem;
+            padding: 0.65rem;
             border: 2px solid var(--line);
             background: var(--panel);
             cursor: pointer;
@@ -675,28 +1092,29 @@
         }
 
         .work-item.visible { opacity: 1; transform: translateY(0); }
-        .work-item:hover { border-color: var(--accent); }
+        .work-item:hover { border-color: var(--accent); transform: translateY(-3px); }
         .work-item.filter-hidden { display: none; }
-        .work-item--lead { border-left: 3px solid var(--star); }
+        .work-item--lead { border-inline-start: 3px solid var(--star); }
 
         .work-item-thumb {
-            width: 4.5rem;
-            height: 4.5rem;
-            border: 1px solid var(--line);
+            width: 3.75rem;
+            height: 3.75rem;
+            border: none;
+            border-radius: 20%;
             overflow: hidden;
-            background: #fff;
+            background: transparent;
         }
 
         .work-item-thumb img { width: 100%; height: 100%; object-fit: cover; }
         .work-item-cat {
-            font-family: var(--font-pixel);
-            font-size: 0.4rem;
+            font-family: var(--font-ui);
+            font-size: 0.58rem;
             color: var(--star);
             letter-spacing: 0.06em;
         }
 
-        .work-item-body h3 { font-size: 0.95rem; margin: 0.2rem 0; font-weight: 600; }
-        .work-item-body p { font-size: 0.78rem; color: var(--muted); line-height: 1.45; }
+        .work-item-body h3 { font-size: 0.88rem; margin: 0.15rem 0; font-weight: 600; }
+        .work-item-body p { font-size: 0.72rem; color: var(--muted); line-height: 1.45; }
 
         .work-item-tags { display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: 0.45rem; }
         .work-tag {
@@ -706,8 +1124,21 @@
             color: var(--muted);
         }
 
-        .work-item-arrow { color: var(--accent); opacity: 0.5; align-self: center; }
+        .work-item-arrow {
+            color: var(--accent);
+            opacity: 0.5;
+            align-self: center;
+            font-size: 0.9rem;
+            line-height: 1;
+            transition: opacity 0.2s, transform 0.2s var(--ease-out);
+        }
+
+        .work-item-arrow::before { content: '→'; }
+        html[dir="rtl"] .work-item-arrow::before { content: '←'; }
+
         .work-item:hover .work-item-arrow { opacity: 1; }
+
+        html[dir="rtl"] .modal-link .fa-arrow-right { transform: scaleX(-1); }
 
         .work-item-miro-ribbon {
             grid-column: 1 / -1;
@@ -726,8 +1157,8 @@
         }
 
         .work-item-miro-label {
-            font-family: var(--font-pixel);
-            font-size: 0.38rem;
+            font-family: var(--font-ui);
+            font-size: 0.55rem;
             color: var(--star);
             display: block;
             margin-bottom: 0.2rem;
@@ -741,58 +1172,131 @@
             text-transform: uppercase;
         }
 
-        /* Path */
-        .retro-chart-wrap { margin-bottom: 1rem; }
-        .retro-chart { width: 100%; height: auto; color: var(--accent); }
+        /* Path — editorial lanes */
 
-        .path-trail { position: relative; padding-left: 1.2rem; }
-        .path-step { position: relative; margin-bottom: 1rem; opacity: 0; transform: translateY(8px); transition: opacity 0.35s, transform 0.35s; }
+        .path-journey {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .path-step {
+            display: grid;
+            grid-template-columns: 5.25rem 1fr;
+            gap: 1rem;
+            align-items: start;
+            padding: 1rem 1.15rem;
+            background: var(--cream);
+            border-radius: 10px;
+            box-shadow: 0 3px 18px rgba(26, 24, 22, 0.07);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+        }
+
         .path-step.visible { opacity: 1; transform: translateY(0); }
 
-        .path-step-marker {
-            position: absolute;
-            left: -1.2rem;
-            top: 0.65rem;
-            width: 10px;
-            height: 10px;
-            border: 2px solid var(--star);
-            background: var(--ink);
-            transform: rotate(45deg);
+        .path-step--current {
+            background: color-mix(in srgb, var(--cream) 90%, var(--star) 10%);
+            box-shadow: 0 4px 22px rgba(167, 139, 250, 0.18);
+            border-inline-start: 3px solid var(--star);
         }
 
-        .path-step-card {
-            border: 1px solid var(--line);
-            padding: 0.85rem;
-            background: var(--panel);
+        html[data-theme="dark"] .path-step--current {
+            background: #565048;
+            box-shadow: 0 4px 24px rgba(167, 139, 250, 0.22);
         }
 
-        .path-step-when { font-size: 0.62rem; color: var(--star); letter-spacing: 0.06em; }
+        .path-step--current .path-step-badge {
+            background: var(--star);
+            color: #1a1816;
+            border-color: var(--star);
+            font-weight: 600;
+        }
+
+        .path-step-side {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            padding-top: 0.1rem;
+        }
+
+        .path-step-when {
+            font-size: 0.6rem;
+            color: var(--star);
+            letter-spacing: 0.05em;
+            line-height: 1.4;
+            font-weight: 500;
+        }
+
         .path-step-badge {
-            font-size: 0.55rem;
-            padding: 0.12rem 0.35rem;
+            font-size: 0.52rem;
+            padding: 0.14rem 0.4rem;
             border: 1px solid var(--star);
             color: var(--star);
-            margin-left: 0.35rem;
+            width: fit-content;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
         }
 
-        .path-step-card h3 { font-size: 0.95rem; margin: 0.35rem 0 0.15rem; }
-        .path-step-role { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.4rem; }
-        .path-step-points { padding-left: 1rem; font-size: 0.78rem; color: var(--muted); }
-        .path-step-points li { margin-bottom: 0.2rem; }
+        .path-step-body h3 { font-size: 1rem; font-weight: 600; margin: 0 0 0.2rem; color: var(--text); }
+        .path-step-role { font-size: 0.76rem; color: var(--muted); margin-bottom: 0.45rem; }
+        .path-step-points { padding-inline-start: 1rem; font-size: 0.78rem; color: var(--muted); }
+        .path-step-points li { margin-bottom: 0.22rem; }
+
+        @media (max-width: 520px) {
+            .path-step { grid-template-columns: 1fr; gap: 0.5rem; }
+            .path-step-side { flex-direction: row; align-items: center; flex-wrap: wrap; }
+        }
 
         /* Connect */
+        #connect .section-hero {
+            margin-bottom: 0;
+            padding-bottom: 1.1rem;
+            border-bottom: 2px solid var(--line);
+        }
+
+        .connect-zone-rule {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.35rem 0 1.1rem;
+            color: var(--muted);
+            font-size: 0.62rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .connect-zone-rule::before,
+        .connect-zone-rule::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--line);
+        }
+
+        .connect-card {
+            border: 2px solid var(--line);
+            background: var(--panel);
+            border-radius: 10px;
+            padding: 1.35rem 1.25rem;
+        }
+
         .connect-card.os-window {
-            border: 2px solid var(--accent);
-            background: var(--panel-2);
+            border: 2px solid var(--line);
+            background: var(--panel);
             padding: 0;
         }
 
-        .connect-card .os-body { padding: 1.1rem; }
+        .connect-card .os-body { padding: 1.35rem 1.25rem; }
 
         .connect-pitch {
-            font-size: 1rem;
-            margin-bottom: 1rem;
+            font-size: 1.05rem;
+            padding-bottom: 1.25rem;
+            margin-bottom: 1.25rem;
+            border-bottom: 1px solid var(--line);
             font-weight: 500;
+            line-height: 1.5;
         }
 
         .connect-pitch span { color: var(--star); }
@@ -801,9 +1305,11 @@
             display: flex;
             align-items: center;
             gap: 0.65rem;
-            padding: 0.75rem;
-            border: 1px solid var(--line);
-            margin-bottom: 0.75rem;
+            padding: 0.85rem 0;
+            border: none;
+            margin-bottom: 1.25rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid var(--line);
         }
 
         .connect-email-icon { color: var(--star); }
@@ -811,9 +1317,9 @@
         .connect-email-address { font-size: 0.88rem; font-weight: 600; }
 
         .connect-copy-btn {
-            margin-left: auto;
-            font-family: var(--font-pixel);
-            font-size: 0.4rem;
+            margin-inline-start: auto;
+            font-family: var(--font-ui);
+            font-size: 0.62rem;
             padding: 0.35rem 0.55rem;
             border: 1px solid var(--line);
         }
@@ -821,8 +1327,10 @@
         .connect-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 0.5rem;
-            margin-bottom: 0.75rem;
+            gap: 0.65rem;
+            margin-bottom: 1.15rem;
+            padding-bottom: 1.15rem;
+            border-bottom: 1px solid var(--line);
         }
 
         .connect-tile {
@@ -837,7 +1345,12 @@
         }
 
         .connect-tile-icon { font-size: 1.1rem; color: var(--accent); }
-        .connect-footnote { font-size: 0.68rem; color: var(--muted); text-align: center; }
+        .connect-footnote {
+            font-size: 0.68rem;
+            color: var(--muted);
+            text-align: center;
+            padding-top: 0.25rem;
+        }
 
         /* Modal - keep functional, restyle */
         .project-modal {
@@ -919,7 +1432,7 @@
         .modal-meta-item span { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
         .modal-meta-item strong { font-size: 0.8rem; }
         .modal-section { margin-bottom: 1rem; }
-        .modal-section h4 { font-family: var(--font-pixel); font-size: 0.45rem; color: var(--star); margin-bottom: 0.35rem; }
+        .modal-section h4 { font-family: var(--font-ui); font-size: 0.65rem; color: var(--star); margin-bottom: 0.35rem; }
         .modal-section p, .modal-features { font-size: 0.82rem; color: var(--muted); }
         .modal-features { list-style: none; }
         .modal-features li { padding-left: 0.75rem; position: relative; margin-bottom: 0.25rem; }
@@ -934,12 +1447,15 @@
             padding: 0.6rem 1rem;
             background: var(--accent);
             color: var(--ink);
-            font-family: var(--font-pixel);
-            font-size: 0.45rem;
+            font-family: var(--font-ui);
+            font-size: 0.72rem;
+            font-weight: 600;
         }
 
+        html[dir="rtl"] .modal-link .fa-arrow-right { transform: scaleX(-1); }
+
         .miro-board { border: 1px solid var(--line); padding: 0.75rem; background: var(--panel); }
-        .miro-spark { font-family: var(--font-pixel); font-size: 0.42rem; color: var(--star); }
+        .miro-spark { font-family: var(--font-ui); font-size: 0.62rem; color: var(--star); }
         .miro-phase--engage { background: #4caf78; color: #fff; font-size: 0.48rem; padding: 0.2rem 0.45rem; }
         .miro-phase--investigate { background: #f4c430; color: #333; font-size: 0.48rem; padding: 0.2rem 0.45rem; }
         .miro-phase--act { background: #5ba4d4; color: #fff; font-size: 0.48rem; padding: 0.2rem 0.45rem; }
@@ -985,7 +1501,7 @@
             padding: 0.15rem 0.4rem;
         }
 
-        .topbar { display: none; }
+        .retro-theme { display: none; }
 
         @media (max-width: 640px) {
             .retro-grid-2 { grid-template-columns: 1fr; }
@@ -999,58 +1515,92 @@
     </style>
 </head>
 <body>
-    <div id="boot-screen" aria-label="Portfolio intro — swipe up or press Enter to start" tabindex="0">
-        <canvas class="field-canvas" id="introField" aria-hidden="true"></canvas>
-        <div class="retro-hero-grid retro-hero-grid--intro" aria-hidden="true"></div>
-        <div class="intro-portal retro-intro">
-            <p class="retro-pixel-title retro-pixel-title--intro">Port<span class="retro-pixel-gap">folio</span><span class="retro-star">✦</span></p>
-            <div class="retro-portrait retro-portrait--intro">
-                <img src="assets/avatar-sq.png" alt="Shahad Alqahtani">
-                <div class="retro-select" aria-hidden="true">
-                    <span class="retro-handle retro-handle--tl"></span>
-                    <span class="retro-handle retro-handle--tr"></span>
-                    <span class="retro-handle retro-handle--bl"></span>
-                    <span class="retro-handle retro-handle--br"></span>
-                    <span class="retro-select-name">Shahad Alqahtani</span>
-                </div>
-            </div>
-            <p class="intro-role">iOS · Full Stack</p>
+    <header class="site-topbar" id="siteTopbar">
+        <div class="topbar-inner">
+            <button class="theme-toggle topbar-theme" id="themeToggle" type="button" aria-label="Switch to light mode" aria-pressed="true">
+                <span class="theme-toggle-icon" aria-hidden="true">☀</span>
+                <span class="theme-toggle-label">light</span>
+            </button>
         </div>
-        <div class="intro-launch" aria-hidden="true">
-            <div class="intro-launch-track"><div class="intro-launch-fill"></div></div>
-            <div class="intro-launch-hint">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 15 6-6 6 6"/></svg>
-                <span>Swipe up · Enter</span>
-            </div>
+    </header>
+
+    <div id="boot-screen" data-i18n-aria="boot.aria" aria-label="Portfolio intro — tap or press Enter to start" tabindex="0">
+        <div class="boot-splash">
+            <img class="boot-logo" src="assets/logo.png" alt="Shahad Alqahtani">
+            <p class="boot-hint" data-i18n="boot.tap">Tap to enter</p>
         </div>
     </div>
 
 <div id="main-content">
-        <section class="retro-hero" aria-label="Portfolio header">
+        <section class="retro-hero" id="retroHero" data-hero-tab="projects" aria-label="Things I made">
             <canvas class="field-canvas" id="heroStars" aria-hidden="true"></canvas>
-            <div class="retro-hero-grid" aria-hidden="true"></div>
+            <svg class="hero-bg-saturn" viewBox="0 0 200 200" aria-hidden="true">
+                <g transform="rotate(-16 100 98)">
+                    <ellipse cx="100" cy="98" rx="74" ry="21" fill="none" stroke="currentColor" stroke-width="1" opacity="0.45"/>
+                </g>
+                <circle cx="100" cy="98" r="27" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.3"/>
+                <path d="M78 92 Q100 86 122 92" fill="none" stroke="currentColor" stroke-width="0.75" opacity="0.55"/>
+                <path d="M80 104 Q100 110 120 104" fill="none" stroke="currentColor" stroke-width="0.65" opacity="0.45"/>
+                <ellipse cx="100" cy="98" rx="27" ry="7" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.35"/>
+                <g transform="rotate(-16 100 98)">
+                    <path d="M28 98 A74 21 0 0 0 172 98" fill="none" stroke="currentColor" stroke-width="1.25"/>
+                </g>
+                <circle cx="158" cy="72" r="2.2" fill="currentColor" opacity="0.5"/>
+                <circle cx="48" cy="128" r="1.6" fill="currentColor" opacity="0.35"/>
+            </svg>
             <div class="retro-hero-bar">
-                <p class="retro-meta-line">2025 · 2026</p>
-                <button class="theme-toggle retro-theme" id="themeToggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
-                    <span class="theme-toggle-icon" aria-hidden="true">☾</span>
-                    <span class="theme-toggle-label">dark</span>
-                </button>
+                <p class="retro-meta-line" data-i18n="hero.year">2025 · 2026</p>
+            </div>
+            <div class="retro-hero-deco" aria-hidden="true">
+                <svg class="hero-deco-art hero-deco-art--about" viewBox="0 0 80 80" fill="none">
+                    <rect x="22" y="22" width="36" height="36" rx="3" stroke="currentColor" stroke-width="1.5" transform="rotate(45 40 40)"/>
+                    <circle cx="40" cy="40" r="5" stroke="currentColor" stroke-width="1.2"/>
+                </svg>
+                <svg class="hero-deco-art hero-deco-art--projects" viewBox="0 0 88 72" fill="none">
+                    <rect x="4" y="8" width="22" height="22" rx="5" stroke="currentColor" stroke-width="1.4"/>
+                    <rect x="33" y="4" width="22" height="22" rx="5" stroke="currentColor" stroke-width="1.4"/>
+                    <rect x="62" y="12" width="22" height="22" rx="5" stroke="currentColor" stroke-width="1.4"/>
+                    <rect x="18" y="38" width="22" height="22" rx="5" stroke="currentColor" stroke-width="1.2" opacity="0.65"/>
+                    <rect x="48" y="42" width="22" height="22" rx="5" stroke="currentColor" stroke-width="1.2" opacity="0.65"/>
+                </svg>
+                <svg class="hero-deco-art hero-deco-art--experience" viewBox="0 0 96 80" fill="none">
+                    <path d="M12 64 L36 44 L58 52 L84 20" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="12" cy="64" r="4" stroke="currentColor" stroke-width="1.3"/>
+                    <circle cx="36" cy="44" r="4" stroke="currentColor" stroke-width="1.3"/>
+                    <circle cx="58" cy="52" r="4" stroke="currentColor" stroke-width="1.3"/>
+                    <circle cx="84" cy="20" r="4" fill="currentColor" opacity="0.35" stroke="currentColor" stroke-width="1.3"/>
+                </svg>
+                <svg class="hero-deco-art hero-deco-art--connect" viewBox="0 0 72 72" fill="none">
+                    <path d="M36 10 L58 22 V44 C58 54 48 62 36 62 C24 62 14 54 14 44 V22 Z" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round"/>
+                    <path d="M28 32 L36 38 L44 28" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="36" cy="48" r="2" fill="currentColor" opacity="0.5"/>
+                </svg>
             </div>
             <div class="retro-hero-center">
-                <p class="retro-pixel-title">Port<span class="retro-pixel-gap">folio</span><span class="retro-star" aria-hidden="true">✦</span></p>
-                <div class="retro-portrait">
-                    <img src="assets/avatar-sq.png" alt="Shahad Alqahtani portrait">
-                    <div class="retro-select" aria-hidden="true">
-                        <span class="retro-handle retro-handle--tl"></span>
-                        <span class="retro-handle retro-handle--tr"></span>
-                        <span class="retro-handle retro-handle--bl"></span>
-                        <span class="retro-handle retro-handle--br"></span>
-                        <span class="retro-select-name">Shahad Alqahtani</span>
+                <div class="hero-projects-strip" id="heroProjectsStrip" aria-hidden="true">
+                    <p class="hero-projects-label" data-i18n="hero.projects.label">My projects</p>
+                    <div class="hero-projects-marquee">
+                        <div class="hero-projects-track" id="heroProjectsTrack"></div>
                     </div>
                 </div>
-                <p class="retro-meta-line">iOS · Full Stack</p>
+                <div class="hero-morph" id="heroMorph">
+                    <h1 class="retro-display-title" id="heroTitle">
+                        <span class="hero-title-inner" id="heroTitleInner">Inside the studio <span class="hero-inline-accent hero-inline-accent--star" aria-hidden="true">✦</span></span>
+                    </h1>
+                    <p class="retro-hero-sub" id="heroSub">profile · skills · education</p>
+                    <p class="retro-hero-name">Shahad Alqahtani</p>
+                    <p class="retro-hero-role" data-i18n="hero.role">iOS · Full Stack</p>
+                </div>
             </div>
-            <svg class="retro-torn" viewBox="0 0 1200 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0,24 C80,8 120,40 200,22 S360,6 480,28 640,42 760,18 920,34 1080,12 1200,26 L1200,48 L0,48 Z"/></svg>
+            <div class="hero-edge" aria-hidden="true">
+                <div class="hero-edge-fade"></div>
+                <div class="hero-edge-orbs">
+                    <span class="hero-orb hero-orb--1"></span>
+                    <span class="hero-orb hero-orb--2"></span>
+                    <span class="hero-orb hero-orb--3"></span>
+                    <span class="hero-orb hero-orb--4"></span>
+                </div>
+            </div>
         </section>
 
         <div class="retro-dark">
@@ -1062,14 +1612,14 @@
                         <header class="section-hero">
                             <span class="section-hero-idx" aria-hidden="true">01</span>
                             <div class="section-hero-content">
-                                <span class="section-hero-tag">Me</span>
-                                <h2 class="section-hero-title">Profile</h2>
-                                <p class="section-hero-lead">Background, education & skills</p>
+                                <span class="section-hero-tag" data-i18n="about.tag">Me</span>
+                                <h2 class="section-hero-title" data-i18n="about.title">Profile</h2>
+                                <p class="section-hero-lead" data-i18n="about.lead">Background, education & skills</p>
                             </div>
                         </header>
 
                         <div class="retro-grid-2">
-                        <div class="me-spotlight os-window" id="meSpotlight"><div class="os-titlebar"><span class="os-dot os-dot--r"></span><span class="os-dot os-dot--y"></span><span class="os-dot os-dot--g"></span><span>about.me</span></div><div class="os-body">
+                        <div class="me-spotlight os-window" id="meSpotlight"><div class="os-titlebar"><span class="os-dot os-dot--r"></span><span class="os-dot os-dot--y"></span><span class="os-dot os-dot--g"></span><span data-i18n="win.about">about.me</span></div><div class="os-body">
                             <div class="me-spotlight-glow" aria-hidden="true"></div>
                             <div class="me-spotlight-top">
                                 <div class="brand-mark brand-mark--lg me-logo">
@@ -1077,31 +1627,31 @@
                                 </div>
                                 <div>
                                     <h3 class="me-name">Shahad Alqahtani</h3>
-                                    <p class="me-line">iOS · Full Stack · B.S. Computer Science</p>
+                                    <p class="me-line" data-i18n="about.line">iOS · Full Stack · B.S. Computer Science</p>
                                 </div>
                             </div>
-                            <ul class="me-about-list" aria-label="About Shahad">
-                                <li><strong>6+ apps shipped</strong> — SwiftUI, Flutter, REST APIs & investor-backed admin platforms</li>
-                                <li><strong>Apple Developer Academy</strong> — 6+ team-built iOS projects · SwiftUI, Firebase & accessibility</li>
-                                <li><strong>CoreTechSolution</strong> — Flutter & SwiftUI features, APIs & full-stack delivery</li>
-                                <li><strong>Open to work</strong> — iOS & full-stack roles · Saudi Arabia</li>
+                            <ul class="me-about-list" data-i18n-aria="aria.aboutList" aria-label="About Shahad">
+                                <li data-i18n-html="about.b1"><strong>6+ apps shipped</strong> — SwiftUI, Flutter, REST APIs & investor-backed admin platforms</li>
+                                <li data-i18n-html="about.b2"><strong>Apple Developer Academy</strong> — 6+ team-built iOS projects · SwiftUI, Firebase & accessibility</li>
+                                <li data-i18n-html="about.b3"><strong>CoreTechSolution</strong> — Flutter & SwiftUI features, APIs & full-stack delivery</li>
+                                <li data-i18n-html="about.b4"><strong>Open to work</strong> — iOS & full-stack roles · Saudi Arabia</li>
                             </ul>
                         </div></div>
 
                         <section id="about-education" class="os-window me-block">
-                            <div class="os-titlebar"><span class="os-dot os-dot--r"></span><span class="os-dot os-dot--y"></span><span class="os-dot os-dot--g"></span><span>education.txt</span></div>
+                            <div class="os-titlebar"><span class="os-dot os-dot--r"></span><span class="os-dot os-dot--y"></span><span class="os-dot os-dot--g"></span><span data-i18n="win.education">education.txt</span></div>
                             <div class="os-body">
-                            <p class="me-block-label">Education</p>
+                            <p class="me-block-label" data-i18n="about.education">Education</p>
                             <div class="me-edu-grid">
                                 <article class="me-edu-tile">
                                     <span class="me-edu-year">2025–26</span>
-                                    <h4>Apple Developer Academy</h4>
-                                    <p class="me-edu-meta">Graduate · iOS</p>
+                                    <h4 data-i18n="edu.ada">Apple Developer Academy</h4>
+                                    <p class="me-edu-meta" data-i18n="edu.ada.meta">Graduate · iOS</p>
                                 </article>
                                 <article class="me-edu-tile">
                                     <span class="me-edu-year">2020–25</span>
-                                    <h4>King Khalid University</h4>
-                                    <p class="me-edu-meta">CS · Bachelor's</p>
+                                    <h4 data-i18n="edu.kku">King Khalid University</h4>
+                                    <p class="me-edu-meta" data-i18n="edu.kku.meta">CS · Bachelor's</p>
                                 </article>
                             </div>
                             </div>
@@ -1109,21 +1659,21 @@
                         </div>
 
                         <section id="hub-skills" class="os-window me-block">
-                            <div class="os-titlebar"><span class="os-dot os-dot--r"></span><span class="os-dot os-dot--y"></span><span class="os-dot os-dot--g"></span><span>skills.sys</span></div>
+                            <div class="os-titlebar"><span class="os-dot os-dot--r"></span><span class="os-dot os-dot--y"></span><span class="os-dot os-dot--g"></span><span data-i18n="win.skills">skills.sys</span></div>
                             <div class="os-body">
                             <div class="skills-head">
-                                <p class="me-block-label">Skills</p>
+                                <p class="me-block-label" data-i18n="about.skills">Skills</p>
                                 <span id="skillFilterCount">36 skills</span>
                             </div>
                             <div class="skills-registry">
-                                <div class="seg-control skill-filters" role="group" aria-label="Filter skills by category">
-                                    <button class="seg-btn skill-filter" type="button" data-skill-cat="languages" aria-pressed="false">code</button>
-                                    <button class="seg-btn skill-filter" type="button" data-skill-cat="ios" aria-pressed="false">mobile</button>
-                                    <button class="seg-btn skill-filter" type="button" data-skill-cat="tools" aria-pressed="false">tools</button>
-                                    <button class="seg-btn skill-filter" type="button" data-skill-cat="soft" aria-pressed="false">soft</button>
+                                <div class="seg-control skill-filters" role="group" data-i18n-aria="aria.filterSkills" aria-label="Filter skills by category">
+                                    <button class="seg-btn skill-filter" type="button" data-skill-cat="languages" aria-pressed="false" data-i18n="filter.code">code</button>
+                                    <button class="seg-btn skill-filter" type="button" data-skill-cat="ios" aria-pressed="false" data-i18n="filter.mobile">mobile</button>
+                                    <button class="seg-btn skill-filter" type="button" data-skill-cat="tools" aria-pressed="false" data-i18n="filter.tools">tools</button>
+                                    <button class="seg-btn skill-filter" type="button" data-skill-cat="soft" aria-pressed="false" data-i18n="filter.soft">soft</button>
                                 </div>
                                 
-                            <div class="retro-tool-bars" aria-label="Tool proficiency">
+                            <div class="retro-tool-bars" data-i18n-aria="aria.toolProficiency" aria-label="Tool proficiency">
                                 <div class="retro-tool-row"><span>Swift</span><div class="retro-bar" style="--pct:90"></div><em>90%</em></div>
                                 <div class="retro-tool-row"><span>SwiftUI</span><div class="retro-bar" style="--pct:88"></div><em>88%</em></div>
                                 <div class="retro-tool-row"><span>Flutter</span><div class="retro-bar" style="--pct:78"></div><em>78%</em></div>
@@ -1183,17 +1733,17 @@
                         <header class="section-hero">
                             <span class="section-hero-idx" aria-hidden="true">02</span>
                             <div class="section-hero-content">
-                                <span class="section-hero-tag">Work</span>
-                                <h2 class="section-hero-title">Shipped work</h2>
-                                <p class="section-hero-lead">Tap a project to see screens, stack & details</p>
+                                <span class="section-hero-tag" data-i18n="work.tag">Work</span>
+                                <h2 class="section-hero-title" data-i18n="work.title">Shipped work</h2>
+                                <p class="section-hero-lead" data-i18n="work.lead">Tap a project to see screens, stack & details</p>
                             </div>
                         </header>
 
                         <div class="work-toolbar">
-                            <div class="seg-control project-filters" role="group" aria-label="Filter projects by platform">
-                                <button class="seg-btn project-filter active" type="button" data-cat="all" aria-pressed="true">all</button>
-                                <button class="seg-btn project-filter" type="button" data-cat="ios" aria-pressed="false">ios</button>
-                                <button class="seg-btn project-filter" type="button" data-cat="web" aria-pressed="false">web</button>
+                            <div class="seg-control project-filters" role="group" data-i18n-aria="aria.filterProjects" aria-label="Filter projects by platform">
+                                <button class="seg-btn project-filter active" type="button" data-cat="all" aria-pressed="true" data-i18n="filter.all">all</button>
+                                <button class="seg-btn project-filter" type="button" data-cat="ios" aria-pressed="false" data-i18n="filter.ios">ios</button>
+                                <button class="seg-btn project-filter" type="button" data-cat="web" aria-pressed="false" data-i18n="filter.web">web</button>
                             </div>
                             <span class="work-count" id="projectFilterCount">7 projects</span>
                         </div>
@@ -1209,71 +1759,52 @@
                         <header class="section-hero">
                             <span class="section-hero-idx" aria-hidden="true">03</span>
                             <div class="section-hero-content">
-                                <span class="section-hero-tag">Path</span>
-                                <h2 class="section-hero-title">Where I've been</h2>
-                                <p class="section-hero-lead">Experience — step by step</p>
+                                <span class="section-hero-tag" data-i18n="path.tag">Path</span>
+                                <h2 class="section-hero-title" data-i18n="path.title">Where I've been</h2>
+                                <p class="section-hero-lead" data-i18n="path.lead">Experience — step by step</p>
                             </div>
                         </header>
 
-                        
-                        <div class="retro-chart-wrap os-window">
-                            <div class="os-titlebar"><span class="os-dot os-dot--r"></span><span class="os-dot os-dot--y"></span><span class="os-dot os-dot--g"></span><span>path.graph</span></div>
-                            <div class="os-body">
-                                <svg class="retro-chart" viewBox="0 0 520 120" aria-hidden="true">
-                                    <polyline points="20,95 120,72 220,58 320,40 420,28 500,18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <circle cx="20" cy="95" r="4" fill="currentColor"/><circle cx="120" cy="72" r="4" fill="currentColor"/><circle cx="220" cy="58" r="4" fill="currentColor"/><circle cx="320" cy="40" r="4" fill="currentColor"/><circle cx="420" cy="28" r="4" fill="currentColor"/><circle cx="500" cy="18" r="4" fill="currentColor"/>
-                                </svg>
-                            </div>
-                        </div>
-
-                        <div class="os-window">
-                            <div class="os-titlebar"><span class="os-dot os-dot--r"></span><span class="os-dot os-dot--y"></span><span class="os-dot os-dot--g"></span><span>path.timeline</span></div>
-                            <div class="os-body">
-                        <div class="path-trail" id="pathTrail">
+                        <div class="path-journey" id="pathTrail">
                             <article class="path-step path-step--current">
-                                <div class="path-step-marker" aria-hidden="true"><span class="path-step-dot"></span></div>
-                                <div class="path-step-card">
-                                    <div class="path-step-head">
-                                        <span class="path-step-when">Jun 2026 — now</span>
-                                        <span class="path-step-badge">current</span>
-                                    </div>
-                                    <h3>CoreTechSolution</h3>
-                                    <p class="path-step-role">Early-stage startup · Flutter & iOS</p>
+                                <aside class="path-step-side">
+                                    <span class="path-step-when" data-i18n="path.s1.when">Jun 2026 — now</span>
+                                    <span class="path-step-badge" data-i18n="path.current">current</span>
+                                </aside>
+                                <div class="path-step-body">
+                                    <h3 data-i18n="path.s1.org">CoreTechSolution</h3>
+                                    <p class="path-step-role" data-i18n="path.s1.role">Early-stage startup · Flutter & iOS</p>
                                     <ul class="path-step-points">
-                                        <li>Building mobile apps with Flutter and SwiftUI</li>
-                                        <li>Product design, APIs & full stack delivery</li>
+                                        <li data-i18n="path.s1.p1">Building mobile apps with Flutter and SwiftUI</li>
+                                        <li data-i18n="path.s1.p2">Product design, APIs & full stack delivery</li>
                                     </ul>
                                 </div>
                             </article>
                             <article class="path-step">
-                                <div class="path-step-marker" aria-hidden="true"><span class="path-step-dot"></span></div>
-                                <div class="path-step-card">
-                                    <div class="path-step-head">
-                                        <span class="path-step-when">Sep 2025 — Jun 2026</span>
-                                    </div>
-                                    <h3>Apple Developer Academy</h3>
-                                    <p class="path-step-role">Graduate · iOS Developer</p>
+                                <aside class="path-step-side">
+                                    <span class="path-step-when" data-i18n="path.s2.when">Sep 2025 — Jun 2026</span>
+                                </aside>
+                                <div class="path-step-body">
+                                    <h3 data-i18n="path.s2.org">Apple Developer Academy</h3>
+                                    <p class="path-step-role" data-i18n="path.s2.role">Graduate · iOS Developer</p>
                                     <ul class="path-step-points">
-                                        <li>6+ team-built iOS apps — SwiftUI, Firebase & REST APIs</li>
-                                        <li>Accessibility, Core Haptics & team delivery end to end</li>
+                                        <li data-i18n="path.s2.p1">6+ team-built iOS apps — SwiftUI, Firebase & REST APIs</li>
+                                        <li data-i18n="path.s2.p2">Accessibility, Core Haptics & team delivery end to end</li>
                                     </ul>
                                 </div>
                             </article>
                             <article class="path-step">
-                                <div class="path-step-marker" aria-hidden="true"><span class="path-step-dot"></span></div>
-                                <div class="path-step-card">
-                                    <div class="path-step-head">
-                                        <span class="path-step-when">Jan — Mar 2024</span>
-                                    </div>
-                                    <h3>Asir Region Municipality</h3>
-                                    <p class="path-step-role">Developer Intern</p>
+                                <aside class="path-step-side">
+                                    <span class="path-step-when" data-i18n="path.s3.when">Jan — Mar 2024</span>
+                                </aside>
+                                <div class="path-step-body">
+                                    <h3 data-i18n="path.s3.org">Asir Region Municipality</h3>
+                                    <p class="path-step-role" data-i18n="path.s3.role">Developer Intern</p>
                                     <ul class="path-step-points">
-                                        <li>Chatbot & internal automation</li>
+                                        <li data-i18n="path.s3.p1">Chatbot & internal automation</li>
                                     </ul>
                                 </div>
                             </article>
-                        </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -1285,25 +1816,27 @@
                         <header class="section-hero">
                             <span class="section-hero-idx" aria-hidden="true">04</span>
                             <div class="section-hero-content">
-                                <span class="section-hero-tag">Hello</span>
-                                <h2 class="section-hero-title">Let's connect</h2>
-                                <p class="section-hero-lead">Projects, collabs, or just saying hi</p>
+                                <span class="section-hero-tag" data-i18n="connect.tag">Hello</span>
+                                <h2 class="section-hero-title" data-i18n="connect.title">Let's connect</h2>
+                                <p class="section-hero-lead" data-i18n="connect.lead">Projects, collabs, or just saying hi</p>
                             </div>
                         </header>
 
+                        <div class="connect-zone-rule" aria-hidden="true"><span>Contact</span></div>
+
                         <div class="connect-card" id="connectSpotlight">
-                            <p class="connect-pitch" id="connectPitch">Got an idea? <span>Let's build it.</span></p>
+                            <p class="connect-pitch" id="connectPitch" data-i18n-html="connect.pitch">Got an idea? <span>Let's build it.</span></p>
 
                             <div class="connect-email-row" id="connectEmailCard">
                                 <div class="connect-email-icon" aria-hidden="true"><i class="fas fa-envelope"></i></div>
                                 <div class="connect-email-body">
-                                    <p class="connect-email-label">Email me</p>
+                                    <p class="connect-email-label" data-i18n="connect.emailLabel">Email me</p>
                                     <a class="connect-email-address" href="mailto:Shahad0x66@gmail.com">Shahad0x66@gmail.com</a>
                                 </div>
-                                <button class="connect-copy-btn" type="button" id="connectCopyEmail" aria-label="Copy email">copy</button>
+                                <button class="connect-copy-btn" type="button" id="connectCopyEmail" data-i18n-aria="connect.copyAria" aria-label="Copy email" data-i18n="connect.copy">copy</button>
                             </div>
 
-                            <nav class="connect-grid" aria-label="Social links">
+                            <nav class="connect-grid" data-i18n-aria="aria.socialLinks" aria-label="Social links">
                                 <a class="connect-tile" href="https://github.com/weuth02x1" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                                     <span class="connect-tile-icon"><i class="fab fa-github"></i></span>
                                     <span class="connect-tile-label">GitHub</span>
@@ -1318,7 +1851,7 @@
                                 </a>
                             </nav>
 
-                            <p class="connect-footnote" id="connectFootnote">Saudi Arabia · open to iOS & full-stack roles</p>
+                            <p class="connect-footnote" id="connectFootnote" data-i18n="connect.footnote">Saudi Arabia · open to iOS & full-stack roles</p>
                             </div>
                         </div>
                     </div>
@@ -1326,13 +1859,13 @@
             </div>
         </div>
 
-        <nav class="hub-dock retro-dock" id="hubDock" role="tablist" aria-label="Portfolio pages">
+        <nav class="hub-dock retro-dock" id="hubDock" role="tablist" data-i18n-aria="aria.dock" aria-label="Portfolio pages">
             <div class="hub-dock-shell">
                 <div class="hub-dock-inner">
-                    <button class="hub-dock-btn" id="hub-tab-about" type="button" data-hub-tab="about" role="tab" aria-selected="false" aria-controls="hub-about"><span class="hub-dock-dot"></span>me</button>
-                    <button class="hub-dock-btn" id="hub-tab-projects" type="button" data-hub-tab="projects" role="tab" aria-selected="false" aria-controls="projects"><span class="hub-dock-dot"></span>work</button>
-                    <button class="hub-dock-btn" id="hub-tab-experience" type="button" data-hub-tab="experience" role="tab" aria-selected="false" aria-controls="experience"><span class="hub-dock-dot"></span>path</button>
-                    <button class="hub-dock-btn" id="hub-tab-connect" type="button" data-hub-tab="connect" role="tab" aria-selected="false" aria-controls="connect"><span class="hub-dock-dot"></span>hello</button>
+                    <button class="hub-dock-btn" id="hub-tab-about" type="button" data-hub-tab="about" role="tab" aria-selected="false" aria-controls="hub-about"><span class="hub-dock-dot"></span><span data-i18n="dock.me">me</span></button>
+                    <button class="hub-dock-btn" id="hub-tab-projects" type="button" data-hub-tab="projects" role="tab" aria-selected="false" aria-controls="projects"><span class="hub-dock-dot"></span><span data-i18n="dock.work">work</span></button>
+                    <button class="hub-dock-btn" id="hub-tab-experience" type="button" data-hub-tab="experience" role="tab" aria-selected="false" aria-controls="experience"><span class="hub-dock-dot"></span><span data-i18n="dock.path">path</span></button>
+                    <button class="hub-dock-btn" id="hub-tab-connect" type="button" data-hub-tab="connect" role="tab" aria-selected="false" aria-controls="connect"><span class="hub-dock-dot"></span><span data-i18n="dock.hello">hello</span></button>
                 </div>
             </div>
         </nav>
@@ -1342,11 +1875,11 @@
     <div id="projectModal" class="project-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
         <div class="project-modal-backdrop" id="modalBackdrop"></div>
         <div class="project-modal-panel" id="modalPanel">
-            <button class="modal-close" id="modalClose" type="button" aria-label="Close">&times;</button>
+            <button class="modal-close" id="modalClose" type="button" data-i18n-aria="modal.close" aria-label="Close">&times;</button>
             <div class="project-modal-scroll" id="modalScroll">
             <div class="modal-cover" id="modalCover">
                 <img id="modalImage" src="" alt="">
-                <span class="modal-cover-fallback" id="modalCoverFallback">screenshot pending</span>
+                <span class="modal-cover-fallback" id="modalCoverFallback" data-i18n="modal.fallback">screenshot pending</span>
             </div>
             <div class="modal-header">
                 <p class="modal-file" id="modalFile"></p>
@@ -1357,20 +1890,20 @@
             <div class="modal-body">
                 <div class="modal-meta" id="modalMeta"></div>
                 <div class="modal-section">
-                    <h4>Overview</h4>
+                    <h4 data-i18n="modal.overview">Overview</h4>
                     <p id="modalOverview"></p>
                 </div>
                 <div class="modal-section">
-                    <h4>Features</h4>
+                    <h4 data-i18n="modal.features">Features</h4>
                     <ul class="modal-features" id="modalFeatures"></ul>
                 </div>
                 <div class="modal-section">
-                    <h4>Stack</h4>
+                    <h4 data-i18n="modal.stack">Stack</h4>
                     <div class="modal-tags" id="modalTags"></div>
                 </div>
                 <div class="modal-section modal-section--miro" id="modalMiroSection" hidden>
-                    <div class="miro-spark">Miro · Challenge Based Learning</div>
-                    <h4 id="modalMiroTitle">Where the idea started</h4>
+                    <div class="miro-spark" id="modalMiroSpark" data-i18n="miro.spark">Miro · Challenge Based Learning</div>
+                    <h4 id="modalMiroTitle" data-i18n="miro.titleDefault">Where the idea started</h4>
                     <p class="miro-caption" id="modalMiroCaption"></p>
                     <div class="miro-board">
                         <span class="miro-tape miro-tape--tl" aria-hidden="true"></span>
@@ -1379,7 +1912,7 @@
                         <div class="miro-scroll" id="modalMiroScroll">
                             <img id="modalMiroImage" src="" alt="">
                         </div>
-                        <p class="miro-hint">drag to explore the board →</p>
+                        <p class="miro-hint" id="modalMiroHint" data-i18n="miro.hint">drag to explore the board →</p>
                     </div>
                 </div>
             </div>
@@ -1395,6 +1928,310 @@
     <script>
 
 
+        const LANG_KEY = 'portfolio-lang';
+        const i18n = {
+            en: {
+                'page.title': 'Shahad Alqahtani — iOS & Full Stack',
+                'boot.tap': 'Tap to enter',
+                'hero.title': 'Portfolio <span class="retro-star" aria-hidden="true">✦</span>',
+                'hero.about.title': 'Inside the studio <span class="hero-inline-accent hero-inline-accent--star" aria-hidden="true">✦</span>',
+                'hero.about.sub': 'profile · skills · education',
+                'hero.work.title': 'Things I made <span class="hero-inline-accent hero-inline-accent--arrow" aria-hidden="true">→</span>',
+                'hero.work.sub': '7 projects · tap to explore',
+                'hero.projects.label': 'My projects',
+                'hero.path.title': 'The road so far <span class="hero-inline-accent" aria-hidden="true">◎</span>',
+                'hero.path.sub': 'experience — step by step',
+                'hero.connect.title': 'Your move <span class="hero-inline-accent" aria-hidden="true">✉</span>',
+                'hero.connect.sub': 'projects · collab · hello',
+                'hero.role': 'iOS · Full Stack',
+                'hero.year': '2025 · 2026',
+                'about.tag': 'Me',
+                'about.title': 'Profile',
+                'about.lead': 'Background, education & skills',
+                'about.line': 'iOS · Full Stack · B.S. Computer Science',
+                'about.b1': '<strong>6+ apps shipped</strong> — SwiftUI, Flutter, REST APIs & investor-backed admin platforms',
+                'about.b2': '<strong>Apple Developer Academy</strong> — 6+ team-built iOS projects · SwiftUI, Firebase & accessibility',
+                'about.b3': '<strong>CoreTechSolution</strong> — Flutter & SwiftUI features, APIs & full-stack delivery',
+                'about.b4': '<strong>Open to work</strong> — iOS & full-stack roles · Saudi Arabia',
+                'about.education': 'Education',
+                'about.skills': 'Skills',
+                'win.about': 'about.me',
+                'win.education': 'education.txt',
+                'win.skills': 'skills.sys',
+                'win.pathTimeline': 'path.timeline',
+                'edu.ada': 'Apple Developer Academy',
+                'edu.ada.meta': 'Graduate · iOS',
+                'edu.kku': 'King Khalid University',
+                'edu.kku.meta': "CS · Bachelor's",
+                'work.tag': 'Work',
+                'work.title': 'Shipped work',
+                'work.lead': 'Tap a project to see screens, stack & details',
+                'path.tag': 'Path',
+                'path.title': "Where I've been",
+                'path.lead': 'Experience — step by step',
+                'path.current': 'current',
+                'path.s1.org': 'CoreTechSolution',
+                'path.s2.org': 'Apple Developer Academy',
+                'path.s3.org': 'Asir Region Municipality',
+                'path.s1.when': 'Jun 2026 — now',
+                'path.s1.role': 'Early-stage startup · Flutter & iOS',
+                'path.s1.p1': 'Building mobile apps with Flutter and SwiftUI',
+                'path.s1.p2': 'Product design, APIs & full stack delivery',
+                'path.s2.when': 'Sep 2025 — Jun 2026',
+                'path.s2.role': 'Graduate · iOS Developer',
+                'path.s2.p1': '6+ team-built iOS apps — SwiftUI, Firebase & REST APIs',
+                'path.s2.p2': 'Accessibility, Core Haptics & team delivery end to end',
+                'path.s3.when': 'Jan — Mar 2024',
+                'path.s3.role': 'Developer Intern',
+                'path.s3.p1': 'Chatbot & internal automation',
+                'connect.tag': 'Hello',
+                'connect.title': "Let's connect",
+                'connect.lead': 'Projects, collabs, or just saying hi',
+                'connect.pitch': 'Got an idea? <span>Let\'s build it.</span>',
+                'connect.emailLabel': 'Email me',
+                'connect.copy': 'copy',
+                'connect.copied': 'copied',
+                'connect.footnote': 'Saudi Arabia · open to iOS & full-stack roles',
+                'dock.me': 'me',
+                'dock.work': 'work',
+                'dock.path': 'path',
+                'dock.hello': 'hello',
+                'filter.all': 'all',
+                'filter.ios': 'ios',
+                'filter.web': 'web',
+                'filter.code': 'code',
+                'filter.mobile': 'mobile',
+                'filter.tools': 'tools',
+                'filter.soft': 'soft',
+                'cat.ios': 'ios',
+                'cat.web': 'web',
+                'modal.overview': 'Overview',
+                'modal.features': 'Features',
+                'modal.stack': 'Stack',
+                'meta.status': 'status',
+                'meta.role': 'role',
+                'meta.year': 'year',
+                'modal.fallback': 'screenshot pending',
+                'modal.secret': 'confidential · no preview',
+                'link.github': 'View on GitHub',
+                'link.appstore': 'View on App Store',
+                'miro.spark': 'Miro · Challenge Based Learning',
+                'miro.titleDefault': 'Where the idea started',
+                'miro.hint': 'drag to explore the board →',
+                'phase.engage': 'Engage',
+                'phase.investigate': 'Investigate',
+                'phase.act': 'Act',
+                'project.open': 'Open {title} project details',
+                'theme.dark': 'dark',
+                'theme.light': 'light',
+                'boot.aria': 'Portfolio intro — tap or press Enter to start',
+                'modal.close': 'Close',
+                'aria.language': 'Language',
+                'connect.copyAria': 'Copy email',
+                'theme.switchDark': 'Switch to dark mode',
+                'theme.switchLight': 'Switch to light mode',
+                'aria.aboutList': 'About Shahad',
+                'aria.filterSkills': 'Filter skills by category',
+                'aria.toolProficiency': 'Tool proficiency',
+                'aria.filterProjects': 'Filter projects by platform',
+                'aria.dock': 'Portfolio pages',
+                'aria.socialLinks': 'Social links'
+            },
+            ar: {
+                'page.title': 'شهد القحطاني — iOS وتطوير شامل',
+                'boot.tap': 'اضغط للدخول',
+                'hero.title': 'معرض الأعمال <span class="retro-star" aria-hidden="true">✦</span>',
+                'hero.role': 'iOS · تطوير شامل',
+                'hero.year': '2025 · 2026',
+                'hero.about.title': 'داخل الاستوديو <span class="hero-inline-accent hero-inline-accent--star" aria-hidden="true">✦</span>',
+                'hero.about.sub': 'الملف · المهارات · التعليم',
+                'hero.work.title': 'أشياء صنعتها <span class="hero-inline-accent hero-inline-accent--arrow" aria-hidden="true">←</span>',
+                'hero.work.sub': '7 مشاريع · اضغط للاستكشاف',
+                'hero.projects.label': 'مشاريعي',
+                'hero.path.title': 'الطريق حتى الآن <span class="hero-inline-accent" aria-hidden="true">◎</span>',
+                'hero.path.sub': 'الخبرة — خطوة بخطوة',
+                'hero.connect.title': 'دورك <span class="hero-inline-accent" aria-hidden="true">✉</span>',
+                'hero.connect.sub': 'مشاريع · تعاون · مرحباً',
+                'about.tag': 'أنا',
+                'about.title': 'الملف الشخصي',
+                'about.lead': 'الخلفية والتعليم والمهارات',
+                'about.line': 'iOS · تطوير شامل · بكالوريوس علوم حاسب',
+                'about.b1': '<strong>أكثر من 6 تطبيقات</strong> — SwiftUI وFlutter وواجهات REST ومنصات إدارية مدعومة من مستثمرين',
+                'about.b2': '<strong>أكاديمية مطوري Apple</strong> — أكثر من 6 مشاريع iOS جماعية · SwiftUI وFirebase وإمكانية الوصول',
+                'about.b3': '<strong>CoreTechSolution</strong> — ميزات Flutter وSwiftUI وواجهات برمجة وتطوير شامل',
+                'about.b4': '<strong>متاحة للعمل</strong> — أدوار iOS وتطوير شامل · المملكة العربية السعودية',
+                'about.education': 'التعليم',
+                'about.skills': 'المهارات',
+                'win.about': 'about.me',
+                'win.education': 'education.txt',
+                'win.skills': 'skills.sys',
+                'win.pathTimeline': 'path.timeline',
+                'edu.ada': 'أكاديمية مطوري Apple',
+                'edu.ada.meta': 'خريجة · iOS',
+                'edu.kku': 'جامعة الملك خالد',
+                'edu.kku.meta': 'علوم حاسب · بكالوريوس',
+                'work.tag': 'الأعمال',
+                'work.title': 'مشاريع منجزة',
+                'work.lead': 'اضغط على مشروع لعرض الشاشات والتقنيات والتفاصيل',
+                'path.tag': 'المسار',
+                'path.title': 'أين كنت',
+                'path.lead': 'الخبرة — خطوة بخطوة',
+                'path.current': 'حالي',
+                'path.s1.org': 'CoreTechSolution',
+                'path.s2.org': 'أكاديمية مطوري Apple',
+                'path.s3.org': 'بلدية منطقة عسير',
+                'path.s1.when': 'يونيو 2026 — الآن',
+                'path.s1.role': 'شركة ناشئة · Flutter وiOS',
+                'path.s1.p1': 'بناء تطبيقات جوال بـ Flutter وSwiftUI',
+                'path.s1.p2': 'تصميم المنتج وواجهات البرمجة والتطوير الشامل',
+                'path.s2.when': 'سبتمبر 2025 — يونيو 2026',
+                'path.s2.role': 'خريجة · مطورة iOS',
+                'path.s2.p1': 'أكثر من 6 تطبيقات iOS جماعية — SwiftUI وFirebase وREST APIs',
+                'path.s2.p2': 'إمكانية الوصول وCore Haptics وتسليم جماعي من البداية للنهاية',
+                'path.s3.when': 'يناير — مارس 2024',
+                'path.s3.role': 'متدربة تطوير',
+                'path.s3.p1': 'شات بوت وأتمتة داخلية',
+                'connect.tag': 'مرحباً',
+                'connect.title': 'لنتواصل',
+                'connect.lead': 'مشاريع أو تعاون أو مجرد تحية',
+                'connect.pitch': 'لديك فكرة؟ <span>لنبنيها معاً.</span>',
+                'connect.emailLabel': 'راسليني',
+                'connect.copy': 'نسخ',
+                'connect.copied': 'تم النسخ',
+                'connect.footnote': 'المملكة العربية السعودية · متاحة لأدوار iOS والتطوير الشامل',
+                'dock.me': 'أنا',
+                'dock.work': 'أعمال',
+                'dock.path': 'مسار',
+                'dock.hello': 'مرحباً',
+                'filter.all': 'الكل',
+                'filter.ios': 'ios',
+                'filter.web': 'ويب',
+                'filter.code': 'برمجة',
+                'filter.mobile': 'جوال',
+                'filter.tools': 'أدوات',
+                'filter.soft': 'مهارات',
+                'cat.ios': 'جوال',
+                'cat.web': 'ويب',
+                'modal.overview': 'نظرة عامة',
+                'modal.features': 'الميزات',
+                'modal.stack': 'التقنيات',
+                'meta.status': 'الحالة',
+                'meta.role': 'الدور',
+                'meta.year': 'السنة',
+                'modal.fallback': 'لقطة الشاشة قريباً',
+                'modal.secret': 'سري · لا معاينة',
+                'link.github': 'عرض على GitHub',
+                'link.appstore': 'عرض على App Store',
+                'miro.spark': 'Miro · التعلم القائم على التحدي',
+                'miro.titleDefault': 'من أين بدأت الفكرة',
+                'miro.hint': 'اسحب لاستكشاف اللوحة ←',
+                'phase.engage': 'انخراط',
+                'phase.investigate': 'استقصاء',
+                'phase.act': 'تنفيذ',
+                'project.open': 'فتح تفاصيل مشروع {title}',
+                'theme.dark': 'داكن',
+                'theme.light': 'فاتح',
+                'boot.aria': 'مقدمة المعرض — اضغط أو Enter للبدء',
+                'modal.close': 'إغلاق',
+                'aria.language': 'اللغة',
+                'connect.copyAria': 'نسخ البريد',
+                'theme.switchDark': 'التبديل إلى الوضع الداكن',
+                'theme.switchLight': 'التبديل إلى الوضع الفاتح',
+                'aria.aboutList': 'نبذة عن شهد',
+                'aria.filterSkills': 'تصفية المهارات حسب الفئة',
+                'aria.toolProficiency': 'إتقان الأدوات',
+                'aria.filterProjects': 'تصفية المشاريع حسب المنصة',
+                'aria.dock': 'صفحات المعرض',
+                'aria.socialLinks': 'روابط التواصل'
+            }
+        };
+
+        let currentLang = 'en';
+
+        function t(key, vars) {
+            let str = i18n[currentLang][key] ?? i18n.en[key] ?? key;
+            if (vars) {
+                Object.entries(vars).forEach(([k, v]) => {
+                    str = str.replace(`{${k}}`, v);
+                });
+            }
+            return str;
+        }
+
+        function phaseLabel(phase) {
+            return t('phase.' + phase) || phase;
+        }
+
+        let openModalId = null;
+
+
+        function formatSkillCount(n) {
+            return currentLang === 'ar'
+                ? `${n} مهارة`
+                : `${n} skill${n === 1 ? '' : 's'}`;
+        }
+
+        function formatProjectCount(n) {
+            return currentLang === 'ar'
+                ? `${n} مشروع`
+                : `${n} project${n === 1 ? '' : 's'}`;
+        }
+
+        function applyLang(lang) {
+            currentLang = 'en';
+            localStorage.setItem(LANG_KEY, 'en');
+            document.documentElement.lang = 'en';
+            document.documentElement.dir = 'ltr';
+            document.title = t('page.title');
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n.en[key] != null) el.textContent = i18n.en[key];
+            });
+            document.querySelectorAll('[data-i18n-html]').forEach(el => {
+                const key = el.getAttribute('data-i18n-html');
+                if (i18n.en[key] != null) el.innerHTML = i18n.en[key];
+            });
+            document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+                const key = el.getAttribute('data-i18n-aria');
+                if (i18n.en[key] != null) el.setAttribute('aria-label', i18n.en[key]);
+            });
+
+            const copyBtn = document.getElementById('connectCopyEmail');
+            if (copyBtn && !copyBtn.classList.contains('is-copied')) {
+                copyBtn.textContent = t('connect.copy');
+            }
+
+            if (typeof applySkillFilter === 'function') {
+                const activeSkillCat = document.querySelector('.skill-filter.active')?.dataset.skillCat || 'all';
+                applySkillFilter(activeSkillCat);
+            }
+            if (typeof applyProjectFilter === 'function') {
+                const activeProjectCat = document.querySelector('.project-filter.active')?.dataset.cat || 'all';
+                applyProjectFilter(activeProjectCat);
+            }
+
+            if (typeof renderProjects === 'function') renderProjects();
+            if (typeof renderHeroProjectsStrip === 'function') renderHeroProjectsStrip();
+
+            if (openModalId && projectMap?.[openModalId]) {
+                openProjectModal(openModalId, { skipFocus: true });
+            }
+
+            const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+            const label = document.getElementById('themeToggle')?.querySelector('.theme-toggle-label');
+            if (label) label.textContent = theme === 'light' ? t('theme.dark') : t('theme.light');
+            if (themeToggle) {
+                themeToggle.setAttribute('aria-label', theme === 'dark' ? t('theme.switchLight') : t('theme.switchDark'));
+            }
+
+            if (typeof updateHeroHeader === 'function') {
+                const activeTab = document.querySelector('.hub-dock [data-hub-tab].active')?.dataset.hubTab || 'about';
+                const hubPage = typeof hubTabMap !== 'undefined' ? (hubTabMap[activeTab] || activeTab) : activeTab;
+                updateHeroHeader(hubPage, { animate: false });
+            }
+        }
+
         const themeToggle = document.getElementById('themeToggle');
         const THEME_KEY = 'portfolio-theme';
 
@@ -1406,19 +2243,19 @@
                 theme = 'light';
             }
             const themeMeta = document.querySelector('meta[name="theme-color"]');
-            if (themeMeta) themeMeta.setAttribute('content', theme === 'dark' ? '#0a0908' : '#e8dcc8');
+            if (themeMeta) themeMeta.setAttribute('content', theme === 'dark' ? '#3d3830' : '#e8dcc8');
             if (themeToggle) {
                 themeToggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
-                themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+                themeToggle.setAttribute('aria-label', theme === 'dark' ? t('theme.switchLight') : t('theme.switchDark'));
                 const icon = themeToggle.querySelector('.theme-toggle-icon');
                 const label = themeToggle.querySelector('.theme-toggle-label');
                 if (icon) icon.textContent = theme === 'light' ? '☾' : '☀';
-                if (label) label.textContent = theme === 'light' ? 'dark' : 'light';
+                if (label) label.textContent = theme === 'light' ? t('theme.dark') : t('theme.light');
             }
             localStorage.setItem(THEME_KEY, theme);
         }
 
-        applyTheme(localStorage.getItem(THEME_KEY) === 'dark' ? 'dark' : 'light');
+        applyTheme(localStorage.getItem(THEME_KEY) === 'light' ? 'light' : 'dark');
 
         if (themeToggle) {
             themeToggle.addEventListener('click', () => {
@@ -1645,23 +2482,18 @@
         }
 
         let mainFieldFx = null;
-        let introFieldFx = null;
 
         function bootPortfolio() {
             if (booted) return;
             booted = true;
             document.documentElement.classList.remove('intro-active');
-            if (introFieldFx) {
-                introFieldFx.destroy();
-                introFieldFx = null;
-            }
             if (mainFieldFx) mainFieldFx.resize();
             bootScreen.classList.add('is-out');
             setTimeout(() => {
                 bootScreen.classList.add('hidden');
                 mainContent.classList.add('visible');
                 const hash = location.hash.slice(1);
-                const tabId = hubTabMap[hash] ? hash : 'about';
+                const tabId = hubTabMap[hash] ? hash : 'projects';
                 switchHubTab(tabId);
                 history.replaceState(null, '', `#${tabId}`);
                 if (tabId === 'skills') setTimeout(scrollToHubSkills, 150);
@@ -1745,132 +2577,26 @@
 
         function launchPortfolio() {
             if (booted) return;
-            bootScreen.classList.add('is-launching');
-            bootScreen.style.setProperty('--reveal', 1);
-            bootScreen.classList.remove('is-dragging');
             playIntroSound();
-            setTimeout(bootPortfolio, 540);
-        }
-
-        function initIntroSwipe() {
-            const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches || navigator.maxTouchPoints > 0;
-            const threshold = isCoarsePointer ? 0.58 : 0.68;
-            const maxSwipe = () => Math.min(window.innerHeight * (isCoarsePointer ? 0.38 : 0.32), isCoarsePointer ? 240 : 200);
-            let dragging = false;
-            let startY = 0;
-            let progress = 0;
-            let activePointerId = null;
-            let touchActive = false;
-
-            const setProgress = (ratio) => {
-                progress = Math.max(0, Math.min(1, ratio));
-                bootScreen.style.setProperty('--reveal', progress);
-                bootScreen.classList.toggle('has-progress', progress > 0.02);
-            };
-
-            const reset = () => {
-                dragging = false;
-                touchActive = false;
-                activePointerId = null;
-                bootScreen.classList.remove('is-dragging');
-                setProgress(0);
-            };
-
-            const complete = () => launchPortfolio();
-
-            const updateDrag = (clientY) => {
-                if (!dragging || booted) return;
-                const dy = startY - clientY;
-                if (dy > 0) setProgress(dy / maxSwipe());
-            };
-
-            const endDrag = () => {
-                if (!dragging) return;
-                const shouldComplete = progress >= threshold;
-                dragging = false;
-                touchActive = false;
-                if (activePointerId != null) {
-                    try { bootScreen.releasePointerCapture(activePointerId); } catch (_) {}
-                    activePointerId = null;
-                }
-                bootScreen.classList.remove('is-dragging');
-                if (shouldComplete) complete();
-                else reset();
-            };
-
-            const beginDrag = (clientY, pointerId = null, target = bootScreen) => {
-                if (booted || dragging) return;
-                dragging = true;
-                startY = clientY;
-                activePointerId = pointerId;
-                bootScreen.classList.add('is-dragging');
-                if (pointerId != null) {
-                    try { target.setPointerCapture(pointerId); } catch (_) {}
-                }
-            };
-
-            bootScreen.addEventListener('pointerdown', (e) => {
-                if (booted || touchActive) return;
-                if (e.pointerType === 'mouse' && e.button !== 0) return;
-                beginDrag(e.clientY, e.pointerId, bootScreen);
-            });
-
-            bootScreen.addEventListener('pointermove', (e) => {
-                if (touchActive || !dragging || e.pointerId !== activePointerId) return;
-                updateDrag(e.clientY);
-            });
-
-            bootScreen.addEventListener('pointerup', (e) => {
-                if (touchActive || e.pointerId !== activePointerId) return;
-                endDrag();
-            });
-
-            bootScreen.addEventListener('pointercancel', (e) => {
-                if (touchActive || e.pointerId !== activePointerId) return;
-                endDrag();
-            });
-
-            bootScreen.addEventListener('touchstart', (e) => {
-                if (booted) return;
-                if (e.touches.length !== 1) return;
-                touchActive = true;
-                beginDrag(e.touches[0].clientY);
-            }, { passive: true });
-
-            bootScreen.addEventListener('touchmove', (e) => {
-                if (!touchActive || !dragging || booted) return;
-                if (e.touches.length !== 1) return;
-                e.preventDefault();
-                updateDrag(e.touches[0].clientY);
-            }, { passive: false });
-
-            bootScreen.addEventListener('touchend', () => {
-                if (!touchActive) return;
-                endDrag();
-            }, { passive: true });
-
-            bootScreen.addEventListener('touchcancel', () => {
-                if (!touchActive) return;
-                endDrag();
-            }, { passive: true });
+            bootScreen.classList.add('is-launching');
+            setTimeout(bootPortfolio, 400);
         }
 
         function initIntro() {
             if (!bootScreen) return;
 
             document.documentElement.classList.add('intro-active');
-            introFieldFx = initAmbientField('introField', { trackTarget: bootScreen, starCount: 8, heroOnly: true });
             const heroEl = document.querySelector('.retro-hero');
-            if (heroEl) mainFieldFx = initAmbientField('heroStars', { starCount: 8, trackTarget: heroEl, heroOnly: true });
-            initIntroSwipe();
+            if (heroEl) mainFieldFx = initAmbientField('heroStars', { starCount: 22, trackTarget: heroEl, heroOnly: true });
 
+            bootScreen.addEventListener('click', () => launchPortfolio());
             bootScreen.addEventListener('keydown', (e) => {
                 if (booted) return;
-                if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') {
+                if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     launchPortfolio();
                 }
-            }, { once: true });
+            });
         }
 
         initIntro();
@@ -1890,6 +2616,65 @@
 
         function updateNavShell() {}
 
+        const heroTabKeyMap = {
+            about: 'about',
+            projects: 'work',
+            experience: 'path',
+            connect: 'connect'
+        };
+
+        let currentHeroTab = null;
+
+        function updateHeroHeader(hubPage, opts = {}) {
+            const animate = opts.animate !== false;
+            const heroEl = document.getElementById('retroHero');
+            const morphEl = document.getElementById('heroMorph');
+            const titleInner = document.getElementById('heroTitleInner');
+            const subEl = document.getElementById('heroSub');
+            if (!heroEl || !titleInner) return;
+
+            const heroKey = heroTabKeyMap[hubPage] || 'about';
+            const titleKey = `hero.${heroKey}.title`;
+            const subKey = `hero.${heroKey}.sub`;
+
+            const applyContent = () => {
+                titleInner.innerHTML = t(titleKey);
+                if (subEl) {
+                    subEl.textContent = t(subKey) || '';
+                    subEl.classList.remove('hero-path-animate');
+                    if (hubPage === 'experience') {
+                        void subEl.offsetWidth;
+                        subEl.classList.add('hero-path-animate');
+                    }
+                }
+                heroEl.dataset.heroTab = hubPage;
+                const strip = document.getElementById('heroProjectsStrip');
+                if (strip) strip.setAttribute('aria-hidden', hubPage === 'projects' ? 'false' : 'true');
+                const plainTitle = (i18n[currentLang][titleKey] || '').replace(/<[^>]*>/g, '').trim();
+                heroEl.setAttribute('aria-label', plainTitle);
+                currentHeroTab = heroKey;
+            };
+
+            const isFirst = currentHeroTab === null;
+            const sameTab = currentHeroTab === heroKey;
+            const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            if (isFirst || sameTab || !animate || reduced || !morphEl) {
+                applyContent();
+                return;
+            }
+
+            morphEl.classList.add('is-morphing', 'is-exit');
+            setTimeout(() => {
+                applyContent();
+                morphEl.classList.remove('is-exit');
+                morphEl.classList.add('is-enter');
+                requestAnimationFrame(() => {
+                    morphEl.classList.remove('is-enter', 'is-morphing');
+                });
+            }, 220);
+        }
+
         function scrollToAboutSection(sectionId) {
             const el = document.getElementById(sectionId);
             if (el) {
@@ -1897,11 +2682,38 @@
             }
         }
 
+        function revealOsWindows(scope) {
+            const root = scope || document.querySelector('.hub-screen.active');
+            if (!root) return;
+            const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            root.querySelectorAll('.os-window').forEach((win, i) => {
+                win.classList.remove('window-visible');
+                if (reduced) {
+                    win.classList.add('window-visible');
+                    return;
+                }
+                setTimeout(() => win.classList.add('window-visible'), 70 + i * 95);
+            });
+        }
+
+        function initOsWindowObserver() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('window-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+
+            document.querySelectorAll('.hub-screen .os-window').forEach(win => {
+                if (!win.classList.contains('window-visible')) observer.observe(win);
+            });
+        }
+
         function revealAboutPage() {
-            const spotlight = document.getElementById('meSpotlight');
-            spotlight?.classList.remove('visible-block');
-            void spotlight?.offsetWidth;
-            spotlight?.classList.add('visible-block');
+            revealOsWindows(document.getElementById('hub-about'));
 
             document.querySelectorAll('#hub-about .me-about-list li').forEach((el, i) => {
                 el.classList.remove('visible');
@@ -1925,6 +2737,7 @@
         }
 
         function revealExperiencePage() {
+            revealOsWindows(document.getElementById('experience'));
             document.querySelectorAll('#experience .path-step').forEach((el, i) => {
                 el.classList.remove('visible');
                 setTimeout(() => el.classList.add('visible'), 90 + i * 110);
@@ -1973,10 +2786,10 @@
                 e.stopPropagation();
                 const email = 'Shahad0x66@gmail.com';
                 navigator.clipboard?.writeText(email).then(() => {
-                    connectCopyEmail.textContent = '✓';
+                    connectCopyEmail.textContent = t('connect.copied');
                     connectCopyEmail.classList.add('is-copied');
                     setTimeout(() => {
-                        connectCopyEmail.textContent = 'copy';
+                        connectCopyEmail.textContent = t('connect.copy');
                         connectCopyEmail.classList.remove('is-copied');
                     }, 1600);
                 }).catch(() => {
@@ -2013,9 +2826,18 @@
             const activeTab = document.querySelector(`.hub-dock [data-hub-tab="${target}"]`);
             moveDockIndicator(activeTab);
             updateNavShell(target);
+            updateHeroHeader(target);
 
             const activeScreen = document.querySelector(`.hub-screen[data-hub-page="${target}"]`);
-            if (activeScreen) activeScreen.scrollTop = 0;
+            if (activeScreen) {
+                activeScreen.scrollTop = 0;
+                const inner = activeScreen.querySelector('.hub-screen-inner');
+                if (inner && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    inner.style.animation = 'none';
+                    void inner.offsetWidth;
+                    inner.style.animation = '';
+                }
+            }
 
             if (target === 'about') revealAboutPage();
             if (target === 'projects') revealProjectsPage();
@@ -2285,6 +3107,34 @@
             }
         ];
 
+        const projectI18n = {
+            '6': { title: 'توقع سوق الأسهم بالذكاء الاصطناعي', desc: 'تطبيق ويب يتوقع حركة السوق — ربح أو خسارة — مبني للمبتدئين.', subtitle: 'ASP.NET · ذكاء اصطناعي · للمبتدئين · ويب', status: 'مكتمل', role: 'مطورة Full Stack', overview: 'موقع يتوقع حركة الأسهم ويساعد المبتدئين على فهم الربح أو الخسارة بدون مصطلحات معقدة. مبني بـ ASP.NET وC# وJavaScript وHTML.', features: ['توقع بالذكاء الاصطناعي — ربح أو خسارة للمبتدئين', 'تحليل السوق — مسار موجّه لاستكشاف البيانات', 'أفضل 10 شركات — قائمة منسقة للاكتشاف', 'واجهة مناسبة للمبتدئين — بدون تعقيد', 'صفحة بداية مع onboarding', 'تطبيق ويب كامل بـ ASP.NET'] },
+            '7': { title: 'Sensic', desc: 'اشعر بالموسيقى — تطبيق لمسي لمن يعانون من ضعف السمع لتجربة الموسيقى باللمس.', subtitle: 'اشعر بالموسيقى · Core Haptics · إمكانية الوصول · SwiftUI', status: 'أكاديمية Apple · مشروع التخرج', role: 'مطورة iOS', overview: 'Sensic يسأل: ماذا لو لم يكن على الموسيقى أن تُسمع لتُحس؟ تجربة لمسية للصم وضعاف السمع — تحوّل الصوت إلى نبضات تُلمس. مشروع التخرج في أكاديمية مطوري Apple.', features: ['Core Haptics — اشعر بالموسيقى كنبضات لمسية', 'آلة بيانو — ردود فعل لمسية واضحة', 'وضع التسجيل والتمرين', 'الصفحة الرئيسية — اختيار آلة وتصفح التسجيلات', 'تصميم شامل لضعاف السمع', 'مشروع التخرج · SwiftUI'], miro: { title: 'من التحدي إلى اللمس', caption: 'لوحة الأكاديمية — بدأ الانخراط مع مستخدمي الصم، والاستقصاء خرط التطبيقات والرسومات، والتنفيذ أصبح نموذج Sensic الذي تلمسينه.' } },
+            '5': { title: 'سري · من مستثمر', desc: 'لوحة إدارية مدعومة من مستثمر — موقع مباشر على الخريطة. Flutter وbackend وfrontend وREST API. التصميم في Figma.', subtitle: 'سري · مستثمر · Flutter · Full Stack', status: 'سري · مستثمر', role: 'مطورة Full Stack', overview: 'مشروع سري من مستثمر — لوحة إدارية لتتبع الموقع المباشر على الخريطة. صممت الواجهة في Figma ثم بنيت المنظومة كاملة بـ Flutter وREST API والخادم.', features: ['Figma — تصميم لوحة الإدارة', 'خريطة موقع مباشر — تتبع لحظي', 'Flutter — واجهة إدارية', 'REST API — نقاط نهاية للموقع والبيانات', 'Backend — منطق الخادم والمصادقة', 'Frontend — لوحة مربوطة بالـ API', 'سري من المستثمر · لا مستودع عام'] },
+            '1': { title: 'رحلة التعلم', desc: 'متتبع عادات للمتعلمين — حددي هدفاً، ابني سلسلة، واستخدمي أيام التجميد عند الانشغال.', subtitle: 'تتبع عادة التعلم · SwiftUI', status: 'متاح على GitHub', role: 'مطورة iOS', overview: 'تطبيق SwiftUI لمن يريد التعلم يومياً — بدون ذنب عند تفويت يوم. تختارين الهدف والإطار الزمني وتسجلين التقدم. السلسلة تحفزك وأيام التجميد تحميك.', features: ['Onboarding — هدف التعلم وأسبوع/شهر/سنة', 'سلسلة يومية مع عداد ونشاط', 'أيام تجميد — إيقاف مؤقت دون خسارة التقدم', 'واجهة داكنة ببرتقالي وأزرق فيروزي', 'مبني بالكامل بـ Swift وSwiftUI'], miro: { title: 'شرارة العادة', caption: 'لوحة Hello World — بيان التحدي، تدفقات المؤقت، وتلخيص التنفيذ الذي شكّل سلاسل رحلة التعلم وأيام التجميد.' } },
+            '3': { title: 'وصال', desc: 'تطبيق تواصل PECS للتوحد — بطاقات صور مخصصة بصورك وصوتك.', subtitle: 'وصال · تواصل بالصور · SwiftUI', status: 'قيد التطوير', role: 'مطورة iOS', overview: 'وصال تطبيق SwiftUI لمن يتواصلون عبر PECS. بطاقات شخصية بصور وصوت مسجل وفئات منظمة — كل شيء محفوظ محلياً ويعمل بدون إنترنت.', features: ['بطاقات PECS — اضغط للتواصل', 'صور مخصصة على كل بطاقة', 'سجّلي صوتك لكل بطاقة', 'قاعدة بيانات محلية — يعمل بدون إنترنت', 'فئات: منزل، طعام، ملابس، مدرسة، صحة وألعاب', 'واجهة خضراء هادئة ومتاحة', 'Swift وSwiftUI'], miro: { title: 'الاتصال بالتصميم', caption: 'عمل Miro للأثر — قيمة مقترحة وتدفقات مستخدم واختبار قابلية استخدام أسست وصال في احتياجات PECS الحقيقية.' } },
+            '2': { title: 'ORBIT', desc: 'كل هدف كوكب — متابعة يومية ومجرة أهداف وتحدي الأصدقاء عبر Firebase.', subtitle: 'Swift · SwiftUI · تحدي الأصدقاء · Firebase', status: 'قيد التطوير', role: 'مطورة iOS', overview: 'ORBIT تطبيق أهداف بروح كونية — كل هدف كوكب في مجرتك. تسجيل يومي واستكشاف الأجرام وتحدي الأصدقاء مع Firebase.', features: ['تصميم كوكب فريد لكل هدف', 'عرض المجرة — أهدافك كعوالم', 'أهداف اليوم — مهام وتقدم', 'تحدي الأصدقاء — تنافس ومتابعة', 'Firebase — مزامنة وتحديات حية', 'Swift وSwiftUI'], miro: { title: 'ارفع مستوى المجرة', caption: 'رحلة الفريق 7 — عنقود بحث وقيمة مقترحة وخارطة حوّلت الأهداف إلى عوالم ORBIT.' } },
+            '4': { title: 'Moviasme', desc: 'اكتشاف أفلام — تصفح وبحث ومراجعات وملف شخصي عبر REST API حي.', subtitle: 'أفلام · API · CRUD · واجهة صفراء · SwiftUI', status: 'مكتمل', role: 'مطورة iOS', overview: 'تطبيق أفلام SwiftUI مربوط بـ REST API حقيقي. تسجيل دخول ومركز أفلام وبحث وتفاصيل ومراجعات وملف شخصي — CRUD كامل.', features: ['تكامل REST API — أفلام ومراجعات وملف', 'CRUD كامل للمراجعات والملف', 'تسجيل دخول وجلسات', 'مركز الأفلام — بحث وقوائم', 'تفاصيل الفيلم — قصة وتقييم ومدة ولغة', 'تعديل الملف من التطبيق', 'واجهة سينمائية صفراء · SwiftUI'], miro: { title: 'من التصميم إلى تطبيق حي', caption: 'لوحة PathWays للفريق 5 — تحدي إحياء الواجهة، استقصاء تدفقات الأفلام، وإطلاق Moviasme بـ CRUD كامل.' } }
+        };
+
+        function pText(p, field) {
+            if (currentLang === 'ar' && projectI18n[p.id] && projectI18n[p.id][field] != null) {
+                return projectI18n[p.id][field];
+            }
+            return p[field];
+        }
+
+        function pFeatures(p) {
+            if (currentLang === 'ar' && projectI18n[p.id]?.features) return projectI18n[p.id].features;
+            return p.features;
+        }
+
+        function pMiroField(p, field) {
+            if (currentLang === 'ar' && projectI18n[p.id]?.miro?.[field]) return projectI18n[p.id].miro[field];
+            return p.miro?.[field];
+        }
+
+
         const modalMiroSection = document.getElementById('modalMiroSection');
         const modalMiroTitle = document.getElementById('modalMiroTitle');
         const modalMiroCaption = document.getElementById('modalMiroCaption');
@@ -2299,14 +3149,13 @@
                 return;
             }
             modalMiroSection.hidden = false;
-            modalMiroTitle.textContent = p.miro.title || 'Where the idea started';
-            modalMiroCaption.textContent = p.miro.caption || '';
-            modalMiroPhases.innerHTML = p.miro.phases.map(phase => {
-                const labels = { engage: 'Engage', investigate: 'Investigate', act: 'Act' };
-                return `<span class="miro-phase miro-phase--${phase}">${labels[phase] || phase}</span>`;
-            }).join('');
+            modalMiroTitle.textContent = pMiroField(p, 'title') || t('miro.titleDefault');
+            modalMiroCaption.textContent = pMiroField(p, 'caption') || '';
+            modalMiroPhases.innerHTML = p.miro.phases.map(phase =>
+                `<span class="miro-phase miro-phase--${phase}">${phaseLabel(phase)}</span>`
+            ).join('');
             modalMiroImage.src = p.miro.board;
-            modalMiroImage.alt = `${p.title} — ${p.miro.label} Miro board`;
+            modalMiroImage.alt = `${pText(p, 'title')} — ${p.miro.label} Miro board`;
             if (modalMiroScroll) modalMiroScroll.scrollLeft = 0;
         }
 
@@ -2344,6 +3193,7 @@
 
         const projectMap = Object.fromEntries(projects.map(p => [p.id, p]));
         const projectsGrid = document.getElementById('projectsGrid');
+        const heroProjectsTrack = document.getElementById('heroProjectsTrack');
         const projectFilters = document.querySelectorAll('.project-filter');
         const projectFilterCount = document.getElementById('projectFilterCount');
         const projectModal = document.getElementById('projectModal');
@@ -2362,6 +3212,44 @@
             });
         }
 
+        function heroProjectIconSrc(p) {
+            const raw = p.appIcon || p.image || p.screens?.[0]?.src || '';
+            if (!raw) return '';
+            const v = p.id === '1' ? 'journey3' : p.id === '4' ? 'showcase1' : 'hero1';
+            return `${raw}?v=${v}`;
+        }
+
+        function heroProjectIconHTML(p, i) {
+            const src = heroProjectIconSrc(p);
+            const title = pText(p, 'title');
+            const delay = (i * 0.38).toFixed(2);
+            const label = t('project.open', { title });
+            if (!src) {
+                return `<button type="button" class="hero-project-icon hero-project-icon--fallback" data-project-id="${p.id}" style="--float-delay:${delay}s" title="${title}" aria-label="${label}"><i class="fas fa-lock" aria-hidden="true"></i></button>`;
+            }
+            return `<button type="button" class="hero-project-icon" data-project-id="${p.id}" style="--float-delay:${delay}s" title="${title}" aria-label="${label}"><img src="${src}" alt="" loading="lazy"></button>`;
+        }
+
+        function renderHeroProjectsStrip() {
+            if (!heroProjectsTrack) return;
+            const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const icons = projects.map((p, i) => heroProjectIconHTML(p, i)).join('');
+            heroProjectsTrack.innerHTML = reduced ? icons : icons + icons;
+            heroProjectsTrack.classList.toggle('is-static', reduced);
+        }
+
+        function initHeroProjectsStrip() {
+            if (!heroProjectsTrack) return;
+            renderHeroProjectsStrip();
+            heroProjectsTrack.addEventListener('click', (e) => {
+                const btn = e.target.closest('[data-project-id]');
+                if (!btn) return;
+                if (!booted) bootPortfolio();
+                switchHubTab('projects');
+                setTimeout(() => openProjectModal(btn.dataset.projectId), 180);
+            });
+        }
+
         function projectPhoneSlots(count) {
             if (count >= 3) return ['slot-1', 'slot-2', 'slot-3'];
             return ['left', 'right'];
@@ -2373,26 +3261,25 @@
             if (!icon) {
                 return `<div class="work-item-thumb work-item-thumb--fallback" aria-hidden="true"><i class="fas fa-lock"></i></div>`;
             }
-            return `<div class="work-item-thumb"><img src="${icon}" alt="${p.title} app icon" loading="lazy"></div>`;
+            return `<div class="work-item-thumb"><img src="${icon}" alt="${pText(p, 'title')} app icon" loading="lazy"></div>`;
         }
 
         function miroPhaseHTML(phase) {
-            const labels = { engage: 'Engage', investigate: 'Investigate', act: 'Act' };
-            return `<span class="work-item-miro-phase work-item-miro-phase--${phase}">${labels[phase] || phase}</span>`;
+            return `<span class="work-item-miro-phase work-item-miro-phase--${phase}">${phaseLabel(phase)}</span>`;
         }
 
         function renderProjects() {
             if (!projectsGrid) return;
             projectsGrid.innerHTML = projects.map((p, i) => `
-                <article class="work-item${i === 0 ? ' work-item--lead' : ''}${p.miro ? ' work-item--has-miro' : ''}" data-project="${p.id}" data-cat="${p.cat}" tabindex="0" role="button" aria-label="Open ${p.title} project details">
+                <article class="work-item${i === 0 ? ' work-item--lead' : ''}${p.miro ? ' work-item--has-miro' : ''}" data-project="${p.id}" data-cat="${p.cat}" tabindex="0" role="button" aria-label="${t('project.open', { title: pText(p, 'title') })}">
                     ${projectListThumbHTML(p)}
                     <div class="work-item-body">
                         <div class="work-item-top">
-                            <span class="work-item-cat">${p.cat}</span>
+                            <span class="work-item-cat">${t('cat.' + p.cat)}</span>
                         </div>
-                        <h3>${p.title}</h3>
-                        <p>${p.desc}</p>
-                        <div class="work-item-tags">${p.stack.slice(0, 3).map(t => `<span class="work-tag">${t}</span>`).join('')}</div>
+                        <h3>${pText(p, 'title')}</h3>
+                        <p>${pText(p, 'desc')}</p>
+                        <div class="work-item-tags">${p.stack.slice(0, 3).map(tag => `<span class="work-tag">${tag}</span>`).join('')}</div>
                     </div>
                     ${p.miro ? `
                     <div class="work-item-miro-ribbon">
@@ -2402,7 +3289,7 @@
                             <div class="work-item-miro-phases">${p.miro.phases.map(miroPhaseHTML).join('')}</div>
                         </div>
                     </div>` : ''}
-                    <span class="work-item-arrow" aria-hidden="true">→</span>
+                    <span class="work-item-arrow" aria-hidden="true"></span>
                 </article>
             `).join('');
             bindProjectImages(projectsGrid);
@@ -2421,7 +3308,7 @@
             });
             if (projectsGrid) projectsGrid.classList.add('is-filtering');
             if (projectFilterCount) {
-                projectFilterCount.textContent = `${visible} project${visible === 1 ? '' : 's'}`;
+                projectFilterCount.textContent = formatProjectCount(visible);
             }
             revealProjectsPage();
         }
@@ -2431,7 +3318,7 @@
                 modalCover.className = ['modal-cover', 'modal-cover--secret', p.theme ? `modal-cover--${p.theme}` : ''].filter(Boolean).join(' ');
                 modalCover.innerHTML = `
                     <i class="fas fa-lock" aria-hidden="true"></i>
-                    <span>confidential · no preview</span>`;
+                    <span>${t('modal.secret')}</span>`;
                 return;
             }
             if (p.layout === 'mockup') {
@@ -2445,7 +3332,7 @@
                     ? `<div class="modal-mockup-captions">${p.mockupCaptions.map(c => `<span>${c}</span>`).join('')}</div>`
                     : '';
                 modalCover.innerHTML = `
-                    <img src="${p.image}" alt="${p.title}">
+                    <img src="${p.image}" alt="${pText(p, 'title')}">
                     ${captions}`;
                 return;
             }
@@ -2462,7 +3349,7 @@
                 const deviceClass = p.deviceMockups ? ' modal-phone--device-mockup' : '';
                 modalCover.innerHTML = p.screens.slice(0, isTriple ? 3 : 2).map((s, i) => `
                     <div class="modal-phone modal-phone--${slots[i]}${deviceClass}">
-                        <img src="${s.src}" alt="${p.title} — ${s.label}">
+                        <img src="${s.src}" alt="${pText(p, 'title')} — ${s.label}">
                         <span class="modal-phone-label">${s.label}</span>
                     </div>
                 `).join('');
@@ -2470,44 +3357,45 @@
             }
             modalCover.className = 'modal-cover';
             modalCover.innerHTML = `
-                <img id="modalImage" src="${p.image}" alt="${p.title}">
-                <span class="modal-cover-fallback" id="modalCoverFallback">screenshot pending</span>`;
+                <img id="modalImage" src="${p.image}" alt="${pText(p, 'title')}">
+                <span class="modal-cover-fallback" id="modalCoverFallback">${t('modal.fallback')}</span>`;
             const img = modalCover.querySelector('#modalImage');
             if (img) {
                 img.addEventListener('error', () => modalCover.classList.add('is-fallback'), { once: true });
             }
         }
 
-        function openProjectModal(id) {
+        function openProjectModal(id, opts = {}) {
             const p = projectMap[id];
             if (!p) return;
 
-            modalTrigger = document.activeElement;
+            openModalId = id;
+            if (!opts.skipFocus) modalTrigger = document.activeElement;
 
             modalPanel.className = 'project-modal-panel ' + p.theme;
             document.getElementById('modalFile').textContent = p.file;
-            document.getElementById('modalTitle').textContent = p.title;
-            document.getElementById('modalSubtitle').textContent = p.subtitle;
+            document.getElementById('modalTitle').textContent = pText(p, 'title');
+            document.getElementById('modalSubtitle').textContent = pText(p, 'subtitle');
             document.getElementById('modalIcon').className = 'modal-icon fas ' + p.icon;
-            document.getElementById('modalOverview').textContent = p.overview;
+            document.getElementById('modalOverview').textContent = pText(p, 'overview');
 
             modalCover.classList.remove('is-fallback');
             setModalCover(p);
 
             document.getElementById('modalMeta').innerHTML = `
-                <div class="modal-meta-item"><span>status</span><strong>${p.status}</strong></div>
-                <div class="modal-meta-item"><span>role</span><strong>${p.role}</strong></div>
-                <div class="modal-meta-item"><span>year</span><strong>${p.year}</strong></div>
+                <div class="modal-meta-item"><span>${t('meta.status')}</span><strong>${pText(p, 'status')}</strong></div>
+                <div class="modal-meta-item"><span>${t('meta.role')}</span><strong>${pText(p, 'role')}</strong></div>
+                <div class="modal-meta-item"><span>${t('meta.year')}</span><strong>${p.year}</strong></div>
             `;
 
-            document.getElementById('modalFeatures').innerHTML = p.features.map(f => `<li>${f}</li>`).join('');
-            document.getElementById('modalTags').innerHTML = p.stack.map(t => `<span class="modal-tag">${t}</span>`).join('');
+            document.getElementById('modalFeatures').innerHTML = pFeatures(p).map(f => `<li>${f}</li>`).join('');
+            document.getElementById('modalTags').innerHTML = p.stack.map(tag => `<span class="modal-tag">${tag}</span>`).join('');
             setModalMiro(p);
 
             const link = document.getElementById('modalLink');
             if (p.link) {
                 link.href = p.link;
-                const label = p.linkLabel || (p.link.includes('apps.apple.com') ? 'View on App Store' : 'View on GitHub');
+                const label = p.linkLabel || (p.link.includes('apps.apple.com') ? t('link.appstore') : t('link.github'));
                 link.innerHTML = `${label} <i class="fas fa-arrow-right"></i>`;
                 link.style.display = '';
             } else {
@@ -2518,10 +3406,11 @@
             projectModal.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
             if (modalScroll) modalScroll.scrollTop = 0;
-            modalClose.focus();
+            if (!opts.skipFocus) modalClose.focus();
         }
 
         function closeProjectModal() {
+            openModalId = null;
             projectModal.classList.remove('open');
             projectModal.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
@@ -2583,7 +3472,7 @@
             });
             skillsRegistry?.classList.add('is-filtering');
             if (skillFilterCount) {
-                skillFilterCount.textContent = `${visible} skill${visible === 1 ? '' : 's'}`;
+                skillFilterCount.textContent = formatSkillCount(visible);
             }
         }
 
@@ -2627,7 +3516,12 @@
             });
         });
 
-        moveDockIndicator(document.querySelector('.hub-dock [data-hub-tab="about"]'));
+        moveDockIndicator(document.querySelector('.hub-dock [data-hub-tab="projects"]'));
+        applyLang(currentLang);
+        updateHeroHeader('projects', { animate: false });
+        initHeroProjectsStrip();
+        initOsWindowObserver();
+        revealOsWindows(document.getElementById('projects'));
     
     
     </script>
