@@ -13,14 +13,43 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@engdawood/thmanyah-font-web/index.css">
     <script>
         (function () {
-            if (localStorage.getItem('portfolio-theme') !== 'light') {
-                document.documentElement.setAttribute('data-theme', 'dark');
+            if (localStorage.getItem('portfolio-theme-migrated') !== '2') {
+                localStorage.removeItem('portfolio-theme');
+                localStorage.setItem('portfolio-theme-migrated', '2');
+            }
+            if (localStorage.getItem('portfolio-theme') === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
             }
             localStorage.setItem('portfolio-lang', 'en');
         })();
     </script>
     <style>
         :root {
+            --beige-hero: #4a443c;
+            --beige: #4a443c;
+            --beige-body: #3d3830;
+            --beige-deep: #353028;
+            --ink: #f0ebe3;
+            --panel: #454038;
+            --panel-2: #3d3830;
+            --cream: #524c44;
+            --muted: rgba(240, 235, 227, 0.55);
+            --text: #f0ebe3;
+            --text-dark: #f0ebe3;
+            --accent: #f0ebe3;
+            --star: #a78bfa;
+            --select: #5b9bd5;
+            --line: rgba(240, 235, 227, 0.14);
+            --font-ui: 'Thmanyah Sans', sans-serif;
+            --font-display: 'Thmanyah Serif Display', serif;
+            --nav-h: 44px;
+            --dock-h: 64px;
+            --radius: 4px;
+            --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+            color-scheme: dark;
+        }
+
+        html[data-theme="light"] {
             --beige-hero: #e8dcc8;
             --beige: #e8dcc8;
             --beige-body: #ddd0bc;
@@ -33,33 +62,8 @@
             --text: #1a1816;
             --text-dark: #1a1816;
             --accent: #1a1816;
-            --star: #a78bfa;
-            --select: #5b9bd5;
             --line: rgba(26, 24, 22, 0.12);
-            --font-ui: 'Thmanyah Sans', sans-serif;
-            --font-display: 'Thmanyah Serif Display', serif;
-            --nav-h: 44px;
-            --dock-h: 64px;
-            --radius: 4px;
-            --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
             color-scheme: light;
-        }
-
-        html[data-theme="dark"] {
-            --beige-hero: #4a443c;
-            --beige: #4a443c;
-            --beige-body: #3d3830;
-            --beige-deep: #353028;
-            --ink: #f0ebe3;
-            --panel: #454038;
-            --panel-2: #3d3830;
-            --cream: #524c44;
-            --text: #f0ebe3;
-            --text-dark: #f0ebe3;
-            --muted: rgba(240, 235, 227, 0.55);
-            --accent: #f0ebe3;
-            --line: rgba(240, 235, 227, 0.14);
-            color-scheme: dark;
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -135,8 +139,12 @@
             font-size: 0.72rem;
             letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: rgba(20,18,16,0.65);
+            color: rgba(240, 235, 227, 0.65);
             margin-bottom: 0.5rem;
+        }
+
+        html[data-theme="light"] .retro-hero-role {
+            color: rgba(20, 18, 16, 0.65);
         }
 
         .retro-hero {
@@ -156,14 +164,14 @@
             height: auto;
             z-index: 0;
             color: var(--star);
-            opacity: 0.14;
+            opacity: 0.2;
             pointer-events: none;
             transform-origin: 55% 50%;
             animation: saturn-drift 14s ease-in-out infinite;
         }
 
-        html[data-theme="dark"] .hero-bg-saturn {
-            opacity: 0.2;
+        html[data-theme="light"] .hero-bg-saturn {
+            opacity: 0.14;
         }
 
         @keyframes saturn-drift {
@@ -246,13 +254,13 @@
             font-size: 0.62rem;
             letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: rgba(20, 18, 16, 0.45);
+            color: rgba(240, 235, 227, 0.45);
             text-align: center;
             margin-bottom: 0.55rem;
         }
 
-        html[data-theme="dark"] .hero-projects-label {
-            color: rgba(240, 235, 227, 0.45);
+        html[data-theme="light"] .hero-projects-label {
+            color: rgba(20, 18, 16, 0.45);
         }
 
         .hero-projects-marquee {
@@ -282,11 +290,6 @@
             transition: transform 0.22s var(--ease-out);
         }
 
-        html[data-theme="dark"] .hero-project-icon {
-            background: transparent;
-            box-shadow: none;
-        }
-
         .hero-project-icon img {
             width: 100%;
             height: 100%;
@@ -302,6 +305,10 @@
             display: grid;
             place-items: center;
             font-size: 0.9rem;
+            color: rgba(240, 235, 227, 0.35);
+        }
+
+        html[data-theme="light"] .hero-project-icon--fallback {
             color: rgba(20, 18, 16, 0.35);
         }
 
@@ -309,13 +316,13 @@
             font-size: 0.68rem;
             letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: rgba(20, 18, 16, 0.52);
+            color: rgba(240, 235, 227, 0.55);
             margin-bottom: 0.6rem;
             min-height: 1.05em;
         }
 
-        html[data-theme="dark"] .retro-hero-sub {
-            color: rgba(240, 235, 227, 0.55);
+        html[data-theme="light"] .retro-hero-sub {
+            color: rgba(20, 18, 16, 0.52);
         }
 
         .hero-morph {
@@ -363,19 +370,15 @@
         .retro-hero[data-hero-tab="projects"] .hero-deco-art--projects,
         .retro-hero[data-hero-tab="experience"] .hero-deco-art--experience,
         .retro-hero[data-hero-tab="connect"] .hero-deco-art--connect {
-            opacity: 0.38;
+            opacity: 0.45;
             transform: scale(1);
         }
 
-        html[data-theme="dark"] .hero-deco-art {
-            opacity: 0;
-        }
-
-        html[data-theme="dark"] .retro-hero[data-hero-tab="about"] .hero-deco-art--about,
-        html[data-theme="dark"] .retro-hero[data-hero-tab="projects"] .hero-deco-art--projects,
-        html[data-theme="dark"] .retro-hero[data-hero-tab="experience"] .hero-deco-art--experience,
-        html[data-theme="dark"] .retro-hero[data-hero-tab="connect"] .hero-deco-art--connect {
-            opacity: 0.45;
+        html[data-theme="light"] .retro-hero[data-hero-tab="about"] .hero-deco-art--about,
+        html[data-theme="light"] .retro-hero[data-hero-tab="projects"] .hero-deco-art--projects,
+        html[data-theme="light"] .retro-hero[data-hero-tab="experience"] .hero-deco-art--experience,
+        html[data-theme="light"] .retro-hero[data-hero-tab="connect"] .hero-deco-art--connect {
+            opacity: 0.38;
         }
 
         .hero-deco-art--about {
@@ -414,7 +417,11 @@
             font-size: 0.72rem;
             letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: rgba(20,18,16,0.65);
+            color: rgba(240, 235, 227, 0.65);
+        }
+
+        html[data-theme="light"] .retro-meta-line {
+            color: rgba(20, 18, 16, 0.65);
         }
 
         .hero-edge {
@@ -574,18 +581,19 @@
             align-items: center;
             justify-content: flex-end;
             padding: 0 14px;
-            background: rgba(232, 220, 200, 0.82);
+            background: rgba(61, 56, 48, 0.9);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(26, 24, 22, 0.08);
+            border-bottom: 1px solid rgba(240, 235, 227, 0.08);
         }
 
         html:not(.intro-active) .site-topbar {
-            background: rgba(221, 208, 188, 0.88);
+            background: rgba(61, 56, 48, 0.9);
         }
 
-        html[data-theme="dark"] .site-topbar {
-            background: rgba(61, 56, 48, 0.9);
-            border-bottom-color: rgba(240, 235, 227, 0.08);
+        html[data-theme="light"] .site-topbar,
+        html[data-theme="light"]:not(.intro-active) .site-topbar {
+            background: rgba(221, 208, 188, 0.88);
+            border-bottom-color: rgba(26, 24, 22, 0.08);
         }
 
         .topbar-inner {
@@ -608,8 +616,8 @@
         .topbar-theme {
             width: 2rem;
             height: 2rem;
-            border: 1px solid rgba(26, 24, 22, 0.12);
-            background: rgba(255, 255, 255, 0.45);
+            border: 1px solid rgba(240, 235, 227, 0.14);
+            background: rgba(255, 255, 255, 0.06);
             border-radius: 4px;
             font-size: 0.9rem;
             display: grid;
@@ -617,10 +625,9 @@
             color: var(--text);
         }
 
-        html[data-theme="dark"] .topbar-theme {
-            border-color: rgba(240, 235, 227, 0.14);
-            background: rgba(255, 255, 255, 0.06);
-            color: var(--text);
+        html[data-theme="light"] .topbar-theme {
+            border-color: rgba(26, 24, 22, 0.12);
+            background: rgba(255, 255, 255, 0.45);
         }
 
         .topbar-theme .theme-toggle-label { display: none; }
@@ -1197,14 +1204,14 @@
         .path-step.visible { opacity: 1; transform: translateY(0); }
 
         .path-step--current {
-            background: color-mix(in srgb, var(--cream) 90%, var(--star) 10%);
-            box-shadow: 0 4px 22px rgba(167, 139, 250, 0.18);
+            background: #565048;
+            box-shadow: 0 4px 24px rgba(167, 139, 250, 0.22);
             border-inline-start: 3px solid var(--star);
         }
 
-        html[data-theme="dark"] .path-step--current {
-            background: #565048;
-            box-shadow: 0 4px 24px rgba(167, 139, 250, 0.22);
+        html[data-theme="light"] .path-step--current {
+            background: color-mix(in srgb, var(--cream) 90%, var(--star) 10%);
+            box-shadow: 0 4px 22px rgba(167, 139, 250, 0.18);
         }
 
         .path-step--current .path-step-badge {
@@ -2218,9 +2225,9 @@
                 openProjectModal(openModalId, { skipFocus: true });
             }
 
-            const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+            const theme = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
             const label = document.getElementById('themeToggle')?.querySelector('.theme-toggle-label');
-            if (label) label.textContent = theme === 'light' ? t('theme.dark') : t('theme.light');
+            if (label) label.textContent = theme === 'dark' ? t('theme.light') : t('theme.dark');
             if (themeToggle) {
                 themeToggle.setAttribute('aria-label', theme === 'dark' ? t('theme.switchLight') : t('theme.switchDark'));
             }
@@ -2236,11 +2243,11 @@
         const THEME_KEY = 'portfolio-theme';
 
         function applyTheme(theme) {
-            if (theme === 'dark') {
-                document.documentElement.setAttribute('data-theme', 'dark');
+            if (theme === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
             } else {
                 document.documentElement.removeAttribute('data-theme');
-                theme = 'light';
+                theme = 'dark';
             }
             const themeMeta = document.querySelector('meta[name="theme-color"]');
             if (themeMeta) themeMeta.setAttribute('content', theme === 'dark' ? '#3d3830' : '#e8dcc8');
@@ -2249,18 +2256,19 @@
                 themeToggle.setAttribute('aria-label', theme === 'dark' ? t('theme.switchLight') : t('theme.switchDark'));
                 const icon = themeToggle.querySelector('.theme-toggle-icon');
                 const label = themeToggle.querySelector('.theme-toggle-label');
-                if (icon) icon.textContent = theme === 'light' ? '☾' : '☀';
-                if (label) label.textContent = theme === 'light' ? t('theme.dark') : t('theme.light');
+                if (icon) icon.textContent = theme === 'dark' ? '☀' : '☾';
+                if (label) label.textContent = theme === 'dark' ? t('theme.light') : t('theme.dark');
             }
             localStorage.setItem(THEME_KEY, theme);
+            if (mainFieldFx?.resize) mainFieldFx.resize();
         }
 
         applyTheme(localStorage.getItem(THEME_KEY) === 'light' ? 'light' : 'dark');
 
         if (themeToggle) {
             themeToggle.addEventListener('click', () => {
-                const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-                applyTheme(next);
+                const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+                applyTheme(isLight ? 'dark' : 'light');
             });
         }
 
@@ -2291,7 +2299,7 @@
             ];
 
             const palette = () => {
-                const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+                const dark = document.documentElement.getAttribute('data-theme') !== 'light';
                 return {
                     washes: dark
                         ? [
@@ -2444,7 +2452,7 @@
 
                 if (pointer.on && !reduced && !heroOnly) {
                     const glow = ctx.createRadialGradient(smooth.x, smooth.y, 0, smooth.x, smooth.y, Math.min(w, h) * 0.18);
-                    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+                    const dark = document.documentElement.getAttribute('data-theme') !== 'light';
                     glow.addColorStop(0, dark ? 'rgba(167, 139, 250, 0.08)' : 'rgba(167, 139, 250, 0.12)');
                     glow.addColorStop(1, 'rgba(255, 255, 255, 0)');
                     ctx.fillStyle = glow;
