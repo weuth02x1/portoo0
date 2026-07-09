@@ -15,7 +15,7 @@
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="assets/logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,450&display=swap" rel="stylesheet">
     <script>
         (function () {
             if (localStorage.getItem('portfolio-theme') === 'dark') {
@@ -41,8 +41,9 @@
             --dock-h: 72px;
             --radius: 20px;
             --radius-sm: 14px;
-            --font-ui: 'DM Sans', system-ui, -apple-system, sans-serif;
-            --font-serif: 'Instrument Serif', Georgia, serif;
+            --font-ui: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            --font-display: 'Fraunces', Georgia, serif;
+            --font-serif: 'Fraunces', Georgia, serif;
             --shadow-sm: 0 1px 3px rgba(20, 18, 16, 0.04);
             --shadow-md: 0 10px 36px rgba(20, 18, 16, 0.08);
             --shadow-dock: 0 14px 44px rgba(20, 18, 16, 0.1), 0 0 0 1px var(--dock-border);
@@ -107,23 +108,24 @@
         }
 
         body::after {
-            content: '';
-            position: fixed;
-            inset: -32px;
-            z-index: 0;
-            pointer-events: none;
-            opacity: 1;
-            background:
-                linear-gradient(var(--grid-line) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-            background-size: 28px 28px;
-            animation: gridDrift 90s linear infinite;
-            mask-image: radial-gradient(ellipse 95% 90% at 50% 48%, #000 35%, transparent 92%);
+            content: none;
         }
 
-        @keyframes gridDrift {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(28px, 28px); }
+        .field-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        #boot-screen .field-canvas {
+            position: absolute;
+        }
+
+        .field-canvas {
+            mask-image: radial-gradient(ellipse 96% 92% at 50% 48%, #000 36%, transparent 94%);
         }
 
         #main-content,
@@ -131,8 +133,8 @@
 
         h1, h2, h3, h4, .display {
             font-family: var(--font-serif);
-            font-weight: 400;
-            letter-spacing: -0.02em;
+            font-weight: 500;
+            letter-spacing: -0.015em;
         }
 
         a { color: inherit; text-decoration: none; }
@@ -147,13 +149,12 @@
             padding: 0 20px;
         }
 
-        /* ── Intro — Emblem ── */
+        /* ── Intro — Luminous Portal ── */
         #boot-screen {
             --intro-bg: #f7f3ec;
             --intro-text: #141210;
             --intro-muted: #5c564e;
             --intro-accent: #8f6b3e;
-            --intro-glow: rgba(143, 107, 62, 0.22);
             --reveal: 0;
             position: fixed;
             inset: 0;
@@ -170,10 +171,6 @@
             transition: opacity 0.65s ease, visibility 0.65s;
         }
 
-        html[data-theme="dark"] #boot-screen {
-            --intro-glow: rgba(196, 165, 116, 0.2);
-        }
-
         #boot-screen.is-out,
         #boot-screen.hidden {
             opacity: 0;
@@ -181,124 +178,92 @@
             pointer-events: none;
         }
 
-        #boot-screen.is-out .intro-emblem,
-        #boot-screen.is-out .intro-gate {
+        #boot-screen.is-out .intro-portal,
+        #boot-screen.is-out .intro-launch {
             opacity: 0;
-            transform: translateY(-24px) scale(0.96);
+            transform: translateY(-28px) scale(0.97);
             transition: transform 0.55s var(--ease-out), opacity 0.55s ease;
         }
 
-        .intro-aura {
+        .intro-veil {
             position: absolute;
             inset: 0;
+            z-index: 1;
             pointer-events: none;
-            background:
-                radial-gradient(ellipse 70% 55% at 50% 44%, rgba(143, 107, 62, 0.14), transparent 72%),
-                radial-gradient(circle at 50% 50%, rgba(255, 253, 249, 0.5), transparent 58%);
-            animation: introAuraBreath 6s ease-in-out infinite;
+            background: radial-gradient(circle at 50% 42%, rgba(143, 107, 62, 0.32) 0%, rgba(143, 107, 62, 0.1) 40%, transparent 74%);
+            opacity: var(--reveal, 0);
+            transform: scale(calc(1 + var(--reveal, 0) * 0.35));
+            will-change: opacity, transform;
         }
 
-        html[data-theme="dark"] .intro-aura {
-            background:
-                radial-gradient(ellipse 70% 55% at 50% 44%, rgba(196, 165, 116, 0.12), transparent 72%),
-                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.04), transparent 58%);
+        html[data-theme="dark"] .intro-veil {
+            background: radial-gradient(circle at 50% 42%, rgba(196, 165, 116, 0.34) 0%, rgba(196, 165, 116, 0.12) 40%, transparent 74%);
         }
 
-        @keyframes introAuraBreath {
-            0%, 100% { opacity: 0.85; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.03); }
-        }
-
-        .intro-emblem {
+        .intro-portal {
             position: relative;
-            z-index: 2;
-            width: clamp(160px, 40vw, 210px);
-            height: clamp(160px, 40vw, 210px);
-            display: grid;
-            place-items: center;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 0 1.5rem;
             transform:
-                translateY(calc(var(--reveal, 0) * -48px))
-                scale(calc(1 + var(--reveal, 0) * 0.12));
-            opacity: calc(1 - var(--reveal, 0) * 0.85);
+                translateY(calc(var(--reveal, 0) * -52px))
+                scale(calc(1 + var(--reveal, 0) * 0.06));
+            opacity: calc(1 - var(--reveal, 0) * 0.88);
             transition: transform 0.45s var(--ease-out), opacity 0.45s ease;
-            will-change: transform, opacity;
         }
 
-        .intro-ring {
+        .intro-arc {
             position: absolute;
+            inset: -30px;
             border-radius: 50%;
+            border: 1px solid transparent;
+            background:
+                linear-gradient(var(--intro-bg), var(--intro-bg)) padding-box,
+                conic-gradient(from 0deg, transparent, rgba(143, 107, 62, 0.55), transparent 28%, transparent 72%, rgba(143, 107, 62, 0.35), transparent) border-box;
+            opacity: 0.55;
+            animation: introArcSpin 18s linear infinite;
             pointer-events: none;
         }
 
-        .intro-ring--outer {
-            inset: -14px;
-            border: 1px solid rgba(143, 107, 62, 0.28);
-            animation: introRingSpin 24s linear infinite;
-        }
-
-        .intro-ring--outer::before {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            border-radius: 50%;
-            background: conic-gradient(from 0deg, transparent 0%, var(--intro-accent) 18%, transparent 36%, transparent 100%);
-            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2.5px), #000 calc(100% - 1px));
-            mask: radial-gradient(farthest-side, transparent calc(100% - 2.5px), #000 calc(100% - 1px));
-            opacity: 0.9;
-        }
-
-        .intro-ring--inner {
-            inset: 4px;
-            border: 1px dashed rgba(143, 107, 62, 0.35);
-            animation: introRingSpin 36s linear infinite reverse;
-        }
-
-        @keyframes introRingSpin {
+        @keyframes introArcSpin {
             to { transform: rotate(360deg); }
         }
 
-        .intro-logo-glow {
-            position: absolute;
-            inset: 16%;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--intro-glow) 0%, transparent 72%);
-            animation: introGlowPulse 3.8s ease-in-out infinite;
-        }
-
-        @keyframes introGlowPulse {
-            0%, 100% { transform: scale(0.92); opacity: 0.55; }
-            50% { transform: scale(1.08); opacity: 1; }
-        }
-
-        .intro-logo-mark {
+        .intro-logo-stage {
             position: relative;
             z-index: 1;
-            width: clamp(96px, 24vw, 120px);
-            height: clamp(96px, 24vw, 120px);
-            border-radius: 50%;
-            background: #fffdf9;
-            border: 1.5px solid rgba(143, 107, 62, 0.4);
-            padding: clamp(16px, 4vw, 20px);
+            margin-bottom: 1.35rem;
+            width: clamp(100px, 26vw, 124px);
+            height: clamp(100px, 26vw, 124px);
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .intro-logo-mark {
+            width: clamp(100px, 26vw, 124px);
+            height: clamp(100px, 26vw, 124px);
+            border-radius: 50%;
+            background: rgba(255, 253, 249, 0.88);
+            border: 1px solid rgba(143, 107, 62, 0.28);
+            padding: clamp(18px, 4.5vw, 22px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             box-shadow:
-                0 0 0 10px rgba(143, 107, 62, 0.08),
-                0 24px 64px rgba(143, 107, 62, 0.22);
-            animation: introLogoFloat 5s ease-in-out infinite;
+                0 0 0 1px rgba(255, 255, 255, 0.5) inset,
+                0 20px 56px rgba(143, 107, 62, 0.16);
         }
 
         html[data-theme="dark"] .intro-logo-mark {
-            background: #1a1816;
-            border-color: rgba(196, 165, 116, 0.35);
-            box-shadow:
-                0 0 0 10px rgba(196, 165, 116, 0.06),
-                0 24px 64px rgba(0, 0, 0, 0.45);
-        }
-
-        @keyframes introLogoFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
+            background: rgba(26, 24, 22, 0.82);
+            border-color: rgba(196, 165, 116, 0.26);
+            box-shadow: 0 20px 56px rgba(0, 0, 0, 0.4);
         }
 
         .intro-logo-mark img {
@@ -314,79 +279,116 @@
             filter: none;
         }
 
-        .intro-gate {
-            position: absolute;
-            bottom: calc(32px + env(safe-area-inset-bottom, 0px));
-            left: 50%;
-            z-index: 3;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            transform: translateX(-50%) translateY(calc(var(--reveal, 0) * -12px));
-            opacity: calc(1 - var(--reveal, 0) * 0.9);
-            transition: transform 0.35s ease, opacity 0.35s ease;
-            pointer-events: none;
+        .intro-identity {
+            position: relative;
+            z-index: 1;
+            animation: introIdentityIn 1s var(--ease-out) 0.25s both;
         }
 
-        .intro-gate-line {
-            width: 1px;
-            height: 32px;
-            background: linear-gradient(0deg, var(--intro-accent), transparent);
-            opacity: 0.55;
+        @keyframes introIdentityIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .intro-gate-chevron {
+        .intro-name {
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 8.5vw, 3.1rem);
+            font-weight: 500;
+            line-height: 1.02;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.35rem;
+        }
+
+        .intro-name em {
+            font-style: italic;
             color: var(--intro-accent);
-            animation: introGateChevron 2.2s ease-in-out infinite;
+            font-weight: 450;
         }
 
-        .intro-gate-chevron svg {
-            width: 22px;
-            height: 22px;
-            display: block;
-        }
-
-        @keyframes introGateChevron {
-            0%, 100% { transform: translateY(0); opacity: 0.55; }
-            50% { transform: translateY(-6px); opacity: 1; }
-        }
-
-        .intro-gate-text {
-            font-size: 0.62rem;
+        .intro-role {
+            font-size: 0.72rem;
             font-weight: 600;
-            letter-spacing: 0.28em;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
             color: var(--intro-muted);
         }
 
-        .intro-veil {
+        .intro-launch {
             position: absolute;
-            inset: 0;
-            z-index: 1;
-            pointer-events: none;
-            background: radial-gradient(circle at 50% 46%, rgba(143, 107, 62, 0.35) 0%, rgba(143, 107, 62, 0.12) 38%, transparent 72%);
-            opacity: var(--reveal, 0);
-            transform: scale(calc(1 + var(--reveal, 0) * 0.4));
-            will-change: opacity, transform;
+            bottom: calc(30px + env(safe-area-inset-bottom, 0px));
+            left: 50%;
+            z-index: 4;
+            width: min(280px, calc(100% - 48px));
+            transform: translateX(-50%) translateY(calc(var(--reveal, 0) * -14px));
+            opacity: calc(1 - var(--reveal, 0) * 0.92);
+            transition: transform 0.35s ease, opacity 0.35s ease;
+            text-align: center;
         }
 
-        html[data-theme="dark"] .intro-veil {
-            background: radial-gradient(circle at 50% 46%, rgba(196, 165, 116, 0.38) 0%, rgba(196, 165, 116, 0.14) 38%, transparent 72%);
+        .intro-launch-track {
+            position: relative;
+            height: 3px;
+            margin-bottom: 0.85rem;
+            border-radius: 999px;
+            background: rgba(143, 107, 62, 0.12);
+            overflow: hidden;
         }
 
-        #boot-screen.is-launching .intro-emblem,
+        html[data-theme="dark"] .intro-launch-track {
+            background: rgba(196, 165, 116, 0.1);
+        }
+
+        .intro-launch-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: calc(var(--reveal, 0) * 100%);
+            border-radius: inherit;
+            background: linear-gradient(90deg, rgba(143, 107, 62, 0.5), var(--intro-accent));
+            box-shadow: 0 0 12px rgba(143, 107, 62, 0.35);
+            transition: width 0.08s linear;
+        }
+
+        .intro-launch-hint {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            color: var(--intro-accent);
+        }
+
+        .intro-launch-hint svg {
+            width: 20px;
+            height: 20px;
+            opacity: 0.75;
+            animation: introLiftCue 2.4s ease-in-out infinite;
+        }
+
+        @keyframes introLiftCue {
+            0%, 100% { transform: translateY(0); opacity: 0.55; }
+            50% { transform: translateY(-5px); opacity: 1; }
+        }
+
+        .intro-launch-hint span {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--intro-muted);
+        }
+
+        #boot-screen.is-launching .intro-portal,
         #boot-screen.is-launching .intro-veil,
-        #boot-screen.is-launching .intro-gate {
-            transition: transform 0.6s var(--ease-out), opacity 0.6s ease;
+        #boot-screen.is-launching .intro-launch,
+        #boot-screen.is-launching .intro-launch-fill {
+            transition: transform 0.6s var(--ease-out), width 0.6s var(--ease-out), opacity 0.6s ease;
         }
 
         #boot-screen.is-dragging { touch-action: none; }
-        #boot-screen.has-progress .intro-logo-mark,
-        #boot-screen.has-progress .intro-ring,
-        #boot-screen.has-progress .intro-logo-glow { animation: none; }
-        #boot-screen.is-dragging .intro-emblem,
-        #boot-screen.is-dragging .intro-gate { transition: none; }
+        #boot-screen.is-dragging .intro-portal,
+        #boot-screen.is-dragging .intro-launch,
+        #boot-screen.is-dragging .intro-launch-fill { transition: none; }
 
         .brand-mark {
             width: 30px;
@@ -426,16 +428,13 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
-            body::after,
-            .intro-aura,
-            .intro-ring--outer,
-            .intro-ring--inner,
-            .intro-logo-glow,
-            .intro-logo-mark,
-            .intro-gate-chevron { animation: none; }
-            #boot-screen.is-launching .intro-emblem,
+            .intro-arc,
+            .intro-launch-hint svg { animation: none; }
+            .intro-identity { animation: none; }
+            #boot-screen.is-launching .intro-portal,
             #boot-screen.is-launching .intro-veil,
-            #boot-screen.is-launching .intro-gate { transition-duration: 0.01ms; }
+            #boot-screen.is-launching .intro-launch,
+            #boot-screen.is-launching .intro-launch-fill { transition-duration: 0.01ms; }
         }
 
         /* ── Main ── */
@@ -892,6 +891,191 @@
         }
 
         .work-item:hover .work-item-arrow { opacity: 1; transform: translateX(3px); }
+
+        .work-item--has-miro {
+            align-items: start;
+        }
+
+        .work-item-miro-ribbon {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            margin-top: 0.15rem;
+            padding-top: 0.65rem;
+            border-top: 1px dashed rgba(143, 107, 62, 0.16);
+        }
+
+        .work-item-miro-peek {
+            width: 3.25rem;
+            height: 2rem;
+            border-radius: 6px;
+            object-fit: cover;
+            object-position: left center;
+            border: 1px solid rgba(143, 107, 62, 0.18);
+            box-shadow: 0 4px 12px rgba(143, 107, 62, 0.08);
+            flex-shrink: 0;
+        }
+
+        .work-item-miro-copy {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .work-item-miro-label {
+            display: block;
+            font-size: 0.58rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.12rem;
+        }
+
+        .work-item-miro-phases {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.28rem;
+        }
+
+        .work-item-miro-phase {
+            font-size: 0.52rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            padding: 0.12rem 0.38rem;
+            border-radius: 999px;
+            border: 1px solid transparent;
+        }
+
+        .work-item-miro-phase--engage {
+            color: #2f7a4f;
+            background: rgba(76, 175, 120, 0.12);
+            border-color: rgba(76, 175, 120, 0.22);
+        }
+
+        .work-item-miro-phase--investigate {
+            color: #9a7b12;
+            background: rgba(244, 196, 48, 0.14);
+            border-color: rgba(244, 196, 48, 0.24);
+        }
+
+        .work-item-miro-phase--act {
+            color: #2f6f9b;
+            background: rgba(91, 164, 212, 0.12);
+            border-color: rgba(91, 164, 212, 0.22);
+        }
+
+        .modal-section--miro { margin-top: 0.25rem; }
+
+        .miro-spark {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.58rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.45rem;
+        }
+
+        .miro-spark::before {
+            content: '✦';
+            font-size: 0.72rem;
+            opacity: 0.75;
+        }
+
+        .miro-board {
+            position: relative;
+            padding: 0.85rem;
+            border-radius: calc(var(--radius-sm) + 4px);
+            background:
+                linear-gradient(145deg, rgba(255, 253, 249, 0.95), rgba(247, 241, 232, 0.88));
+            border: 1px solid rgba(143, 107, 62, 0.16);
+            box-shadow: 0 18px 48px rgba(143, 107, 62, 0.1);
+        }
+
+        html[data-theme="dark"] .miro-board {
+            background: linear-gradient(145deg, rgba(30, 28, 26, 0.96), rgba(22, 20, 18, 0.92));
+            border-color: rgba(196, 165, 116, 0.14);
+            box-shadow: 0 18px 48px rgba(0, 0, 0, 0.35);
+        }
+
+        .miro-tape {
+            position: absolute;
+            width: 52px;
+            height: 18px;
+            border-radius: 2px;
+            background: rgba(232, 220, 196, 0.72);
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) inset;
+            opacity: 0.85;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .miro-tape--tl { top: 10px; left: 18px; transform: rotate(-7deg); }
+        .miro-tape--tr { top: 12px; right: 20px; transform: rotate(5deg); }
+
+        .miro-phases {
+            display: flex;
+            gap: 0.35rem;
+            margin-bottom: 0.65rem;
+            flex-wrap: wrap;
+        }
+
+        .miro-phase {
+            font-size: 0.58rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.28rem 0.55rem;
+            border-radius: 999px;
+        }
+
+        .miro-phase--engage { color: #fff; background: #4caf78; }
+        .miro-phase--investigate { color: #5c4a00; background: #f4c430; }
+        .miro-phase--act { color: #fff; background: #5ba4d4; }
+
+        .miro-caption {
+            font-size: 0.82rem;
+            color: var(--muted);
+            line-height: 1.55;
+            margin-bottom: 0.75rem;
+        }
+
+        .miro-scroll {
+            overflow-x: auto;
+            overflow-y: hidden;
+            border-radius: 10px;
+            border: 1px solid rgba(143, 107, 62, 0.12);
+            background: #fff;
+            cursor: grab;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+        }
+
+        html[data-theme="dark"] .miro-scroll { background: #161412; }
+
+        .miro-scroll.is-dragging { cursor: grabbing; }
+
+        .miro-scroll img {
+            display: block;
+            width: auto;
+            height: min(220px, 42vw);
+            max-width: none;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .miro-hint {
+            margin-top: 0.55rem;
+            font-size: 0.62rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-align: center;
+        }
 
         /* ── Path ── */
         .path-trail { display: grid; gap: 0.85rem; }
@@ -1610,26 +1794,33 @@
     </style>
 </head>
 <body>
+    <canvas class="field-canvas" id="mainField" aria-hidden="true"></canvas>
 
     <div id="boot-screen" aria-label="Portfolio intro — swipe up or press Enter to start" tabindex="0">
-        <div class="intro-aura" aria-hidden="true"></div>
+        <canvas class="field-canvas" id="introField" aria-hidden="true"></canvas>
         <div class="intro-veil" aria-hidden="true"></div>
 
-        <div class="intro-emblem">
-            <div class="intro-ring intro-ring--outer" aria-hidden="true"></div>
-            <div class="intro-ring intro-ring--inner" aria-hidden="true"></div>
-            <div class="intro-logo-glow" aria-hidden="true"></div>
-            <div class="intro-logo-mark">
-                <img src="assets/logo.png" alt="Shahad Alqahtani">
+        <div class="intro-portal">
+            <div class="intro-logo-stage">
+                <div class="intro-arc" aria-hidden="true"></div>
+                <div class="intro-logo-mark">
+                    <img src="assets/logo.png" alt="Shahad Alqahtani">
+                </div>
+            </div>
+            <div class="intro-identity">
+                <h1 class="intro-name">Shahad <em>Alqahtani</em></h1>
+                <p class="intro-role">iOS · Full Stack</p>
             </div>
         </div>
 
-        <div class="intro-gate" aria-hidden="true">
-            <span class="intro-gate-line"></span>
-            <div class="intro-gate-chevron">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"/></svg>
+        <div class="intro-launch" aria-hidden="true">
+            <div class="intro-launch-track">
+                <div class="intro-launch-fill"></div>
             </div>
-            <span class="intro-gate-text">Swipe up · Enter</span>
+            <div class="intro-launch-hint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"/></svg>
+                <span>Swipe up · Enter</span>
+            </div>
         </div>
     </div>
 
@@ -1929,6 +2120,20 @@
                     <h4>Stack</h4>
                     <div class="modal-tags" id="modalTags"></div>
                 </div>
+                <div class="modal-section modal-section--miro" id="modalMiroSection" hidden>
+                    <div class="miro-spark">Miro · Challenge Based Learning</div>
+                    <h4 id="modalMiroTitle">Where the idea started</h4>
+                    <p class="miro-caption" id="modalMiroCaption"></p>
+                    <div class="miro-board">
+                        <span class="miro-tape miro-tape--tl" aria-hidden="true"></span>
+                        <span class="miro-tape miro-tape--tr" aria-hidden="true"></span>
+                        <div class="miro-phases" id="modalMiroPhases"></div>
+                        <div class="miro-scroll" id="modalMiroScroll">
+                            <img id="modalMiroImage" src="" alt="">
+                        </div>
+                        <p class="miro-hint">drag to explore the board →</p>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <a href="#" class="modal-link" id="modalLink" target="_blank" rel="noopener noreferrer">
@@ -1978,10 +2183,164 @@
         const mainContent = document.getElementById('main-content');
         let booted = false;
 
+        function initBubbleGarden(canvasId, opts = {}) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return null;
+
+            const ctx = canvas.getContext('2d');
+            const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const count = opts.count ?? 16;
+            let w = 0;
+            let h = 0;
+            let dpr = 1;
+            let time = 0;
+            let raf = 0;
+            let bubbles = [];
+            const pointer = { x: -9999, y: -9999, on: false };
+
+            const palette = () => {
+                const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+                return dark
+                    ? [
+                        [196, 165, 116, 0.14],
+                        [214, 181, 140, 0.11],
+                        [168, 196, 165, 0.1],
+                        [196, 168, 184, 0.09],
+                    ]
+                    : [
+                        [255, 214, 190, 0.42],
+                        [247, 220, 186, 0.38],
+                        [232, 210, 196, 0.34],
+                        [220, 236, 210, 0.28],
+                    ];
+            };
+
+            function build() {
+                bubbles = [];
+                for (let i = 0; i < count; i++) {
+                    const r = 28 + Math.random() * 56;
+                    bubbles.push({
+                        x: Math.random() * w,
+                        y: Math.random() * h,
+                        r,
+                        tone: i % 4,
+                        phase: Math.random() * Math.PI * 2,
+                        drift: 0.35 + Math.random() * 0.55,
+                        wobble: 8 + Math.random() * 18,
+                    });
+                }
+            }
+
+            function resize() {
+                const rect = canvas.getBoundingClientRect();
+                dpr = Math.min(window.devicePixelRatio || 1, 2);
+                w = Math.max(1, rect.width);
+                h = Math.max(1, rect.height);
+                canvas.width = Math.floor(w * dpr);
+                canvas.height = Math.floor(h * dpr);
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                build();
+                if (reduced) drawFrame();
+            }
+
+            function localPointer(clientX, clientY) {
+                const rect = canvas.getBoundingClientRect();
+                pointer.x = clientX - rect.left;
+                pointer.y = clientY - rect.top;
+                pointer.on = pointer.x >= 0 && pointer.y >= 0 && pointer.x <= w && pointer.y <= h;
+            }
+
+            function drawBubble(x, y, r, rgba) {
+                const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+                g.addColorStop(0, `rgba(${rgba[0]},${rgba[1]},${rgba[2]},${rgba[3]})`);
+                g.addColorStop(0.55, `rgba(${rgba[0]},${rgba[1]},${rgba[2]},${rgba[3] * 0.55})`);
+                g.addColorStop(1, `rgba(${rgba[0]},${rgba[1]},${rgba[2]},0)`);
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, Math.PI * 2);
+                ctx.fillStyle = g;
+                ctx.fill();
+            }
+
+            function drawFrame() {
+                const tones = palette();
+                ctx.clearRect(0, 0, w, h);
+
+                for (const b of bubbles) {
+                    let x = b.x;
+                    let y = b.y;
+                    let r = b.r;
+                    if (!reduced) {
+                        x += Math.sin(time * b.drift + b.phase) * b.wobble;
+                        y += Math.cos(time * b.drift * 0.9 + b.phase) * b.wobble * 0.85;
+                    }
+                    if (pointer.on && !reduced) {
+                        const dx = x - pointer.x;
+                        const dy = y - pointer.y;
+                        const dist = Math.hypot(dx, dy) || 1;
+                        const influence = 150;
+                        if (dist < influence) {
+                            const push = (1 - dist / influence) * 22;
+                            x += (dx / dist) * push;
+                            y += (dy / dist) * push;
+                            r *= 1 + (1 - dist / influence) * 0.12;
+                        }
+                    }
+                    const tone = tones[b.tone];
+                    drawBubble(x, y, r, tone);
+                }
+
+                if (pointer.on && !reduced) {
+                    const halo = ctx.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, 90);
+                    halo.addColorStop(0, 'rgba(255, 236, 210, 0.18)');
+                    halo.addColorStop(1, 'rgba(255, 236, 210, 0)');
+                    ctx.fillStyle = halo;
+                    ctx.beginPath();
+                    ctx.arc(pointer.x, pointer.y, 90, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            function loop() {
+                time += 0.012;
+                drawFrame();
+                raf = requestAnimationFrame(loop);
+            }
+
+            const onMove = (e) => localPointer(e.clientX, e.clientY);
+            const onLeave = () => { pointer.on = false; };
+            const target = opts.trackTarget || window;
+
+            target.addEventListener('pointermove', onMove, { passive: true });
+            target.addEventListener('pointerleave', onLeave, { passive: true });
+            window.addEventListener('resize', resize);
+
+            resize();
+            if (!reduced) loop();
+            else drawFrame();
+
+            return {
+                destroy() {
+                    cancelAnimationFrame(raf);
+                    target.removeEventListener('pointermove', onMove);
+                    target.removeEventListener('pointerleave', onLeave);
+                    window.removeEventListener('resize', resize);
+                },
+                resize
+            };
+        }
+
+        let mainFieldFx = null;
+        let introFieldFx = null;
+
         function bootPortfolio() {
             if (booted) return;
             booted = true;
             document.documentElement.classList.remove('intro-active');
+            if (introFieldFx) {
+                introFieldFx.destroy();
+                introFieldFx = null;
+            }
+            if (mainFieldFx) mainFieldFx.resize();
             bootScreen.classList.add('is-out');
             setTimeout(() => {
                 bootScreen.classList.add('hidden');
@@ -2185,6 +2544,8 @@
             if (!bootScreen) return;
 
             document.documentElement.classList.add('intro-active');
+            introFieldFx = initBubbleGarden('introField', { count: 14, trackTarget: bootScreen });
+            mainFieldFx = initBubbleGarden('mainField', { count: 18 });
             initIntroSwipe();
 
             bootScreen.addEventListener('keydown', (e) => {
@@ -2428,7 +2789,14 @@
                     'Final capstone · Apple Developer Academy · SwiftUI'
                 ],
                 stack: ['Swift', 'SwiftUI', 'Core Haptics', 'Accessibility'],
-                link: 'https://apps.apple.com/sa/app/sensic/id6776334462'
+                link: 'https://apps.apple.com/sa/app/sensic/id6776334462',
+                miro: {
+                    board: 'assets/projects/miro/team1-macro.png',
+                    label: 'TEAM1 · MACRO',
+                    title: 'From challenge to haptics',
+                    caption: 'Apple Developer Academy board — Engage started with deaf users, Investigate mapped the App Store & sketches, Act became the Sensic prototype you can feel.',
+                    phases: ['engage', 'investigate', 'act']
+                }
             },
             {
                 id: '5',
@@ -2484,7 +2852,14 @@
                     'Built 100% with Swift & SwiftUI'
                 ],
                 stack: ['Swift', 'SwiftUI', 'iOS', 'Xcode'],
-                link: 'https://github.com/weuth02x1/LearningJ.git'
+                link: 'https://github.com/weuth02x1/LearningJ.git',
+                miro: {
+                    board: 'assets/projects/miro/hello-world.png',
+                    label: 'Hello World ! ☀️🌍',
+                    title: 'The habit spark',
+                    caption: 'Our Hello World CBL board — challenge statement, daily timer flows, and the Act synthesis that shaped Learning Journey\'s streaks & freeze days.',
+                    phases: ['engage', 'investigate', 'act']
+                }
             },
             {
                 id: '3',
@@ -2515,7 +2890,14 @@
                     'Built with Swift & SwiftUI'
                 ],
                 stack: ['Swift', 'SwiftUI', 'Local Database', 'Accessibility'],
-                link: 'https://github.com/SarahAlowayridhi/weasel.git'
+                link: 'https://github.com/SarahAlowayridhi/weasel.git',
+                miro: {
+                    board: 'assets/projects/miro/be-the-impact.png',
+                    label: 'Be The Impact ☀️',
+                    title: 'Connection by design',
+                    caption: 'Impact-first Miro work — value proposition, user flows & usability testing that grounded Wessal in real PECS communication needs.',
+                    phases: ['engage', 'investigate', 'act']
+                }
             },
             {
                 id: '2',
@@ -2545,7 +2927,14 @@
                     'Today · Orbs · Friends · Settings · Swift & SwiftUI'
                 ],
                 stack: ['Swift', 'SwiftUI', 'Firebase', 'iOS'],
-                link: 'https://github.com/Saja12344/todoTask.git'
+                link: 'https://github.com/Saja12344/todoTask.git',
+                miro: {
+                    board: 'assets/projects/miro/level-up-team7.png',
+                    label: 'Level-Up · Team 7',
+                    title: 'Level up the galaxy',
+                    caption: 'Team 7\'s full CBL journey — research clusters, value proposition canvas, and the roadmap that turned goals into ORBIT\'s planet worlds.',
+                    phases: ['engage', 'investigate', 'act']
+                }
             },
             {
                 id: '4',
@@ -2575,9 +2964,73 @@
                     'Dark cinematic UI with warm yellow accents · Swift & SwiftUI'
                 ],
                 stack: ['Swift', 'SwiftUI', 'REST API', 'CRUD'],
-                link: 'https://github.com/SuhailaH20/Movieisme_Team5_M.git'
+                link: 'https://github.com/SuhailaH20/Movieisme_Team5_M.git',
+                miro: {
+                    board: 'assets/projects/miro/pathways.png',
+                    label: 'PathWays ☀️ · Team 5',
+                    title: 'UI design to live app',
+                    caption: 'PathWays board for Team 5 — challenge to bring UI to life, investigate movie flows, and ship Moviasme with full API CRUD.',
+                    phases: ['engage', 'investigate', 'act']
+                }
             }
         ];
+
+        const modalMiroSection = document.getElementById('modalMiroSection');
+        const modalMiroTitle = document.getElementById('modalMiroTitle');
+        const modalMiroCaption = document.getElementById('modalMiroCaption');
+        const modalMiroPhases = document.getElementById('modalMiroPhases');
+        const modalMiroImage = document.getElementById('modalMiroImage');
+        const modalMiroScroll = document.getElementById('modalMiroScroll');
+
+        function setModalMiro(p) {
+            if (!modalMiroSection) return;
+            if (!p.miro) {
+                modalMiroSection.hidden = true;
+                return;
+            }
+            modalMiroSection.hidden = false;
+            modalMiroTitle.textContent = p.miro.title || 'Where the idea started';
+            modalMiroCaption.textContent = p.miro.caption || '';
+            modalMiroPhases.innerHTML = p.miro.phases.map(phase => {
+                const labels = { engage: 'Engage', investigate: 'Investigate', act: 'Act' };
+                return `<span class="miro-phase miro-phase--${phase}">${labels[phase] || phase}</span>`;
+            }).join('');
+            modalMiroImage.src = p.miro.board;
+            modalMiroImage.alt = `${p.title} — ${p.miro.label} Miro board`;
+            if (modalMiroScroll) modalMiroScroll.scrollLeft = 0;
+        }
+
+        function initMiroScrollDrag() {
+            if (!modalMiroScroll) return;
+            let dragging = false;
+            let startX = 0;
+            let scrollLeft = 0;
+
+            modalMiroScroll.addEventListener('pointerdown', (e) => {
+                dragging = true;
+                startX = e.clientX;
+                scrollLeft = modalMiroScroll.scrollLeft;
+                modalMiroScroll.classList.add('is-dragging');
+                modalMiroScroll.setPointerCapture(e.pointerId);
+            });
+
+            modalMiroScroll.addEventListener('pointermove', (e) => {
+                if (!dragging) return;
+                modalMiroScroll.scrollLeft = scrollLeft - (e.clientX - startX);
+            });
+
+            const endDrag = (e) => {
+                if (!dragging) return;
+                dragging = false;
+                modalMiroScroll.classList.remove('is-dragging');
+                try { modalMiroScroll.releasePointerCapture(e.pointerId); } catch (_) {}
+            };
+
+            modalMiroScroll.addEventListener('pointerup', endDrag);
+            modalMiroScroll.addEventListener('pointercancel', endDrag);
+        }
+
+        initMiroScrollDrag();
 
         const projectMap = Object.fromEntries(projects.map(p => [p.id, p]));
         const projectsGrid = document.getElementById('projectsGrid');
@@ -2613,10 +3066,15 @@
             return `<div class="work-item-thumb"><img src="${icon}" alt="${p.title} app icon" loading="lazy"></div>`;
         }
 
+        function miroPhaseHTML(phase) {
+            const labels = { engage: 'Engage', investigate: 'Investigate', act: 'Act' };
+            return `<span class="work-item-miro-phase work-item-miro-phase--${phase}">${labels[phase] || phase}</span>`;
+        }
+
         function renderProjects() {
             if (!projectsGrid) return;
             projectsGrid.innerHTML = projects.map((p, i) => `
-                <article class="work-item${i === 0 ? ' work-item--lead' : ''}" data-project="${p.id}" data-cat="${p.cat}" tabindex="0" role="button" aria-label="Open ${p.title} project details">
+                <article class="work-item${i === 0 ? ' work-item--lead' : ''}${p.miro ? ' work-item--has-miro' : ''}" data-project="${p.id}" data-cat="${p.cat}" tabindex="0" role="button" aria-label="Open ${p.title} project details">
                     ${projectListThumbHTML(p)}
                     <div class="work-item-body">
                         <div class="work-item-top">
@@ -2626,6 +3084,14 @@
                         <p>${p.desc}</p>
                         <div class="work-item-tags">${p.stack.slice(0, 3).map(t => `<span class="work-tag">${t}</span>`).join('')}</div>
                     </div>
+                    ${p.miro ? `
+                    <div class="work-item-miro-ribbon">
+                        <img class="work-item-miro-peek" src="${p.miro.board}" alt="" loading="lazy" aria-hidden="true">
+                        <div class="work-item-miro-copy">
+                            <span class="work-item-miro-label">${p.miro.label}</span>
+                            <div class="work-item-miro-phases">${p.miro.phases.map(miroPhaseHTML).join('')}</div>
+                        </div>
+                    </div>` : ''}
                     <span class="work-item-arrow" aria-hidden="true">→</span>
                 </article>
             `).join('');
@@ -2726,6 +3192,7 @@
 
             document.getElementById('modalFeatures').innerHTML = p.features.map(f => `<li>${f}</li>`).join('');
             document.getElementById('modalTags').innerHTML = p.stack.map(t => `<span class="modal-tag">${t}</span>`).join('');
+            setModalMiro(p);
 
             const link = document.getElementById('modalLink');
             if (p.link) {
