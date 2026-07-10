@@ -30,9 +30,6 @@
             document.documentElement.classList.remove('intro-active');
             var boot = document.getElementById('boot-screen');
             if (boot) boot.classList.add('is-out', 'hidden');
-            if (typeof window.__onBootDismiss === 'function') {
-                window.__onBootDismiss(window.__pendingTab);
-            }
         };
     </script>
     <style>
@@ -585,37 +582,151 @@
         }
 
         .boot-start-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-width: min(220px, 72vw);
-            min-height: 58px;
-            padding: 1rem 2.75rem;
-            font-family: var(--font-ui);
-            font-size: 0.92rem;
-            font-weight: 600;
-            letter-spacing: 0.24em;
-            text-transform: uppercase;
-            color: #f0ebe3;
-            background: #7c3aed;
-            border: 2px solid #a78bfa;
-            border-radius: 6px;
-            box-shadow: 0 10px 32px rgba(124, 58, 237, 0.4);
-            cursor: pointer;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: rgba(167, 139, 250, 0.35);
-            -webkit-appearance: none;
-            appearance: none;
+            display: none;
+        }
+
+        .boot-enter {
+            width: min(272px, 84vw);
             pointer-events: auto;
             position: relative;
             z-index: 3;
-            transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
         }
 
-        .boot-start-btn:active {
-            transform: scale(0.97);
-            background: #6d28d9;
-            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.3);
+        .boot-enter-track {
+            position: relative;
+            height: 50px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid rgba(240, 235, 227, 0.14);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.06),
+                inset 0 -1px 3px rgba(0, 0, 0, 0.12),
+                0 10px 36px rgba(0, 0, 0, 0.18);
+            overflow: hidden;
+        }
+
+        .boot-enter-glow {
+            position: absolute;
+            inset: -40% -10%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(167, 139, 250, 0.14), transparent 58%);
+            pointer-events: none;
+            animation: boot-glow 4s ease-in-out infinite;
+        }
+
+        @keyframes boot-glow {
+            0%, 100% { opacity: 0.55; transform: translateX(0); }
+            50% { opacity: 1; transform: translateX(6%); }
+        }
+
+        .boot-enter-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 52px;
+            border-radius: inherit;
+            background: linear-gradient(90deg, rgba(167, 139, 250, 0.1), rgba(196, 165, 116, 0.16));
+            pointer-events: none;
+            will-change: width;
+        }
+
+        .boot-enter-label {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.55rem;
+            padding-left: 54px;
+            font-family: var(--font-ui);
+            font-size: 0.58rem;
+            font-weight: 500;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: rgba(240, 235, 227, 0.38);
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+            user-select: none;
+        }
+
+        .boot-enter-chevrons {
+            display: inline-flex;
+            gap: 1px;
+            font-size: 0.72rem;
+            letter-spacing: 0;
+            color: rgba(196, 165, 250, 0.55);
+            animation: boot-nudge 2.4s ease-in-out infinite;
+        }
+
+        @keyframes boot-nudge {
+            0%, 100% { opacity: 0.3; transform: translateX(0); }
+            50% { opacity: 0.85; transform: translateX(5px); }
+        }
+
+        .boot-enter-thumb {
+            position: absolute;
+            left: 4px;
+            top: 4px;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(155deg, #f8f4ec 0%, #e8dcc8 48%, #ddd0bc 100%);
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            box-shadow:
+                0 1px 0 rgba(255, 255, 255, 0.7) inset,
+                0 4px 14px rgba(0, 0, 0, 0.22),
+                0 0 0 1px rgba(0, 0, 0, 0.04);
+            cursor: grab;
+            touch-action: none;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-appearance: none;
+            appearance: none;
+            display: grid;
+            place-items: center;
+            color: #5c554c;
+            z-index: 2;
+            will-change: transform;
+            transition: box-shadow 0.2s ease, color 0.2s ease;
+        }
+
+        .boot-enter-thumb svg {
+            width: 15px;
+            height: 15px;
+            transition: transform 0.2s ease;
+        }
+
+        .boot-enter.is-dragging .boot-enter-thumb {
+            cursor: grabbing;
+            box-shadow:
+                0 1px 0 rgba(255, 255, 255, 0.5) inset,
+                0 2px 8px rgba(0, 0, 0, 0.28);
+        }
+
+        .boot-enter.is-dragging .boot-enter-thumb svg {
+            transform: translateX(1px);
+        }
+
+        .boot-enter.is-dragging .boot-enter-label {
+            opacity: 0.12;
+        }
+
+        .boot-enter.is-complete .boot-enter-track {
+            border-color: rgba(196, 165, 250, 0.35);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.08),
+                0 0 28px rgba(167, 139, 250, 0.22);
+        }
+
+        .boot-enter.is-complete .boot-enter-thumb {
+            background: linear-gradient(155deg, #e8dcc8, #c4a574);
+            color: #3d3830;
+            box-shadow:
+                0 0 20px rgba(196, 165, 250, 0.35),
+                0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .boot-enter.is-complete .boot-enter-label {
+            opacity: 0;
         }
 
         .boot-hint {
@@ -724,6 +835,7 @@
         @media (prefers-reduced-motion: reduce) {
             .retro-star { animation: none; }
             .boot-logo { animation: none; }
+            .boot-enter-chevrons, .boot-enter-glow { animation: none; }
             .hub-screen-inner { animation: none; }
             .os-window:not(.window-visible) { opacity: 1; transform: none; }
             .os-window.window-visible:hover, .work-item:hover { transform: none; }
@@ -1765,7 +1877,21 @@
     <div id="boot-screen" data-i18n-aria="boot.aria" aria-label="Portfolio intro — press Start to enter">
         <div class="boot-splash">
             <img class="boot-logo" src="assets/logo.png" alt="Shahad Alqahtani">
-            <button type="button" class="boot-start-btn" id="bootStartBtn" data-i18n="boot.start" aria-label="Start portfolio" onclick="window.startSite('projects'); return false;">START</button>
+            <div class="boot-enter" id="bootEnter">
+                <div class="boot-enter-track" id="bootStartTrack">
+                    <div class="boot-enter-glow" aria-hidden="true"></div>
+                    <div class="boot-enter-fill" id="bootStartFill"></div>
+                    <div class="boot-enter-label" aria-hidden="true">
+                        <span class="boot-enter-chevrons">› › ›</span>
+                        <span data-i18n="boot.slide">slide to enter</span>
+                    </div>
+                    <button type="button" class="boot-enter-thumb" id="bootStartBtn" aria-label="Slide right to enter portfolio">
+                        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                            <path d="M5.5 3.5 10 8l-4.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
             <p class="boot-hint" data-i18n="boot.hint">Portfolio · projects · connect</p>
         </div>
     </div>
@@ -2192,6 +2318,7 @@
             en: {
                 'page.title': 'Shahad Alqahtani — iOS & Full Stack',
                 'boot.start': 'START',
+                'boot.slide': 'slide to enter',
                 'boot.hint': 'Portfolio · projects · connect',
                 'boot.tap': 'START',
                 'hero.title': 'Portfolio <span class="retro-star" aria-hidden="true">✦</span>',
@@ -2495,6 +2622,7 @@
 
         const themeToggle = document.getElementById('themeToggle');
         const THEME_KEY = 'portfolio-theme';
+        let mainFieldFx = null;
 
         function applyTheme(theme) {
             if (theme === 'light') {
@@ -2742,8 +2870,6 @@
                 resize
             };
         }
-
-        let mainFieldFx = null;
 
         function playIntroSound() {
             try {
@@ -3106,16 +3232,92 @@
             history.replaceState(null, '', `#${target}`);
         }
 
+        function initBootSlider() {
+            const wrap = document.getElementById('bootEnter');
+            const track = document.getElementById('bootStartTrack');
+            const thumb = document.getElementById('bootStartBtn');
+            const fill = document.getElementById('bootStartFill');
+            if (!wrap || !track || !thumb) return;
+
+            const PAD = 4;
+            let dragging = false;
+            let startPointerX = 0;
+            let startThumbX = 0;
+            let completed = false;
+
+            const maxX = () => Math.max(0, track.offsetWidth - thumb.offsetWidth - PAD * 2);
+
+            const getCurrentX = () => {
+                const m = thumb.style.transform.match(/translateX\(([-\d.]+)px\)/);
+                return m ? parseFloat(m[1]) : 0;
+            };
+
+            const setPos = (x, animate) => {
+                const clamped = Math.max(0, Math.min(maxX(), x));
+                if (animate) {
+                    thumb.style.transition = 'transform 0.45s cubic-bezier(0.34, 1.2, 0.64, 1)';
+                    if (fill) fill.style.transition = 'width 0.45s cubic-bezier(0.34, 1.2, 0.64, 1)';
+                } else {
+                    thumb.style.transition = '';
+                    if (fill) fill.style.transition = '';
+                }
+                thumb.style.transform = `translateX(${clamped}px)`;
+                if (fill) fill.style.width = `${PAD + clamped + thumb.offsetWidth * 0.52}px`;
+                return clamped;
+            };
+
+            const completeBoot = () => {
+                if (completed || booted || window.__bootDismissed) return;
+                completed = true;
+                wrap.classList.add('is-complete');
+                setPos(maxX(), true);
+                try { playIntroSound(); } catch (_) {}
+                setTimeout(() => window.startSite('projects'), 340);
+            };
+
+            const snapBack = () => {
+                setPos(0, true);
+                setTimeout(() => {
+                    thumb.style.transition = '';
+                    if (fill) fill.style.transition = '';
+                }, 460);
+            };
+
+            thumb.addEventListener('pointerdown', (e) => {
+                if (completed || booted || window.__bootDismissed) return;
+                dragging = true;
+                wrap.classList.add('is-dragging');
+                startPointerX = e.clientX;
+                startThumbX = getCurrentX();
+                thumb.setPointerCapture(e.pointerId);
+                e.preventDefault();
+            });
+
+            thumb.addEventListener('pointermove', (e) => {
+                if (!dragging || completed) return;
+                const x = setPos(startThumbX + (e.clientX - startPointerX), false);
+                if (x >= maxX() * 0.86) completeBoot();
+            });
+
+            const endDrag = (e) => {
+                if (!dragging) return;
+                dragging = false;
+                wrap.classList.remove('is-dragging');
+                try { thumb.releasePointerCapture(e.pointerId); } catch (_) {}
+                if (!completed) snapBack();
+            };
+
+            thumb.addEventListener('pointerup', endDrag);
+            thumb.addEventListener('pointercancel', endDrag);
+
+            thumb.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (!completed && getCurrentX() >= maxX() * 0.45) completeBoot();
+            });
+        }
+
         function setupSafariTap() {
-            const bootBtn = document.getElementById('bootStartBtn');
-            if (bootBtn) {
-                bootBtn.onclick = function (e) {
-                    if (e) e.preventDefault();
-                    try { playIntroSound(); } catch (_) {}
-                    window.startSite('projects');
-                    return false;
-                };
-            }
+            initBootSlider();
 
             hubTabs.forEach(tab => {
                 tab.onclick = function (e) {
@@ -3135,9 +3337,6 @@
 
             const target = (tabId && hubTabMap[tabId]) ? tabId : 'projects';
             switchHubTab(target);
-            if (target === 'projects') {
-                applyProjectFilter(document.querySelector('.project-filter.active')?.dataset.cat || 'all');
-            }
             history.replaceState(null, '', `#${target}`);
             const activeTab = document.querySelector(`.hub-dock [data-hub-tab="${target}"]`);
             if (activeTab) moveDockIndicator(activeTab);
@@ -3156,8 +3355,6 @@
         function bootPortfolio() {
             bootComplete('projects');
         }
-
-        window.__onBootDismiss = bootComplete;
 
         window.addEventListener('hashchange', () => {
             const hash = location.hash.slice(1);
@@ -3572,8 +3769,9 @@
         }
 
         function renderProjects() {
-            if (!projectsGrid) return;
-            projectsGrid.innerHTML = projects.map((p, i) => `
+            const grid = document.getElementById('projectsGrid');
+            if (!grid) return;
+            grid.innerHTML = projects.map((p, i) => `
                 <article class="work-item${i === 0 ? ' work-item--lead' : ''}${p.miro ? ' work-item--has-miro' : ''}" data-project="${p.id}" data-cat="${p.cat}" tabindex="0" role="button" aria-label="${t('project.open', { title: pText(p, 'title') })}">
                     ${projectListThumbHTML(p)}
                     <div class="work-item-body">
@@ -3595,21 +3793,23 @@
                     <span class="work-item-arrow" aria-hidden="true"></span>
                 </article>
             `).join('');
-            bindProjectImages(projectsGrid);
+            bindProjectImages(grid);
         }
 
         function getProjectCards() {
-            return projectsGrid ? projectsGrid.querySelectorAll('.work-item[data-cat]') : [];
+            const grid = document.getElementById('projectsGrid');
+            return grid ? grid.querySelectorAll('.work-item[data-cat]') : [];
         }
 
         function applyProjectFilter(cat) {
+            const grid = document.getElementById('projectsGrid');
             let visible = 0;
             getProjectCards().forEach(card => {
                 const show = cat === 'all' || card.dataset.cat === cat;
                 card.classList.toggle('filter-hidden', !show);
                 if (show) visible++;
             });
-            if (projectsGrid) projectsGrid.classList.add('is-filtering');
+            if (grid) grid.classList.add('is-filtering');
             if (projectFilterCount) {
                 projectFilterCount.textContent = formatProjectCount(visible);
             }
@@ -3825,9 +4025,14 @@
         setupSafariTap();
 
         switchHubTab('projects');
-        applyProjectFilter(document.querySelector('.project-filter.active')?.dataset.cat || 'all');
         const projectsTab = document.querySelector('.hub-dock [data-hub-tab="projects"]');
         if (projectsTab) moveDockIndicator(projectsTab);
+
+        const headStartSite = window.startSite;
+        window.startSite = function (tab) {
+            headStartSite(tab);
+            if (!booted) bootComplete(tab || window.__pendingTab || 'projects');
+        };
 
         if (window.__bootDismissed) {
             bootComplete(window.__pendingTab || 'projects');
