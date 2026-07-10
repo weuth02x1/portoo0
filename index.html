@@ -29,9 +29,7 @@
             window.__bootDismissed = true;
             document.documentElement.classList.remove('intro-active');
             var boot = document.getElementById('boot-screen');
-            var main = document.getElementById('main-content');
             if (boot) boot.classList.add('is-out', 'hidden');
-            if (main) main.classList.add('visible');
             if (typeof window.__onBootDismiss === 'function') {
                 window.__onBootDismiss(window.__pendingTab);
             }
@@ -537,8 +535,7 @@
             transform: translateY(0);
         }
 
-        #main-content { position: relative; z-index: 1; opacity: 0; transition: opacity 0.55s ease; }
-        #main-content.visible { opacity: 1; visibility: visible; }
+        #main-content { position: relative; z-index: 1; }
 
         /* Boot splash */
         #boot-screen {
@@ -2747,29 +2744,6 @@
         }
 
         let mainFieldFx = null;
-        let pendingHubTab = null;
-
-        function dismissBoot(tabId) {
-            booted = true;
-            window.__bootDismissed = true;
-            document.documentElement.classList.remove('intro-active');
-            if (bootScreen) bootScreen.classList.add('is-out', 'hidden');
-            if (mainContent) mainContent.classList.add('visible');
-            const tab = (tabId && hubTabMap[tabId]) ? tabId : 'projects';
-            switchHubTab(tab);
-            if (tab === 'projects') {
-                applyProjectFilter(document.querySelector('.project-filter.active')?.dataset.cat || 'all');
-            }
-            history.replaceState(null, '', `#${tab}`);
-        }
-
-        function enterPortfolio(tabId) {
-            dismissBoot(tabId);
-        }
-
-        function bootPortfolio() {
-            dismissBoot('projects');
-        }
 
         function playIntroSound() {
             try {
@@ -3122,7 +3096,14 @@
         }
 
         function activateHubTab(tabId) {
-            enterPortfolio(tabId);
+            if (!booted && !window.__bootDismissed) {
+                try { playIntroSound(); } catch (_) {}
+                window.startSite(tabId);
+                return;
+            }
+            const target = hubTabMap[tabId] ? tabId : 'projects';
+            switchHubTab(target);
+            history.replaceState(null, '', `#${target}`);
         }
 
         function setupSafariTap() {
@@ -3139,36 +3120,44 @@
             hubTabs.forEach(tab => {
                 tab.onclick = function (e) {
                     if (e) e.preventDefault();
-                    if (!booted && !window.__bootDismissed) {
-                        try { playIntroSound(); } catch (_) {}
-                        window.startSite(tab.dataset.hubTab);
-                    } else {
-                        switchHubTab(tab.dataset.hubTab);
-                        history.replaceState(null, '', `#${tab.dataset.hubTab}`);
-                    }
+                    activateHubTab(tab.dataset.hubTab);
                     return false;
                 };
             });
         }
 
-        function initSiteContent() {
-            if (mainContent) mainContent.classList.add('visible');
+        function bootComplete(tabId) {
+            booted = true;
+            window.__bootDismissed = true;
+            document.documentElement.classList.remove('intro-active');
+            if (bootScreen) bootScreen.classList.add('is-out', 'hidden');
             if (mainFieldFx) mainFieldFx.resize();
-            switchHubTab('projects');
-            applyProjectFilter(document.querySelector('.project-filter.active')?.dataset.cat || 'all');
-            const projectsTab = document.querySelector('.hub-dock [data-hub-tab="projects"]');
-            if (projectsTab) moveDockIndicator(projectsTab);
-        }
 
-        window.__onBootDismiss = function (tab) {
-            if (mainFieldFx) mainFieldFx.resize();
-            const target = (tab && hubTabMap[tab]) ? tab : 'projects';
+            const target = (tabId && hubTabMap[tabId]) ? tabId : 'projects';
             switchHubTab(target);
             if (target === 'projects') {
                 applyProjectFilter(document.querySelector('.project-filter.active')?.dataset.cat || 'all');
             }
             history.replaceState(null, '', `#${target}`);
-        };
+            const activeTab = document.querySelector(`.hub-dock [data-hub-tab="${target}"]`);
+            if (activeTab) moveDockIndicator(activeTab);
+        }
+
+        function enterPortfolio(tabId) {
+            if (!booted && !window.__bootDismissed) {
+                bootComplete(tabId);
+                return;
+            }
+            const target = hubTabMap[tabId] ? tabId : 'projects';
+            switchHubTab(target);
+            history.replaceState(null, '', `#${target}`);
+        }
+
+        function bootPortfolio() {
+            bootComplete('projects');
+        }
+
+        window.__onBootDismiss = bootComplete;
 
         window.addEventListener('hashchange', () => {
             const hash = location.hash.slice(1);
@@ -3834,12 +3823,14 @@
         initHeroProjectsStrip();
         initOsWindowObserver();
         setupSafariTap();
-        initSiteContent();
+
+        switchHubTab('projects');
+        applyProjectFilter(document.querySelector('.project-filter.active')?.dataset.cat || 'all');
+        const projectsTab = document.querySelector('.hub-dock [data-hub-tab="projects"]');
+        if (projectsTab) moveDockIndicator(projectsTab);
 
         if (window.__bootDismissed) {
-            booted = true;
-            if (bootScreen) bootScreen.classList.add('is-out', 'hidden');
-            window.__onBootDismiss(window.__pendingTab || 'projects');
+            bootComplete(window.__pendingTab || 'projects');
         }
     
     
