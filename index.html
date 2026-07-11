@@ -80,8 +80,106 @@ img { display: block; max-width: 100%; }
   height: 100%;
   overflow: hidden;
   border-radius: 44px;
-  background: #1a2744 url('assets/wallpaper.svg') center / cover no-repeat;
+  background: #0d1b2a url('assets/life/grad.jpg') center 35% / cover no-repeat;
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+  transition: background 0.55s ease;
+}
+.stage::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(8,16,28,0.35) 0%, rgba(8,16,28,0.15) 35%, rgba(8,16,28,0.55) 100%),
+    radial-gradient(ellipse at 50% 20%, transparent 30%, rgba(0,0,0,0.35) 100%);
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.55s ease, background 0.55s ease;
+}
+/* home wallpaper after unlock — deep black with soft aurora */
+.stage.is-home {
+  background:
+    radial-gradient(ellipse 90% 55% at 18% 12%, rgba(90, 70, 180, 0.28), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 88% 22%, rgba(20, 90, 160, 0.22), transparent 50%),
+    radial-gradient(ellipse 80% 45% at 50% 100%, rgba(40, 40, 50, 0.55), transparent 55%),
+    #000000;
+}
+.stage.is-home::before {
+  background:
+    radial-gradient(circle at 70% 75%, rgba(255,255,255,0.04), transparent 35%),
+    linear-gradient(180deg, rgba(0,0,0,0.15) 0%, transparent 30%, rgba(0,0,0,0.35) 100%);
+  opacity: 1;
+}
+.stage > * { position: relative; z-index: 1; }
+.island { z-index: 60; }
+
+/* memory collage on lock */
+.lock-memories {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.lock-polaroid {
+  position: absolute;
+  width: 112px;
+  padding: 6px 6px 20px;
+  background: #fff;
+  box-shadow: 0 14px 32px rgba(0,0,0,0.4);
+  border-radius: 4px;
+}
+.lock-polaroid img {
+  width: 100%;
+  height: 88px;
+  object-fit: cover;
+  display: block;
+  background: #ddd;
+}
+.lock-polaroid span {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.52rem;
+  font-weight: 700;
+  color: #2a2a2a;
+  text-align: center;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.lock-polaroid--hero {
+  width: 148px;
+  left: 50%;
+  top: 42%;
+  margin-left: -74px;
+  transform: rotate(-3deg);
+  z-index: 3;
+  opacity: 0.95;
+  padding-bottom: 24px;
+}
+.lock-polaroid--hero img { height: 118px; object-fit: cover; object-position: center 30%; }
+.lock-polaroid--1 { left: -26px; top: 34%; transform: rotate(-18deg); z-index: 1; opacity: 0.9; }
+.lock-polaroid--2 { right: -28px; top: 30%; transform: rotate(16deg); z-index: 1; opacity: 0.9; }
+.lock-polaroid--3 { left: 6%; bottom: 20%; transform: rotate(8deg); width: 98px; z-index: 2; opacity: 0.88; }
+.lock-polaroid--3 img { height: 76px; }
+.lock-polaroid--4 { right: 4%; bottom: 18%; transform: rotate(-10deg); width: 98px; z-index: 2; opacity: 0.88; }
+.lock-polaroid--4 img { height: 76px; }
+.lock-quote {
+  position: absolute;
+  left: 50%;
+  bottom: 34%;
+  transform: translateX(-50%) rotate(-2deg);
+  z-index: 4;
+  background: rgba(255,255,255,0.92);
+  color: #1c1c1e;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 6px 10px;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  white-space: nowrap;
+}
+.lock-quote em {
+  font-style: normal;
+  color: #5b4bdb;
 }
 .island {
   position: absolute;
@@ -261,21 +359,36 @@ img { display: block; max-width: 100%; }
   min-width: 0;
 }
 .app-icon {
+  position: relative;
   width: min(68px, 16vw); aspect-ratio: 1;
   border-radius: var(--radius-app);
   overflow: hidden;
-  background: rgba(255,255,255,0.15);
+  background: #2c2c2e;
   box-shadow:
+    0 1px 1px rgba(0,0,0,0.12),
     0 10px 22px rgba(0,0,0,0.28),
-    inset 0 0 0 0.5px rgba(255,255,255,0.2);
+    inset 0 0 0 0.5px rgba(255,255,255,0.28);
   transition: transform .15s ease;
 }
+.app-icon::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.06) 28%, transparent 55%);
+  pointer-events: none;
+  z-index: 1;
+}
 .app:active .app-icon { transform: scale(0.9); }
-.app-icon img { width: 100%; height: 100%; object-fit: cover; }
+.app-icon img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
 .app-icon.fallback {
   display: grid; place-items: center;
   font-size: 0.7rem; font-weight: 700;
-  background: linear-gradient(145deg, #3a3a3c, #1c1c1e);
+  background: linear-gradient(145deg, #636366, #3a3a3c);
 }
 .app-name {
   font-size: 0.68rem; font-weight: 500;
@@ -338,6 +451,115 @@ img { display: block; max-width: 100%; }
 .sheet .card .meta { font-size: 0.78rem; color: var(--sheet-muted); margin-bottom: 0.45rem; }
 .sheet .card p, .sheet .card li { font-size: 0.88rem; color: #3a3a3c; line-height: 1.4; }
 .sheet ul { list-style: none; display: grid; gap: 0.35rem; }
+/* Photos app sheet */
+.photos-panel {
+  padding: 8px 14px 20px;
+}
+.photos-head {
+  padding: 8px 4px 12px;
+}
+.photos-head h2 {
+  font-size: 1.55rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+.photos-head p {
+  font-size: 0.82rem;
+  color: var(--sheet-muted);
+  margin-top: 2px;
+}
+.photos-quote {
+  display: inline-block;
+  margin: 0 0 12px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: #f2f0ff;
+  color: #5b4bdb;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.photos-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.photos-grid button {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #ddd;
+}
+.photos-grid button:first-child {
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 10;
+}
+.photos-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.photos-grid .photos-cert {
+  background: #f5f5f7;
+}
+.photos-grid .photos-cert img {
+  object-fit: contain;
+  padding: 6px;
+}
+.photos-grid span {
+  position: absolute;
+  left: 8px;
+  bottom: 7px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.55);
+  letter-spacing: 0.02em;
+}
+.photos-grid .photos-cert span {
+  color: #1c1c1e;
+  text-shadow: none;
+  background: rgba(255,255,255,0.88);
+  padding: 2px 6px;
+  border-radius: 6px;
+  left: 6px;
+  bottom: 6px;
+}
+.photos-viewer {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  display: none;
+  flex-direction: column;
+  background: #000;
+}
+.photos-viewer.open { display: flex; }
+.photos-viewer img {
+  flex: 1;
+  width: 100%;
+  object-fit: contain;
+  background: #000;
+}
+.photos-viewer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 14px calc(14px + var(--safe-b));
+  color: #fff;
+  background: linear-gradient(transparent, rgba(0,0,0,0.75));
+}
+.photos-viewer-bar p {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.photos-viewer-bar button {
+  color: #64d2ff;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
 .sheet ul li { padding-left: 0.85rem; position: relative; }
 .sheet ul li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--blue); position: absolute; left: 0; top: 0.45em; }
 .contact a.mail {
@@ -414,27 +636,42 @@ img { display: block; max-width: 100%; }
   display: flex; flex-direction: column; align-items: center; gap: 4px;
 }
 .dock-ico {
-  width: 52px; height: 52px; border-radius: 14px;
+  position: relative;
+  width: 54px; height: 54px;
+  border-radius: var(--radius-app);
   display: grid; place-items: center;
-  background: rgba(255,255,255,0.92);
   color: #fff;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+  overflow: hidden;
+  box-shadow:
+    0 1px 1px rgba(0,0,0,0.12),
+    0 8px 18px rgba(0,0,0,0.25),
+    inset 0 0 0 0.5px rgba(255,255,255,0.28);
   transition: transform .12s ease;
 }
+.dock-ico::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.06) 28%, transparent 55%);
+  pointer-events: none;
+}
 .dock-ico svg {
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   display: block;
+  position: relative;
+  z-index: 1;
 }
 .dock-btn.active .dock-ico {
   outline: 2px solid rgba(255,255,255,0.85);
   outline-offset: 2px;
 }
 .dock-btn:active .dock-ico { transform: scale(0.9); }
-.dock-btn[data-hub-tab="about"] .dock-ico { background: linear-gradient(180deg, #5ac8fa, #007aff); color: #fff; }
-.dock-btn[data-hub-tab="projects"] .dock-ico { background: linear-gradient(180deg, #64d2ff, #0a84ff); color: #fff; }
-.dock-btn[data-hub-tab="experience"] .dock-ico { background: linear-gradient(180deg, #30d158, #248a3d); color: #fff; }
-.dock-btn[data-hub-tab="connect"] .dock-ico { background: linear-gradient(180deg, #ff9f0a, #ff453a); color: #fff; }
+.dock-btn[data-hub-tab="about"] .dock-ico { background: linear-gradient(180deg, #5ac8fa, #007aff); }
+.dock-btn[data-hub-tab="projects"] .dock-ico { background: linear-gradient(180deg, #64d2ff, #0a84ff); }
+.dock-btn[data-hub-tab="experience"] .dock-ico { background: linear-gradient(180deg, #30d158, #248a3d); }
+.dock-btn[data-hub-tab="connect"] .dock-ico { background: linear-gradient(180deg, #ff9f0a, #ff453a); }
 .dock-label { font-size: 0.62rem; font-weight: 500; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
 
 /* modal = app sheet */
@@ -543,6 +780,29 @@ img { display: block; max-width: 100%; }
     <div class="island" aria-hidden="true"></div>
     <div class="lock" id="boot-screen">
       <button type="button" class="lock-hit" id="bootStartBtn" aria-label="Unlock"></button>
+      <div class="lock-memories" aria-hidden="true">
+        <div class="lock-polaroid lock-polaroid--1">
+          <img src="assets/life/celebrate.jpg" alt="">
+          <span>grad night</span>
+        </div>
+        <div class="lock-polaroid lock-polaroid--2">
+          <img src="assets/life/desk.jpg" alt="">
+          <span>desk</span>
+        </div>
+        <div class="lock-polaroid lock-polaroid--hero">
+          <img src="assets/life/plaque.jpg" alt="">
+          <span>cohort 5 · 2024</span>
+        </div>
+        <div class="lock-polaroid lock-polaroid--3">
+          <img src="assets/life/certificate.jpg" alt="">
+          <span>certificate</span>
+        </div>
+        <div class="lock-polaroid lock-polaroid--4">
+          <img src="assets/life/grad.jpg" alt="">
+          <span>academy</span>
+        </div>
+        <div class="lock-quote">Small Steps · <em>Big Impact</em></div>
+      </div>
       <div class="lock-time">
         <div class="lock-clock" id="lockClock">9:41</div>
         <div class="lock-date" id="lockDate"></div>
@@ -594,7 +854,7 @@ img { display: block; max-width: 100%; }
           <div class="card" id="about-education">
             <h3>school</h3>
             <p class="meta">2025–26 · Apple Developer Academy</p>
-            <p style="margin-bottom:8px">iOS track</p>
+            <p style="margin-bottom:8px">iOS track · Cohort 5</p>
             <p class="meta">2020–25 · King Khalid University</p>
             <p>Computer Science</p>
           </div>
@@ -759,6 +1019,34 @@ img { display: block; max-width: 100%; }
         </div>
         <div class="modal-foot"><a class="modal-link" id="modalLink" href="#" target="_blank" rel="noopener noreferrer">Open</a></div>
       </div>
+    </div>
+  </div>
+
+  <div id="photosModal" class="modal" aria-hidden="true">
+    <div class="modal-bg" id="photosBackdrop"></div>
+    <div class="modal-panel">
+      <div class="modal-grab" aria-hidden="true"></div>
+      <button class="modal-close" id="photosClose" type="button" aria-label="Close">
+        <svg viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M2 2l10 10M12 2 2 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div class="photos-panel">
+        <div class="photos-head">
+          <h2>Photos</h2>
+          <p>Academy · certificates · memories</p>
+        </div>
+        <div class="photos-quote">Small Steps · Big Impact</div>
+        <div class="photos-grid" id="photosGrid"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="photosViewer" class="photos-viewer" aria-hidden="true">
+    <img id="photosViewerImg" alt="">
+    <div class="photos-viewer-bar">
+      <p id="photosViewerCaption"></p>
+      <button type="button" id="photosViewerClose">Done</button>
     </div>
   </div>
   </div>
@@ -1048,6 +1336,7 @@ function unlock() {
   booted = true;
   boot.classList.add('is-out');
   phone.classList.add('is-on');
+  document.getElementById('stage').classList.add('is-home');
   switchHubTab('projects');
 }
 
@@ -1095,9 +1384,27 @@ const modalMiroCaption = document.getElementById('modalMiroCaption');
 const modalMiroPhases = document.getElementById('modalMiroPhases');
 const modalMiroImage = document.getElementById('modalMiroImage');
 const modalMiroScroll = document.getElementById('modalMiroScroll');
+const photosModal = document.getElementById('photosModal');
+const photosViewer = document.getElementById('photosViewer');
+
+const lifePhotos = [
+  { src: 'assets/life/plaque.jpg', label: 'plaque · cohort 5' },
+  { src: 'assets/life/grad.jpg', label: 'academy stage' },
+  { src: 'assets/life/celebrate.jpg', label: 'grad night' },
+  { src: 'assets/life/certificate.jpg', label: 'academy certificate' },
+  { src: 'assets/life/desk.jpg', label: 'desk' },
+  { src: 'assets/life/cert-tuwaiq-aspnet.png', label: 'ASP.NET · Tuwaiq', fit: 'contain' },
+  { src: 'assets/life/cert-python-basics.png', label: 'Python · Michigan', fit: 'contain' },
+  { src: 'assets/life/cert-backend.png', label: 'Back-end · 120h', fit: 'contain' }
+];
 
 function renderProjects() {
-  projectsGrid.innerHTML = projects.map(p => {
+  const photosApp =
+    '<button type="button" class="app" data-photos="1">' +
+      '<div class="app-icon"><img src="assets/projects/icons/ios/photos.svg" alt=""></div>' +
+      '<span class="app-name">Photos</span></button>';
+
+  projectsGrid.innerHTML = photosApp + projects.map(p => {
     const icon = p.appIcon || '';
     const name = shortName[p.id] || p.title;
     const iconHtml = icon
@@ -1108,6 +1415,43 @@ function renderProjects() {
       '<span class="app-name">' + name + '</span></button>';
   }).join('');
   document.getElementById('appCount').textContent = String(projects.length);
+
+  const grid = document.getElementById('photosGrid');
+  if (grid) {
+    grid.innerHTML = lifePhotos.map((ph, i) =>
+      '<button type="button" data-photo-index="' + i + '"' +
+        (ph.fit === 'contain' ? ' class="photos-cert"' : '') + '>' +
+        '<img src="' + ph.src + '" alt="">' +
+        '<span>' + ph.label + '</span></button>'
+    ).join('');
+  }
+}
+
+function openPhotosModal() {
+  photosModal.classList.add('open');
+  photosModal.setAttribute('aria-hidden', 'false');
+}
+
+function closePhotosModal() {
+  photosModal.classList.remove('open');
+  photosModal.setAttribute('aria-hidden', 'true');
+  closePhotosViewer();
+}
+
+function openPhotosViewer(index) {
+  const ph = lifePhotos[index];
+  if (!ph) return;
+  const img = document.getElementById('photosViewerImg');
+  img.src = ph.src;
+  img.className = ph.fit === 'contain' ? 'is-cert' : '';
+  document.getElementById('photosViewerCaption').textContent = ph.label;
+  photosViewer.classList.add('open');
+  photosViewer.setAttribute('aria-hidden', 'false');
+}
+
+function closePhotosViewer() {
+  photosViewer.classList.remove('open');
+  photosViewer.setAttribute('aria-hidden', 'true');
 }
 
 function setModalCover(p) {
@@ -1174,13 +1518,27 @@ function closeProjectModal() {
 }
 
 projectsGrid.addEventListener('click', e => {
+  if (e.target.closest('[data-photos]')) {
+    openPhotosModal();
+    return;
+  }
   const app = e.target.closest('[data-project]');
   if (app) openProjectModal(app.dataset.project);
 });
 modalClose.addEventListener('click', closeProjectModal);
 modalBackdrop.addEventListener('click', closeProjectModal);
+document.getElementById('photosClose').addEventListener('click', closePhotosModal);
+document.getElementById('photosBackdrop').addEventListener('click', closePhotosModal);
+document.getElementById('photosGrid').addEventListener('click', e => {
+  const btn = e.target.closest('[data-photo-index]');
+  if (btn) openPhotosViewer(Number(btn.dataset.photoIndex));
+});
+document.getElementById('photosViewerClose').addEventListener('click', closePhotosViewer);
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeProjectModal();
+  if (e.key !== 'Escape') return;
+  if (photosViewer.classList.contains('open')) closePhotosViewer();
+  else if (photosModal.classList.contains('open')) closePhotosModal();
+  else closeProjectModal();
 });
 
 document.getElementById('connectCopyEmail').addEventListener('click', () => {
