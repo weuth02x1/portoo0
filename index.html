@@ -383,7 +383,9 @@ img { display: block; max-width: 100%; }
 .app-icon img {
   width: 100%; height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
+  background: #111;
 }
 .app-icon.fallback {
   display: grid; place-items: center;
@@ -1069,7 +1071,7 @@ const projects = [
                 title: 'Athar',
                 desc: 'اتركي أثرًا في المكان — صور، مواقع، وآثار الناس حولك.',
                 image: 'assets/projects/athar/logo.png',
-                appIcon: 'assets/projects/icons/athar.png',
+                appIcon: 'assets/projects/icons/athar-icon.png',
                 screens: [
                     { src: 'assets/projects/athar/logo.png', label: 'Athar · brand' }
                 ],
@@ -1097,7 +1099,7 @@ const projects = [
                 title: 'Mr Crab',
                 desc: 'تراكنق موني — تتبّع مصاريفك وفواتيرك مع مستر سلطع.',
                 image: 'assets/projects/sanad/home.png',
-                appIcon: 'assets/projects/icons/sanad.png',
+                appIcon: 'assets/projects/icons/sanad-icon.png',
                 screens: [
                     { src: 'assets/projects/sanad/home.png', label: 'home · budget' },
                     { src: 'assets/projects/sanad/spending.png', label: 'spend · categories' }
@@ -1126,7 +1128,7 @@ const projects = [
                 title: 'Beksela',
                 desc: 'ليلة الألعاب — ألعاب مجالس للسهرة: حروف، كذب، ومهام سرية.',
                 image: 'assets/projects/akhir/01-home.png',
-                appIcon: 'assets/projects/icons/akhir.png',
+                appIcon: 'assets/projects/icons/beksela-icon.png',
                 screens: [
                     { src: 'assets/projects/akhir/01-home.png', label: 'home' },
                     { src: 'assets/projects/akhir/02-letters.png', label: 'letter chain' }
@@ -1155,7 +1157,7 @@ const projects = [
                 title: 'Ghala',
                 desc: 'تطبيق عائلي — الأم تسند، والبنات يثبتن بالصورة.',
                 image: 'assets/projects/ghala/who-uses.png',
-                appIcon: 'assets/projects/icons/ghala.png',
+                appIcon: 'assets/projects/icons/ghala-icon.png',
                 screens: [
                     { src: 'assets/projects/ghala/who-uses.png', label: 'who uses it' },
                     { src: 'assets/projects/ghala/mom-home.png', label: 'mom home' }
@@ -1183,7 +1185,7 @@ const projects = [
                 title: 'Rukn',
                 desc: 'اكتشف الركن المناسب — محلات ونقاط على الخريطة.',
                 image: 'assets/projects/rukn/spot.png',
-                appIcon: 'assets/projects/icons/rukn.png',
+                appIcon: 'assets/projects/icons/rukn-icon.png',
                 screens: [
                     { src: 'assets/projects/rukn/spot.png', label: 'spot detail' },
                     { src: 'assets/projects/rukn/map.png', label: 'map' }
