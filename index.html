@@ -1055,6 +1055,94 @@ img { display: block; max-width: 100%; }
 <script>
 const projects = [
             {
+                id: 'athar',
+                file: 'Athar.swift',
+                title: 'أثر',
+                desc: 'اتركي أثرًا في المكان — صور، مواقع، وآثار الناس حولك.',
+                image: 'assets/projects/athar/logo.png',
+                appIcon: 'assets/projects/icons/athar.png',
+                screens: [
+                    { src: 'assets/projects/athar/logo.png', label: 'أثر · الهوية' }
+                ],
+                cat: 'ios',
+                icon: 'fa-location-dot',
+                theme: 'theme-athar',
+                subtitle: 'أثر · خريطة · مجتمع · SwiftUI · Supabase',
+                status: 'In Development',
+                role: 'iOS Developer',
+                year: '2026',
+                overview: 'أثر تطبيق يخلّي المكان يحكي. تصوّرين، تتركين أثرًا على الخريطة، وتشوفين آثار الناس حولك — مع مشاركة عامة أو لمتابعينك عبر Supabase.',
+                features: [
+                    'اتركي أثرًا بصورة وموقع على الخريطة',
+                    'خلاصة عامة لآثار الناس حولك',
+                    'متابعة أشخاص بمعرّفهم ووصول آثارهم',
+                    'أماكن محفوظة + مفضّلات + آثار مفتوحة بالموقع',
+                    'SwiftUI · موقع · Supabase Auth / Storage / Feed'
+                ],
+                stack: ['Swift', 'SwiftUI', 'Supabase', 'MapKit'],
+                link: ''
+            },
+            {
+                id: 'sanad',
+                file: 'MrCrabMoney.swift',
+                title: 'مستر سلطع',
+                desc: 'تراكنق موني — تتبّع مصاريفك وفواتيرك مع مستر سلطع.',
+                image: 'assets/projects/sanad/home.png',
+                appIcon: 'assets/projects/icons/sanad.png',
+                screens: [
+                    { src: 'assets/projects/sanad/home.png', label: 'الرئيسية · الميزانية' },
+                    { src: 'assets/projects/sanad/spending.png', label: 'الصرف · الفئات' },
+                    { src: 'assets/projects/sanad/dashboard.png', label: 'لوحة · المستر سلطع' }
+                ],
+                cat: 'ios',
+                icon: 'fa-wallet',
+                theme: 'theme-sanad',
+                subtitle: 'مستر سلطع · تراكنق موني · فواتير · SwiftUI',
+                status: 'In Development',
+                role: 'iOS Developer',
+                year: '2026',
+                overview: 'مستر سلطع (Mr Crab Money Tracking) تطبيق تتبّع فلوس: ميزانية شهرية، مصاريف، فواتير بالكاميرا، وخطط ادّخار — بواجهة مرحة مع شخصية مستر سلطع.',
+                features: [
+                    'تراكنق موني — ميزانية شهرية ومتبقّي الصرف',
+                    'مسح فواتير بالكاميرا واستخراج البيانات',
+                    'فئات الصرف + نصائح ذكية للأسبوع',
+                    'خطط ادّخار وأهداف مالية',
+                    'مستر سلطع رفيق الواجهة · SwiftUI · SwiftData'
+                ],
+                stack: ['Swift', 'SwiftUI', 'SwiftData', 'Vision'],
+                link: ''
+            },
+            {
+                id: 'laylat',
+                file: 'LaylatAlAlab.swift',
+                title: 'ليلة الألعاب',
+                desc: 'ألعاب مجالس للسهرة — حروف، كذب، ومهام سرية.',
+                image: 'assets/projects/akhir/home-games.png',
+                appIcon: 'assets/projects/icons/akhir.png',
+                screens: [
+                    { src: 'assets/projects/akhir/home-games.png', label: 'اختر اللعبة' },
+                    { src: 'assets/projects/akhir/01-home.png', label: 'الرئيسية' },
+                    { src: 'assets/projects/akhir/02-letters.png', label: 'سلسلة الحروف' }
+                ],
+                cat: 'ios',
+                icon: 'fa-gamepad',
+                theme: 'theme-laylat',
+                subtitle: 'ليلة الألعاب · مجالس · SwiftUI',
+                status: 'In Development',
+                role: 'iOS Developer',
+                year: '2026',
+                overview: 'ليلة الألعاب تطبيق مجالس للسهرة: سلسلة الحروف، آخر واحد يكذب، ومهمتك السرية — جاهز لجلسة مع الأصحاب بدون تجهيز ورق.',
+                features: [
+                    'سلسلة الحروف — كلمة تبدأ بآخر حرف',
+                    'آخر واحد يكذب — كشف الكذاب',
+                    'مهمتك السرية — مهام خفية + تصويت',
+                    'وضع فرق وألعاب إضافية للمجالس',
+                    'SwiftUI · تجربة حزب كاملة على الجوال'
+                ],
+                stack: ['Swift', 'SwiftUI', 'iOS'],
+                link: ''
+            },
+            {
                 id: '6',
                 file: 'StockMarket.cshtml',
                 title: 'Stock Market AI Prediction',
@@ -1295,6 +1383,9 @@ const projects = [
         ];
 
 const shortName = {
+  athar: 'أثر',
+  sanad: 'سلطع',
+  laylat: 'ألعاب',
   '6': 'Stocks',
   '7': 'Sensic',
   '5': 'Private',
