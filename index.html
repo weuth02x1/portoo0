@@ -270,8 +270,9 @@ img { display: block; max-width: 100%; }
   box-shadow: 0 1px 8px rgba(0,0,0,0.2);
 }
 .lock-hit {
-  position: absolute; inset: 0; z-index: 1;
+  position: absolute; inset: 0; z-index: 50;
   cursor: pointer;
+  background: transparent;
 }
 
 /* home chrome */
@@ -816,7 +817,7 @@ img { display: block; max-width: 100%; }
           <div class="lock-fab">📷</div>
         </div>
         <div class="lock-hint">
-          <span>swipe up to open</span>
+          <span>tap to open</span>
           <div class="lock-bar"></div>
         </div>
       </div>
@@ -1492,14 +1493,10 @@ function unlock() {
 }
 
 document.getElementById('bootStartBtn').addEventListener('click', unlock);
-let touchY = null;
-boot.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, { passive: true });
-boot.addEventListener('touchend', e => {
-  if (touchY == null) return;
-  const dy = touchY - e.changedTouches[0].clientY;
-  touchY = null;
-  if (dy > 40) unlock();
-}, { passive: true });
+boot.addEventListener('click', unlock);
+boot.addEventListener('pointerup', e => {
+  if (e.pointerType === 'touch' || e.pointerType === 'mouse' || e.pointerType === 'pen') unlock();
+});
 document.addEventListener('keydown', e => {
   if (!booted && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); unlock(); }
 });
