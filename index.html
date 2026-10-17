@@ -861,9 +861,9 @@ img { display: block; max-width: 100%; }
   </div>
 </div>
 <div class="phone-shell">
-  <div class="stage" id="stage">
+  <div class="stage is-home" id="stage">
     <div class="island" aria-hidden="true"></div>
-    <div class="lock" id="boot-screen">
+    <div class="lock is-out" id="boot-screen" hidden>
       <button type="button" class="lock-hit" id="bootStartBtn" aria-label="Unlock"></button>
       <div class="lock-memories" aria-hidden="true">
         <div class="lock-polaroid lock-polaroid--1">
@@ -905,7 +905,7 @@ img { display: block; max-width: 100%; }
       </div>
     </div>
 
-    <div class="phone" id="phone">
+    <div class="phone is-on" id="phone">
       <div class="status">
         <span id="statusTime">9:41</span>
         <div class="status-right" aria-hidden="true">
@@ -1607,7 +1607,7 @@ const boot = document.getElementById('boot-screen');
 const phone = document.getElementById('phone');
 const hubTabs = document.querySelectorAll('[data-hub-tab]');
 const hubScreens = document.querySelectorAll('.page[data-hub-page]');
-let booted = false;
+let booted = true;
 
 function tickClock() {
   const now = new Date();
@@ -1918,12 +1918,7 @@ function initSkillBoard() {
 renderProjects();
 initSkillBoard();
 window.startSite = unlock;
-
-const hash = location.hash.slice(1);
-if (hubTabMap[hash]) {
-  // stay locked until unlock, then go
-  document.getElementById('bootStartBtn').addEventListener('click', () => switchHubTab(hash), { once: true });
-}
+switchHubTab(hubTabMap[location.hash.slice(1)] || 'projects');
 </script>
 </body>
 </html>
