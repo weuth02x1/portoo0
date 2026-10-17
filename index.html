@@ -28,9 +28,7 @@
 html, body { height: 100%; }
 body {
   font-family: var(--font);
-  background:
-    radial-gradient(ellipse at 50% 20%, #2a2a30 0%, transparent 55%),
-    #050506;
+  background: #071018;
   color: var(--ink);
   min-height: 100dvh;
   display: grid;
@@ -39,12 +37,89 @@ body {
   overflow: hidden;
   padding: 16px;
 }
+.city {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 18%, rgba(255, 176, 92, 0.18), transparent 55%),
+    linear-gradient(180deg, #1a2744 0%, #0c1524 42%, #081018 100%);
+}
+.city-glow {
+  position: absolute;
+  left: 50%;
+  bottom: 18%;
+  width: min(720px, 90vw);
+  height: 180px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse, rgba(255, 186, 92, 0.28), transparent 70%);
+  filter: blur(8px);
+}
+.city-label {
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  letter-spacing: 0.28em;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.72);
+}
+.skyline {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 28vh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 4vw;
+}
+.tower {
+  width: 7vw;
+  min-width: 28px;
+  border-radius: 6px 6px 0 0;
+  background: linear-gradient(180deg, #1c2c44, #0a1018);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+  position: relative;
+}
+.tower::after {
+  content: '';
+  position: absolute;
+  inset: 10px 8px 0;
+  background:
+    linear-gradient(180deg, rgba(255,214,140,0.55) 0 6px, transparent 6px 12px) 0 0 / 10px 16px,
+    linear-gradient(90deg, transparent 0 4px, rgba(255,214,140,0.35) 4px 7px, transparent 7px) 0 0 / 12px 16px;
+  opacity: 0.7;
+  animation: windows 4.8s ease-in-out infinite;
+}
+.tower:nth-child(2) { height: 62%; }
+.tower:nth-child(3) { height: 88%; width: 5vw; }
+.tower:nth-child(4) { height: 100%; }
+.tower:nth-child(5) { height: 74%; }
+.tower:nth-child(6) { height: 48%; }
+.tower:nth-child(1), .tower:nth-child(7) { height: 36%; }
+.tower:nth-child(odd)::after { animation-delay: 1.2s; }
+@keyframes windows {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 0.9; }
+}
+@keyframes phoneFloat {
+  0%, 100% { transform: translateY(0) rotate(-0.6deg); }
+  50% { transform: translateY(-16px) rotate(0.7deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .phone-shell, .tower::after { animation: none; }
+}
 button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
 
 .phone-shell {
   position: relative;
+  z-index: 2;
+  animation: phoneFloat 7s ease-in-out infinite;
   width: min(390px, calc(100vw - 24px));
   height: min(844px, calc(100dvh - 32px));
   border-radius: 54px;
@@ -778,6 +853,13 @@ img { display: block; max-width: 100%; }
 </style>
 </head>
 <body>
+<div class="city" aria-hidden="true">
+  <p class="city-label">RIYADH</p>
+  <div class="city-glow"></div>
+  <div class="skyline">
+    <i class="tower"></i><i class="tower"></i><i class="tower"></i><i class="tower"></i><i class="tower"></i><i class="tower"></i><i class="tower"></i>
+  </div>
+</div>
 <div class="phone-shell">
   <div class="stage" id="stage">
     <div class="island" aria-hidden="true"></div>
@@ -1066,6 +1148,64 @@ img { display: block; max-width: 100%; }
 
 <script>
 const projects = [
+            {
+                id: 'keva',
+                file: 'Keva.swift',
+                title: 'KEVA',
+                desc: 'A Riyadh delivery and rides platform — two apps and two websites, one system.',
+                image: 'assets/projects/keva/driver-map.jpg',
+                appIcon: 'assets/projects/icons/keva-icon.png',
+                screens: [
+                    { src: 'assets/projects/keva/driver-map.jpg', label: 'driver · map' },
+                    { src: 'assets/projects/keva/driver-earnings.jpg', label: 'driver · earnings' }
+                ],
+                cat: 'mobile',
+                icon: 'fa-car',
+                theme: 'theme-keva',
+                subtitle: 'Customer · Driver · Provider · Admin',
+                status: 'In Development',
+                role: 'Mobile & Full Stack',
+                year: '2026',
+                overview: 'KEVA is the proof of range: a customer app, a driver app, a provider website, and an admin website. Restaurants and rides run through the same platform — orders, live maps, wallets, and operations.',
+                features: [
+                    'Customer app — order, ride, track, and pay',
+                    'Driver app — go online, navigate, and see earnings',
+                    'Provider website — stores, menus, and incoming orders',
+                    'Admin website — fleet, drivers, zones, and finance',
+                    'Built for iOS, Android, and the web'
+                ],
+                stack: ['Flutter', 'iOS', 'Android', 'Web', 'Maps'],
+                link: ''
+            },
+            {
+                id: 'khuta',
+                file: 'Khuta.swift',
+                title: 'Khuta',
+                desc: 'Walk 10,000 steps. Earn points. Redeem them for free coffee and meals.',
+                image: 'assets/projects/khuta/home.jpg',
+                appIcon: 'assets/projects/icons/khuta-icon.png',
+                screens: [
+                    { src: 'assets/projects/khuta/home.jpg', label: 'steps' },
+                    { src: 'assets/projects/khuta/rewards.jpg', label: 'rewards' }
+                ],
+                cat: 'mobile',
+                icon: 'fa-shoe-prints',
+                theme: 'theme-khuta',
+                subtitle: 'Steps · Points · Rewards · iOS & Android',
+                status: 'In Development',
+                role: 'Mobile Developer',
+                year: '2026',
+                overview: 'Khuta turns a daily walk into something you can spend. Hit 10,000 steps, collect points, and redeem them for free coffee and meals nearby.',
+                features: [
+                    'Daily goal of 10,000 steps',
+                    'Points that add up as you walk',
+                    'Free coffee and free meals with those points',
+                    'Weekly progress and nearby rewards',
+                    'Built for iOS & Android'
+                ],
+                stack: ['iOS', 'Android', 'Flutter'],
+                link: ''
+            },
             {
                 id: 'athar',
                 file: 'Athar.swift',
@@ -1442,6 +1582,8 @@ const projects = [
         ];
 
 const shortName = {
+  keva: 'KEVA',
+  khuta: 'Khuta',
   athar: 'Athar',
   sanad: 'Mr Crab',
   laylat: 'Beksela',
