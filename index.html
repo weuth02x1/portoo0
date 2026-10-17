@@ -46,71 +46,27 @@ body {
     radial-gradient(ellipse 80% 50% at 50% 18%, rgba(255, 176, 92, 0.18), transparent 55%),
     linear-gradient(180deg, #1a2744 0%, #0c1524 42%, #081018 100%);
 }
-.city-glow {
+.city svg {
   position: absolute;
-  left: 50%;
-  bottom: 18%;
-  width: min(720px, 90vw);
-  height: 180px;
-  transform: translateX(-50%);
-  background: radial-gradient(ellipse, rgba(255, 186, 92, 0.28), transparent 70%);
-  filter: blur(8px);
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
-.city-label {
-  position: absolute;
-  top: 28px;
-  left: 50%;
-  transform: translateX(-50%);
-  letter-spacing: 0.28em;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: rgba(255,255,255,0.72);
-}
-.skyline {
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 28vh;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 8px;
-  padding: 0 4vw;
-}
-.tower {
-  width: 7vw;
-  min-width: 28px;
-  border-radius: 6px 6px 0 0;
-  background: linear-gradient(180deg, #1c2c44, #0a1018);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
-  position: relative;
-}
-.tower::after {
-  content: '';
-  position: absolute;
-  inset: 10px 8px 0;
-  background:
-    linear-gradient(180deg, rgba(255,214,140,0.55) 0 6px, transparent 6px 12px) 0 0 / 10px 16px,
-    linear-gradient(90deg, transparent 0 4px, rgba(255,214,140,0.35) 4px 7px, transparent 7px) 0 0 / 12px 16px;
-  opacity: 0.7;
-  animation: windows 4.8s ease-in-out infinite;
-}
-.tower:nth-child(2) { height: 62%; }
-.tower:nth-child(3) { height: 88%; width: 5vw; }
-.tower:nth-child(4) { height: 100%; }
-.tower:nth-child(5) { height: 74%; }
-.tower:nth-child(6) { height: 48%; }
-.tower:nth-child(1), .tower:nth-child(7) { height: 36%; }
-.tower:nth-child(odd)::after { animation-delay: 1.2s; }
-@keyframes windows {
-  0%, 100% { opacity: 0.45; }
-  50% { opacity: 0.9; }
+.win { fill: #ffd7a1; }
+.win.a { animation: twinkle 3.2s ease-in-out infinite; }
+.win.b { animation: twinkle 4.4s ease-in-out infinite 0.8s; }
+.win.c { animation: twinkle 5.1s ease-in-out infinite 1.6s; }
+.star { fill: #fff; animation: twinkle 3.6s ease-in-out infinite; }
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
 }
 @keyframes phoneFloat {
   0%, 100% { transform: translateY(0) rotate(-0.6deg); }
   50% { transform: translateY(-16px) rotate(0.7deg); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .phone-shell, .tower::after { animation: none; }
+  .phone-shell, .win, .star { animation: none; }
 }
 button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
 a { color: inherit; text-decoration: none; }
@@ -854,11 +810,84 @@ img { display: block; max-width: 100%; }
 </head>
 <body>
 <div class="city" aria-hidden="true">
-  <p class="city-label">RIYADH</p>
-  <div class="city-glow"></div>
-  <div class="skyline">
-    <i class="tower"></i><i class="tower"></i><i class="tower"></i><i class="tower"></i><i class="tower"></i><i class="tower"></i><i class="tower"></i>
-  </div>
+  <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#1c3358"/>
+        <stop offset="0.45" stop-color="#12243c"/>
+        <stop offset="1" stop-color="#070d16"/>
+      </linearGradient>
+      <radialGradient id="moon" cx="50%" cy="50%" r="50%">
+        <stop offset="0" stop-color="#fff6e4"/>
+        <stop offset="0.45" stop-color="#f3d7a2"/>
+        <stop offset="1" stop-color="#f3d7a2" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="haze" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#ffb15a" stop-opacity="0"/>
+        <stop offset="1" stop-color="#ff9a3c" stop-opacity="0.35"/>
+      </linearGradient>
+      <linearGradient id="tower" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#24344c"/>
+        <stop offset="1" stop-color="#0c1420"/>
+      </linearGradient>
+    </defs>
+    <rect width="1600" height="900" fill="url(#sky)"/>
+    <circle cx="1180" cy="150" r="90" fill="url(#moon)"/>
+    <circle cx="1180" cy="150" r="26" fill="#fff4dc"/>
+    <g class="stars" fill="#fff">
+      <circle class="star" cx="120" cy="80" r="1.4"/><circle class="star" cx="260" cy="140" r="1.1"/>
+      <circle class="star" cx="420" cy="70" r="1.6"/><circle class="star" cx="560" cy="160" r="1"/>
+      <circle class="star" cx="700" cy="90" r="1.3"/><circle class="star" cx="860" cy="50" r="1.1"/>
+      <circle class="star" cx="980" cy="130" r="1.5"/><circle class="star" cx="1400" cy="90" r="1.2"/>
+      <circle class="star" cx="1480" cy="180" r="1"/><circle class="star" cx="180" cy="210" r="1.2"/>
+    </g>
+    <ellipse cx="800" cy="760" rx="700" ry="90" fill="url(#haze)"/>
+    <!-- distant blocks -->
+    <g fill="url(#tower)">
+      <rect x="40" y="640" width="70" height="260"/>
+      <rect x="120" y="590" width="54" height="310"/>
+      <rect x="186" y="660" width="90" height="240"/>
+      <rect x="1280" y="600" width="60" height="300"/>
+      <rect x="1350" y="540" width="48" height="360"/>
+      <rect x="1410" y="630" width="110" height="270"/>
+      <rect x="300" y="680" width="80" height="220"/>
+      <rect x="1100" y="650" width="90" height="250"/>
+    </g>
+    <!-- Al Faisaliyah: needle, globe, tapered shaft -->
+    <g fill="#1a2940">
+      <polygon points="470,250 478,250 486,430 454,430"/>
+      <circle cx="474" cy="455" r="28" fill="#243650"/>
+      <circle cx="474" cy="455" r="16" fill="#0e1828"/>
+      <polygon points="500,500 448,500 420,900 528,900"/>
+    </g>
+    <!-- Kingdom Centre: skybridge and the opening -->
+    <g fill="#22344e">
+      <polygon points="760,180 790,180 804,900 746,900"/>
+      <polygon points="900,180 930,180 944,900 886,900"/>
+      <rect x="760" y="250" width="170" height="28" rx="2"/>
+      <polygon points="804,300 886,300 900,900 790,900" fill="#121c2c"/>
+    </g>
+    <!-- mid towers -->
+    <g fill="url(#tower)">
+      <polygon points="600,430 660,430 676,900 584,900"/>
+      <polygon points="980,390 1048,390 1064,900 964,900"/>
+      <rect x="690" y="520" width="70" height="380"/>
+      <rect x="1080" y="500" width="64" height="400"/>
+    </g>
+    <g>
+      <rect class="win a" x="132" y="620" width="6" height="8"/><rect class="win b" x="148" y="640" width="6" height="8"/>
+      <rect class="win c" x="132" y="680" width="6" height="8"/><rect class="win a" x="148" y="710" width="6" height="8"/>
+      <rect class="win b" x="612" y="500" width="7" height="10"/><rect class="win c" x="630" y="540" width="7" height="10"/>
+      <rect class="win a" x="612" y="620" width="7" height="10"/><rect class="win b" x="630" y="700" width="7" height="10"/>
+      <rect class="win c" x="770" y="210" width="6" height="8"/><rect class="win a" x="908" y="210" width="6" height="8"/>
+      <rect class="win b" x="770" y="400" width="6" height="8"/><rect class="win c" x="908" y="460" width="6" height="8"/>
+      <rect class="win a" x="996" y="460" width="7" height="10"/><rect class="win b" x="1016" y="520" width="7" height="10"/>
+      <rect class="win c" x="996" y="640" width="7" height="10"/><rect class="win a" x="1016" y="720" width="7" height="10"/>
+      <rect class="win b" x="1362" y="580" width="6" height="8"/><rect class="win c" x="1378" y="640" width="6" height="8"/>
+      <rect class="win a" x="456" y="620" width="6" height="8"/><rect class="win b" x="490" y="700" width="6" height="8"/>
+    </g>
+    <rect y="860" width="1600" height="40" fill="#070d16"/>
+  </svg>
 </div>
 <div class="phone-shell">
   <div class="stage is-home" id="stage">
@@ -931,9 +960,9 @@ img { display: block; max-width: 100%; }
             <h3>now</h3>
             <p class="meta">what I'm doing</p>
             <ul>
-              <li>building apps at CoreTechSolution</li>
-              <li>shipped 10+ apps — iOS & Android, client + personal</li>
-              <li>looking for a mobile / full-stack role</li>
+              <li>Software Developer at LYNX</li>
+              <li>apps, websites, and Google Maps</li>
+              <li>requirements, delivery, and project leadership</li>
             </ul>
           </div>
           <div class="card" id="about-education">
@@ -1008,11 +1037,13 @@ img { display: block; max-width: 100%; }
           <h1>Path</h1>
           <p class="sub">work so far</p>
           <div class="card">
-            <h3>CoreTechSolution</h3>
-            <p class="meta">Jun 2026 — now · Flutter · iOS & Android</p>
+            <h3>LYNX</h3>
+            <p class="meta">Now · Software Developer</p>
             <ul>
-              <li>building mobile apps</li>
-              <li>APIs + shipping features</li>
+              <li>building apps and websites, end to end</li>
+              <li>Google Maps — live location, routes, and places</li>
+              <li>turning a brief into a clear build</li>
+              <li>running the work like a project manager: scope, people, and delivery</li>
             </ul>
           </div>
           <div class="card">
