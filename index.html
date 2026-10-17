@@ -169,18 +169,23 @@ body {
   .scene-photo-tall { display: block; }
   .scene-plate {
     --zoom: 1;
-    top: 50%;
-    left: 50%;
-    width: max(100vw, calc(100dvh * 9 / 16));
-    height: max(100dvh, calc(100vw * 16 / 9));
-    transform: translate(-50%, -52%);
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100dvh;
+    transform: none;
   }
+  .scene-photo-tall { object-fit: cover; object-position: center top; }
   .hold {
-    left: 22.2%;
-    top: 63.4%;
-    width: 56.4%;
-    height: 21%;
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    top: 22vh;
+    bottom: 14px;
+    width: auto;
+    height: auto;
   }
+  .stage { border-radius: 18px; }
   .night { left: 12%; right: 12%; top: 4%; height: 48%; }
   .phone { padding: 0; }
 }
@@ -232,14 +237,9 @@ img { display: block; max-width: 100%; }
 }
 /* home wallpaper after unlock — deep black with soft aurora */
 .stage.is-home {
-  background: #0c0e16;
+  background: #16131f;
 }
-.stage.is-home::before {
-  background:
-    radial-gradient(circle at 70% 75%, rgba(255,255,255,0.04), transparent 35%),
-    linear-gradient(180deg, rgba(0,0,0,0.15) 0%, transparent 30%, rgba(0,0,0,0.35) 100%);
-  opacity: 1;
-}
+.stage.is-home::before { opacity: 0; }
 .stage > * { position: relative; z-index: 1; }
 .island { display: none; }
 
@@ -423,54 +423,43 @@ img { display: block; max-width: 100%; }
 .status { display: none; }
 .site-head {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  align-items: baseline;
+  gap: 8px;
   padding: 10px 14px 8px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
   flex-shrink: 0;
 }
 .brand { min-width: 0; }
 .brand strong {
   display: block;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   font-weight: 600;
   letter-spacing: -0.02em;
-  color: #f4f2f8;
+  color: #f6f3fb;
 }
 .brand span {
   display: block;
   margin-top: 1px;
-  font-size: 0.62rem;
-  color: rgba(232, 228, 242, 0.62);
-  letter-spacing: 0.01em;
+  font-size: 0.66rem;
+  color: #b9b2c8;
 }
 .site-nav {
-  display: flex;
-  align-items: center;
-  gap: 2px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  flex-shrink: 0;
+  background: #100e18;
+  border-top: 1px solid rgba(214, 198, 240, 0.16);
 }
 .site-nav button {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 6px 8px 7px;
-  color: rgba(232, 228, 242, 0.62);
-  font-size: 0.68rem;
-  font-weight: 500;
+  padding: 11px 4px 10px;
+  color: #b9b2c8;
+  font-size: 0.78rem;
+  font-weight: 600;
   letter-spacing: 0.01em;
-  border-radius: 0;
-  border-bottom: 1px solid transparent;
 }
-.site-nav button svg {
-  width: 13px;
-  height: 13px;
-  flex-shrink: 0;
-}
-.site-nav button:hover { color: #f4f2f8; }
+.site-nav button:hover { color: #f6f3fb; }
 .site-nav button.active {
-  color: #e4d9ff;
-  border-bottom-color: #c4b2f0;
+  color: #f4eeff;
+  box-shadow: inset 0 -2px 0 #c4b2f0;
 }
 .work-intro {
   padding: 12px 14px 8px;
@@ -490,85 +479,87 @@ img { display: block; max-width: 100%; }
 }
 .work-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 10px;
-  padding: 4px 12px 16px;
-}
-@container (max-width: 420px) {
-  .work-grid { grid-template-columns: 1fr; }
-  .brand span { display: none; }
-  .site-head { padding: 5px 8px 4px; gap: 4px; }
-  .brand strong { font-size: 0.78rem; }
-  .site-nav button { padding: 4px 3px 5px; gap: 3px; font-size: 0.58rem; }
-  .site-nav button svg { width: 11px; height: 11px; }
-  .work-intro { padding: 6px 10px 4px; }
-  .work-intro h2 { font-size: 0.92rem; }
+  padding: 0 12px 16px;
 }
 .work-card {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  background: #141824;
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 10px;
-  overflow: hidden;
-  color: inherit;
-  transition: border-color .2s ease, transform .2s ease;
-}
-.work-card:hover {
-  border-color: rgba(196, 178, 240, 0.45);
-  transform: translateY(-1px);
-}
-.work-shot {
-  aspect-ratio: 16 / 10;
-  background: #0a0c12;
-  overflow: hidden;
-}
-.work-shot img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
   display: block;
+  text-align: left;
+  background: #221e2c;
+  border: 1px solid rgba(214, 198, 240, 0.14);
+  border-radius: 12px;
+  padding: 12px 12px 13px;
+  color: #f6f3fb;
 }
-.work-shot.is-logo img { object-fit: contain; padding: 12px; }
-.work-shot.is-private {
-  display: grid;
-  place-items: center;
-  color: rgba(232, 228, 242, 0.45);
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.work-kicker {
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  color: #c4b2f0;
+  margin-bottom: 4px;
 }
-.work-body { padding: 8px 10px 10px; }
 .work-body h3 {
-  font-size: 0.78rem;
+  font-size: 0.98rem;
   font-weight: 600;
-  letter-spacing: -0.02em;
-  color: #f4f2f8;
+  letter-spacing: -0.03em;
+  color: #f6f3fb;
 }
-.work-body p {
-  margin-top: 3px;
-  font-size: 0.64rem;
-  line-height: 1.35;
-  color: rgba(232, 228, 242, 0.62);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.work-body .story {
+  margin-top: 8px;
+  font-size: 0.74rem;
+  line-height: 1.5;
+  color: #ddd6ea;
+}
+.work-body ul {
+  margin-top: 8px;
+  display: grid;
+  gap: 4px;
+  list-style: none;
+}
+.work-body li {
+  font-size: 0.7rem;
+  line-height: 1.4;
+  color: #c9c2d6;
+  padding-left: 0.7rem;
+  position: relative;
+}
+.work-body li::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #c4b2f0;
+  position: absolute;
+  left: 0;
+  top: 0.45em;
 }
 .work-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
-  margin-top: 7px;
+  margin-top: 10px;
 }
 .work-tags span {
-  font-size: 0.55rem;
-  letter-spacing: 0.02em;
-  color: rgba(210, 198, 240, 0.8);
-  border: 1px solid rgba(196, 178, 240, 0.28);
-  padding: 2px 5px;
+  font-size: 0.6rem;
+  color: #ddd4f4;
+  background: #2c2738;
+  padding: 3px 7px;
   border-radius: 99px;
+}
+.work-link {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.68rem;
+  color: #c4b2f0;
+}
+@media (max-width: 899px) {
+  .site-head { padding: 12px 14px 6px; }
+  .brand strong { font-size: 1.05rem; }
+  .brand span { font-size: 0.75rem; }
+  .site-nav button { font-size: 0.92rem; padding: 14px 4px 12px; }
+  .work-body h3 { font-size: 1.05rem; }
+  .work-body .story { font-size: 0.88rem; }
+  .work-body li { font-size: 0.82rem; }
 }
 
 .status {
@@ -726,7 +717,7 @@ img { display: block; max-width: 100%; }
 .sheet {
   margin: 0;
   background: transparent;
-  color: #f4f2f8;
+  color: #f6f3fb;
   border-radius: 0;
   padding: 14px 14px 20px;
   min-height: 100%;
@@ -735,15 +726,15 @@ img { display: block; max-width: 100%; }
   font-size: 1.15rem; font-weight: 600; letter-spacing: -0.03em;
   margin-bottom: 0.15rem;
 }
-.sheet .sub { color: rgba(232,228,242,0.55); font-size: 0.72rem; margin-bottom: 0.9rem; }
+.sheet .sub { color: #b9b2c8; font-size: 0.72rem; margin-bottom: 0.9rem; }
 .sheet .card {
-  background: #141824; border-radius: 10px;
+  background: #221e2c; border-radius: 12px;
   padding: 12px; margin-bottom: 8px;
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(214, 198, 240, 0.14);
 }
-.sheet .card h3 { font-size: 0.84rem; font-weight: 600; margin-bottom: 0.15rem; color: #f4f2f8; }
-.sheet .card .meta { font-size: 0.66rem; color: rgba(196,178,240,0.9); margin-bottom: 0.4rem; }
-.sheet .card p, .sheet .card li { font-size: 0.72rem; color: rgba(232,228,242,0.72); line-height: 1.45; }
+.sheet .card h3 { font-size: 0.84rem; font-weight: 600; margin-bottom: 0.15rem; color: #f6f3fb; }
+.sheet .card .meta { font-size: 0.66rem; color: #c4b2f0; margin-bottom: 0.4rem; }
+.sheet .card p, .sheet .card li { font-size: 0.74rem; color: #ddd6ea; line-height: 1.5; }
 .sheet ul { list-style: none; display: grid; gap: 0.35rem; }
 /* Photos app sheet */
 .photos-panel {
@@ -867,9 +858,9 @@ img { display: block; max-width: 100%; }
 }
 .socials { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
 .socials a {
-  text-align: center; background: #141824; border: 1px solid rgba(255,255,255,0.08);
+  text-align: center; background: #221e2c; border: 1px solid rgba(214,198,240,0.14);
   border-radius: 8px; padding: 10px 6px; font-size: 0.68rem; font-weight: 500;
-  color: #f4f2f8;
+  color: #f6f3fb;
 }
 .socials a:hover { border-color: rgba(196,178,240,0.45); }
 
@@ -1068,7 +1059,6 @@ img { display: block; max-width: 100%; }
 .miro-phase { font-size: 0.6rem; background: #e5e5ea; padding: 2px 6px; border-radius: 6px; text-transform: uppercase; }
 .miro-scroll { overflow-x: auto; border-radius: 8px; }
 .miro-scroll img { height: 150px; width: auto; }
-.modal-icon { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
@@ -1142,24 +1132,6 @@ img { display: block; max-width: 100%; }
           <strong>Shahad</strong>
           <span>Software Developer</span>
         </div>
-        <nav class="site-nav" id="hubDock" aria-label="Pages">
-          <button class="active" type="button" data-hub-tab="projects" aria-selected="true">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.2" stroke="currentColor" stroke-width="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.2" stroke="currentColor" stroke-width="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.2" stroke="currentColor" stroke-width="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.2" stroke="currentColor" stroke-width="1.6"/></svg>
-            <span>Apps</span>
-          </button>
-          <button type="button" data-hub-tab="experience" aria-selected="false">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 17.5 9.2 12l3.4 3L20 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span>Path</span>
-          </button>
-          <button type="button" data-hub-tab="about" aria-selected="false">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.2" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 19c1.3-3 3.5-4.4 6.5-4.4s5.2 1.4 6.5 4.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-            <span>Me</span>
-          </button>
-          <button type="button" data-hub-tab="connect" aria-selected="false">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="m4.5 7.5 7.5 5.5 7.5-5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span>Contact</span>
-          </button>
-        </nav>
       </header>
 
     <div class="pages" id="hubScreens">
@@ -1286,6 +1258,12 @@ img { display: block; max-width: 100%; }
         </div>
       </section>
     </div>
+    <nav class="site-nav" id="hubDock" aria-label="Pages">
+      <button class="active" type="button" data-hub-tab="projects" aria-selected="true">Apps</button>
+      <button type="button" data-hub-tab="experience" aria-selected="false">Path</button>
+      <button type="button" data-hub-tab="about" aria-selected="false">Me</button>
+      <button type="button" data-hub-tab="connect" aria-selected="false">Contact</button>
+    </nav>
   </div>
 
   <div id="projectModal" class="modal" aria-hidden="true">
@@ -1902,35 +1880,36 @@ const lifePhotos = [
 ];
 
 function renderProjects() {
-  const photos =
-    '<button type="button" class="work-card" data-photos="1">' +
-      '<div class="work-shot"><img src="assets/life/desk.jpg" alt=""></div>' +
-      '<div class="work-body"><h3>Photos</h3><p>Academy, certificates, and the desk.</p></div>' +
-    '</button>';
+  const stories = {
+    keva: 'KEVA is one system for Riyadh, not four disconnected products. The customer app is where someone orders food, books a ride, follows it live, and pays. The driver app is the other side of that trip: go online, navigate, and see what the day earned. Restaurants and stores run from a provider website — menus, incoming orders, and the day as it happens. An admin website watches the fleet, the drivers, the zones, and the money. Maps hold it together, on iOS, Android, and the web. Shahad is building it across mobile and full stack in 2026.',
+    khuta: 'Khuta starts from a simple bargain: walk 10,000 steps, and the walk should be worth something you can actually spend. Points collect as the day adds up. Those points turn into free coffee and free meals nearby, so the reward is a place, not a badge. Weekly progress shows whether the habit is holding. It is in development for iOS and Android, with the daily goal, the points, and the nearby rewards treated as one loop.',
+    athar: 'Athar is about leaving a mark that stays on a real place. A photo is pinned to the map, then shared with everyone nearby or kept inside a circle. Other people\'s drops become a public feed of stories you can walk toward. You can follow someone, save a favorite, and come back to a place you already unlocked. It is a community product for iOS and Android, still in development, built around maps and a place for the stories to live.',
+    sanad: 'Mr Crab is money tracking that stays readable. A monthly budget shows what is left, not only what already left. Receipts can be scanned so the details do not have to be typed by hand. Spending is grouped, a weekly chart shows the shape of the month, and tips stay practical. Bills, warranties, and documents have a place to sit instead of disappearing into a camera roll. The character keeps it light. It is in development for iOS and Android.',
+    laylat: 'Beksela is for the moment friends are already in the room and nobody wants to set anything up. There are no cards to deal. You pick a game and start. A letter chain keeps a word moving around the group. Who-is-lying is a bluff you have to catch. Secret missions run in voting rounds, and team modes open the night up for a bigger group. It is a party-game app in development for iOS and Android.',
+    ghala: 'Ghala is a home between a mother and her daughters. The flows are separate, because the two roles are not the same: one guides, the others show the work. A task is finished with a photo, so progress is visible instead of argued. Gifts sit at the end of that proof, earned rather than handed out. The tone stays soft and meant for the house. It is in development for iOS and Android.',
+    rukn: 'Rukn is how a place becomes easy to find and easy to understand. Spots and shops sit on a map. A pin opens a clear detail page instead of a cluttered listing. Registering a shop is a short path, not a form that feels like paperwork. Browse from the pin to the information and back. It is in development for iOS and Android.',
+    '6': 'Stock Market AI is a finished web app for someone opening the market for the first time. The outlook is plain: rise or fall, said in language a beginner can use. A guided analysis walks from the landing page to the insight without the usual noise. Top companies are there for a quick look around. Shahad built it full stack in 2024 with ASP.NET, C#, JavaScript, and HTML.',
+    '7': 'Sensic is music for people who feel it. Sound becomes touch: haptic pulses follow the piece, a piano answers under the hand, and practice and recording give the session a shape. It was designed accessibility-first, from real user needs through to a product on the App Store, for iOS and Android. Shahad built the mobile side in 2025.',
+    '5': 'This one stays private. It is an investor product under NDA: live location on a map, admin controls, and a full delivery from a Figma design to Flutter on iOS and Android, with a REST API behind it. The screens are not public. What can be said is the range — design, mobile, and backend — shipped as one confidential build in 2025.',
+    '1': 'Learning Journey is a habit that stays kind when a day is missed. You set a goal for a week, a month, or a year, then keep a daily streak on a calendar you can actually read. Freeze days protect the streak when life interrupts, so progress does not turn into punishment. The interface is dark, quiet, and focused. It is on GitHub, built for iOS and Android in 2026.',
+    '3': 'Wessal is picture communication, in the spirit of PECS, made personal. Cards are tapped to say something. Each card can carry a photo that belongs to that person, and a voice they recorded themselves. Categories keep the cards findable. It works offline, on the device, when a connection is the last thing you should need. It is in development for iOS and Android, with accessibility as the point of the product.',
+    '2': 'ORBIT treats a goal as a world, not a checkbox. Each goal is its own planet. A galaxy view holds all of them. The day is a list of tasks you can check off, and friends can be challenged in real time so the progress is shared. It is in development for iOS and Android, with Firebase behind the live part, in 2026.',
+    '4': 'Moviasme is a completed movie app on live data. Sign in, browse curated rows, search, and open a film into a real detail screen. Reviews can be written, edited, and deleted. The profile is part of the same account, not a separate demo. Shahad built it for iOS and Android in 2025, on a REST API, from the interface through to the live flows.'
+  };
 
-  projectsGrid.innerHTML = photos + projects.map(p => {
-    const shot = (p.screens && p.screens[0] && p.screens[0].src) || p.image || '';
-    const logo = shot && /logo|icon/i.test(shot);
-    const tags = (p.stack || []).slice(0, 3).map(t => '<span>' + t + '</span>').join('');
-    const visual = p.secret || !shot
-      ? '<div class="work-shot is-private">Private</div>'
-      : '<div class="work-shot' + (logo ? ' is-logo' : '') + '"><img src="' + shot + '" alt=""></div>';
-    return '<button type="button" class="work-card" data-project="' + p.id + '">' +
-      visual +
-      '<div class="work-body"><h3>' + p.title + '</h3><p>' + (p.desc || '') + '</p>' +
+  projectsGrid.innerHTML = projects.map(p => {
+    const tags = (p.stack || []).map(t => '<span>' + t + '</span>').join('');
+    const bits = (p.features || []).map(f => '<li>' + f + '</li>').join('');
+    const link = '<button type="button" class="work-link" data-project="' + p.id + '">Open</button>';
+    return '<article class="work-card">' +
+      '<p class="work-kicker">' + p.role + ' · ' + p.year + ' · ' + p.status + '</p>' +
+      '<div class="work-body"><h3>' + p.title + '</h3>' +
+      '<p class="story">' + (stories[p.id] || p.overview || p.desc) + '</p>' +
+      (bits ? '<ul>' + bits + '</ul>' : '') +
       (tags ? '<div class="work-tags">' + tags + '</div>' : '') +
-      '</div></button>';
+      link +
+      '</div></article>';
   }).join('');
-
-  const grid = document.getElementById('photosGrid');
-  if (grid) {
-    grid.innerHTML = lifePhotos.map((ph, i) =>
-      '<button type="button" data-photo-index="' + i + '"' +
-        (ph.fit === 'contain' ? ' class="photos-cert"' : '') + '>' +
-        '<img src="' + ph.src + '" alt="">' +
-        '<span>' + ph.label + '</span></button>'
-    ).join('');
-  }
 }
 
 function openPhotosModal() {
@@ -1974,7 +1953,7 @@ function setModalCover(p) {
   }
   if (p.screens && p.screens.length >= 2) {
     modalCover.className = 'modal-cover modal-cover--showcase';
-    modalCover.innerHTML = p.screens.slice(0, 2).map(s =>
+    modalCover.innerHTML = p.screens.map(s =>
       '<div class="modal-phone"><img src="' + s.src + '" alt=""><span class="modal-phone-label">' + s.label + '</span></div>'
     ).join('');
     return;
