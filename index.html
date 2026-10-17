@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#1c1c1e">
+<meta name="theme-color" content="#100c22">
 <title>Shahad</title>
 <meta name="description" content="Shahad Alqahtani — mobile & full-stack developer · iOS & Android">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
@@ -28,78 +28,167 @@
 html, body { height: 100%; }
 body {
   font-family: var(--font);
-  background: #12100e;
+  background: #100c22;
   color: var(--ink);
   min-height: 100dvh;
-  display: grid;
-  place-items: center;
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
-  padding: 16px;
 }
-.city {
+.scene {
   position: fixed;
   inset: 0;
-  pointer-events: none;
   overflow: hidden;
-  background:
-    radial-gradient(ellipse 55% 40% at 50% 58%, rgba(255, 176, 110, 0.08), transparent 70%),
-    linear-gradient(180deg, #1a1714 0%, #12100e 100%);
+  background: #100c22;
 }
-.window {
+.scene-plate {
+  --zoom: 1.05;
   position: absolute;
   left: 50%;
   top: 48%;
-  transform: translate(-50%, -52%);
-  width: min(980px, 88vw);
-  height: min(680px, 74vh);
-  padding: 22px;
-  border-radius: 6px;
-  background: #2c261f;
-  box-shadow:
-    0 0 0 14px #1a1613,
-    inset 0 0 0 1px rgba(255,255,255,0.08),
-    0 40px 90px rgba(0,0,0,0.45);
+  width: calc(max(100vw, 100dvh * 16 / 9) * var(--zoom));
+  height: calc(max(100dvh, 100vw * 9 / 16) * var(--zoom));
+  transform: translate(-50%, -62%);
 }
-.window svg {
-  display: block;
+.scene-photo {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  border-radius: 2px;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
 }
-.window::after {
+.night {
+  position: absolute;
+  z-index: 1;
+  left: 10%;
+  right: 9%;
+  top: 3%;
+  height: 50%;
+  overflow: hidden;
+  pointer-events: none;
+}
+.night::after {
   content: '';
   position: absolute;
-  inset: 22px;
-  background: linear-gradient(115deg, rgba(255,255,255,0.07), transparent 28%);
-  pointer-events: none;
+  left: 5%;
+  right: 5%;
+  bottom: 0;
+  height: 42%;
+  background: radial-gradient(ellipse at 50% 100%, rgba(168, 112, 210, 0.22), transparent 70%);
 }
-.win { fill: #ffd7a1; }
-.win.a { animation: twinkle 3.2s ease-in-out infinite; }
-.win.b { animation: twinkle 4.4s ease-in-out infinite 0.8s; }
-.win.c { animation: twinkle 5.1s ease-in-out infinite 1.6s; }
-.star { fill: #fff; animation: twinkle 3.6s ease-in-out infinite; }
+.stars {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow:
+    18px 22px #fff, 70px 8px rgba(255,255,255,0.8), 120px 36px #fff,
+    180px 12px rgba(230,220,255,0.9), 240px 44px #fff, 310px 18px rgba(255,255,255,0.7),
+    370px 40px #fff, 430px 10px rgba(255,255,255,0.85), 490px 32px #fff,
+    40px 70px rgba(255,255,255,0.75), 150px 88px #fff, 260px 76px rgba(230,220,255,0.8),
+    340px 96px #fff, 460px 70px rgba(255,255,255,0.7), 90px 110px #fff;
+  animation: twinkle 3.6s ease-in-out infinite;
+}
+.stars-b {
+  top: 18px;
+  left: 36px;
+  width: 1px;
+  height: 1px;
+  animation-duration: 5.2s;
+  animation-delay: -1.4s;
+  box-shadow:
+    24px 14px #fff, 96px 40px rgba(255,255,255,0.65), 160px 8px #fff,
+    230px 52px rgba(230,220,255,0.85), 300px 20px #fff, 390px 48px rgba(255,255,255,0.7),
+    470px 16px #fff, 60px 64px rgba(255,255,255,0.8), 200px 90px #fff;
+}
+.stars-c {
+  top: 40px;
+  left: 80px;
+  animation-duration: 4.4s;
+  animation-delay: -2.2s;
+  opacity: 0.85;
+  box-shadow:
+    30px 6px rgba(255,255,255,0.7), 140px 28px #fff, 220px 60px rgba(230,220,255,0.75),
+    330px 14px #fff, 420px 46px rgba(255,255,255,0.8), 80px 48px #fff;
+}
+.meteor {
+  position: absolute;
+  top: 8%;
+  left: 6%;
+  width: 86px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(244, 236, 255, 0.95));
+  opacity: 0;
+  filter: drop-shadow(0 0 5px rgba(210, 190, 255, 0.85));
+  animation: meteor 16s linear infinite;
+}
+.meteor::after {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: -1.5px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #fff;
+}
+.m2 { top: 22%; left: 28%; animation-duration: 21s; animation-delay: -7s; }
+.m3 { top: 6%; left: 48%; width: 70px; animation-duration: 18s; animation-delay: -13s; }
 @keyframes twinkle {
-  0%, 100% { opacity: 0.25; }
+  0%, 100% { opacity: 0.28; }
   50% { opacity: 1; }
 }
+@keyframes meteor {
+  0% { transform: translate3d(0, 0, 0) rotate(24deg); opacity: 0; }
+  4% { opacity: 1; }
+  15% { transform: translate3d(240px, 110px, 0) rotate(24deg); opacity: 0; }
+  100% { opacity: 0; }
+}
 .hold {
-  position: relative;
-  z-index: 3;
-  width: min(390px, calc(100vw - 24px));
-  height: min(844px, calc(100dvh - 32px));
-}
-.hand {
   position: absolute;
-  z-index: 6;
-  left: -22%;
-  bottom: -7%;
-  width: 148%;
-  height: auto;
-  pointer-events: none;
+  z-index: 2;
+  left: 38.3%;
+  top: 54.2%;
+  width: 23.8%;
+  height: 31.4%;
 }
-@media (prefers-reduced-motion: reduce) {
-  .win, .star { animation: none; }
+.scene-photo-tall { display: none; }
+@media (max-width: 899px) {
+  .scene-photo-wide { display: none; }
+  .scene-photo-tall { display: block; }
+  .scene-plate {
+    --zoom: 1;
+    top: 50%;
+    left: 50%;
+    width: max(100vw, calc(100dvh * 9 / 16));
+    height: max(100dvh, calc(100vw * 16 / 9));
+    transform: translate(-50%, -52%);
+  }
+  .hold {
+    left: 22.2%;
+    top: 59.2%;
+    width: 56.4%;
+    height: 24.2%;
+  }
+  .night { left: 12%; right: 12%; top: 4%; height: 48%; }
+  .widget { display: none; }
+  .phone { padding: 8px 8px 4px; }
+  .apps { gap: 8px 4px; padding: 2px; }
+  .app-icon { width: 40px; }
+  .dock { padding: 6px; gap: 2px; border-radius: 16px; }
+  .dock-ico { width: 34px; height: 34px; }
+  .meteor { animation-duration: 22s; }
+  .m2, .m3 { display: none; }
+}
+@media (min-width: 900px) {
+  .scene-plate {
+    --zoom: 1.52;
+    top: 50%;
+    transform: translate(-50%, -64%);
+  }
 }
 button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
 a { color: inherit; text-decoration: none; }
@@ -110,31 +199,7 @@ img { display: block; max-width: 100%; }
   z-index: 2;
   width: 100%;
   height: 100%;
-  border-radius: 54px;
-  padding: 11px;
-  background: linear-gradient(160deg, #3a3a3e 0%, #111113 28%, #0a0a0c 70%, #222226 100%);
-  box-shadow:
-    0 0 0 1px #000,
-    0 25px 80px rgba(0,0,0,0.65),
-    inset 0 1px 0 rgba(255,255,255,0.18),
-    inset 0 -1px 0 rgba(255,255,255,0.05);
-}
-.phone-shell::before {
-  content: '';
-  position: absolute;
-  left: -3px; top: 120px;
-  width: 3px; height: 28px;
-  border-radius: 2px 0 0 2px;
-  background: #2a2a2e;
-  box-shadow: 0 48px 0 #2a2a2e, 0 96px 0 #2a2a2e;
-}
-.phone-shell::after {
-  content: '';
-  position: absolute;
-  right: -3px; top: 180px;
-  width: 3px; height: 72px;
-  border-radius: 0 2px 2px 0;
-  background: #2a2a2e;
+  background: transparent;
 }
 
 .stage {
@@ -142,7 +207,8 @@ img { display: block; max-width: 100%; }
   width: 100%;
   height: 100%;
   overflow: hidden;
-  border-radius: 44px;
+  container-type: inline-size;
+  border-radius: 3.4% / 6.2%;
   background: #0d1b2a url('assets/life/grad.jpg') center 35% / cover no-repeat;
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
   transition: background 0.55s ease;
@@ -402,11 +468,13 @@ img { display: block; max-width: 100%; }
   position: absolute; inset: 0;
   overflow-y: auto; overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
   opacity: 0; transform: scale(0.98);
   pointer-events: none;
   transition: opacity .25s ease, transform .25s ease;
   padding: 4px 2px 12px;
 }
+.page::-webkit-scrollbar { display: none; }
 .page.active {
   opacity: 1; transform: none; pointer-events: auto;
 }
@@ -417,6 +485,18 @@ img { display: block; max-width: 100%; }
   grid-template-columns: repeat(4, 1fr);
   gap: 18px 10px;
   padding: 8px 4px;
+}
+@container (min-width: 520px) {
+  .apps { grid-template-columns: repeat(7, 1fr); gap: 8px 6px; padding: 0 2px; }
+  .phone { padding: 10px 12px 4px; }
+  .widget { margin: 0 2px 4px; padding: 6px 10px 6px; }
+  .widget .big { font-size: 1.02rem; margin-bottom: 0; }
+  .widget p { display: none; }
+  .widget-row { margin-top: 4px; gap: 6px; }
+  .pill-mini { padding: 3px 2px; }
+  .stage .app-icon { width: 42px; height: 42px; }
+  .dock { padding: 6px 8px; margin: 0; }
+  .dock-ico { width: 36px; height: 36px; }
 }
 .app {
   display: flex; flex-direction: column; align-items: center; gap: 6px;
@@ -838,90 +918,28 @@ img { display: block; max-width: 100%; }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }
+@media (max-width: 899px) {
+  .stage .app-icon { width: 40px; height: 40px; }
+  #phone { padding: 6px 6px 4px; }
+  .pages { min-height: 0; }
+  .dock { padding: 4px 4px 2px; }
+  .dock-ico { width: 32px; height: 32px; }
+  .dock-label { font-size: 0.55rem; }
+}
 </style>
 </head>
 <body>
-<div class="city" aria-hidden="true">
-  <div class="window">
-  <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
-    <defs>
-      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#1c3358"/>
-        <stop offset="0.45" stop-color="#12243c"/>
-        <stop offset="1" stop-color="#070d16"/>
-      </linearGradient>
-      <radialGradient id="moon" cx="50%" cy="50%" r="50%">
-        <stop offset="0" stop-color="#fff6e4"/>
-        <stop offset="0.45" stop-color="#f3d7a2"/>
-        <stop offset="1" stop-color="#f3d7a2" stop-opacity="0"/>
-      </radialGradient>
-      <linearGradient id="haze" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#ffb15a" stop-opacity="0"/>
-        <stop offset="1" stop-color="#ff9a3c" stop-opacity="0.35"/>
-      </linearGradient>
-      <linearGradient id="tower" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#24344c"/>
-        <stop offset="1" stop-color="#0c1420"/>
-      </linearGradient>
-    </defs>
-    <rect width="1600" height="900" fill="url(#sky)"/>
-    <circle cx="1180" cy="150" r="90" fill="url(#moon)"/>
-    <circle cx="1180" cy="150" r="26" fill="#fff4dc"/>
-    <g class="stars" fill="#fff">
-      <circle class="star" cx="120" cy="80" r="1.4"/><circle class="star" cx="260" cy="140" r="1.1"/>
-      <circle class="star" cx="420" cy="70" r="1.6"/><circle class="star" cx="560" cy="160" r="1"/>
-      <circle class="star" cx="700" cy="90" r="1.3"/><circle class="star" cx="860" cy="50" r="1.1"/>
-      <circle class="star" cx="980" cy="130" r="1.5"/><circle class="star" cx="1400" cy="90" r="1.2"/>
-      <circle class="star" cx="1480" cy="180" r="1"/><circle class="star" cx="180" cy="210" r="1.2"/>
-    </g>
-    <ellipse cx="800" cy="760" rx="700" ry="90" fill="url(#haze)"/>
-    <!-- distant blocks -->
-    <g fill="url(#tower)">
-      <rect x="40" y="640" width="70" height="260"/>
-      <rect x="120" y="590" width="54" height="310"/>
-      <rect x="186" y="660" width="90" height="240"/>
-      <rect x="1280" y="600" width="60" height="300"/>
-      <rect x="1350" y="540" width="48" height="360"/>
-      <rect x="1410" y="630" width="110" height="270"/>
-      <rect x="300" y="680" width="80" height="220"/>
-      <rect x="1100" y="650" width="90" height="250"/>
-    </g>
-    <!-- Al Faisaliyah: needle, globe, tapered shaft -->
-    <g fill="#1a2940">
-      <polygon points="470,250 478,250 486,430 454,430"/>
-      <circle cx="474" cy="455" r="28" fill="#243650"/>
-      <circle cx="474" cy="455" r="16" fill="#0e1828"/>
-      <polygon points="500,500 448,500 420,900 528,900"/>
-    </g>
-    <!-- Kingdom Centre: skybridge and the opening -->
-    <g fill="#22344e">
-      <polygon points="760,180 790,180 804,900 746,900"/>
-      <polygon points="900,180 930,180 944,900 886,900"/>
-      <rect x="760" y="250" width="170" height="28" rx="2"/>
-      <polygon points="804,300 886,300 900,900 790,900" fill="#121c2c"/>
-    </g>
-    <!-- mid towers -->
-    <g fill="url(#tower)">
-      <polygon points="600,430 660,430 676,900 584,900"/>
-      <polygon points="980,390 1048,390 1064,900 964,900"/>
-      <rect x="690" y="520" width="70" height="380"/>
-      <rect x="1080" y="500" width="64" height="400"/>
-    </g>
-    <g>
-      <rect class="win a" x="132" y="620" width="6" height="8"/><rect class="win b" x="148" y="640" width="6" height="8"/>
-      <rect class="win c" x="132" y="680" width="6" height="8"/><rect class="win a" x="148" y="710" width="6" height="8"/>
-      <rect class="win b" x="612" y="500" width="7" height="10"/><rect class="win c" x="630" y="540" width="7" height="10"/>
-      <rect class="win a" x="612" y="620" width="7" height="10"/><rect class="win b" x="630" y="700" width="7" height="10"/>
-      <rect class="win c" x="770" y="210" width="6" height="8"/><rect class="win a" x="908" y="210" width="6" height="8"/>
-      <rect class="win b" x="770" y="400" width="6" height="8"/><rect class="win c" x="908" y="460" width="6" height="8"/>
-      <rect class="win a" x="996" y="460" width="7" height="10"/><rect class="win b" x="1016" y="520" width="7" height="10"/>
-      <rect class="win c" x="996" y="640" width="7" height="10"/><rect class="win a" x="1016" y="720" width="7" height="10"/>
-      <rect class="win b" x="1362" y="580" width="6" height="8"/><rect class="win c" x="1378" y="640" width="6" height="8"/>
-      <rect class="win a" x="456" y="620" width="6" height="8"/><rect class="win b" x="490" y="700" width="6" height="8"/>
-    </g>
-    <rect y="860" width="1600" height="40" fill="#070d16"/>
-  </svg>
-  </div>
+<div class="scene">
+<div class="scene-plate">
+<img class="scene-photo scene-photo-wide" src="assets/scene/riyadh-night.jpg" alt="">
+<img class="scene-photo scene-photo-tall" src="assets/scene/riyadh-night-mobile.jpg" alt="">
+<div class="night" aria-hidden="true">
+  <div class="stars stars-a"></div>
+  <div class="stars stars-b"></div>
+  <div class="stars stars-c"></div>
+  <span class="meteor m1"></span>
+  <span class="meteor m2"></span>
+  <span class="meteor m3"></span>
 </div>
 <div class="hold">
 <div class="phone-shell">
@@ -1211,17 +1229,9 @@ img { display: block; max-width: 100%; }
   </div>
   </div>
 </div>
-<svg class="hand" viewBox="0 0 640 520" aria-hidden="true">
-  <path fill="#e4ae90" d="M175 520V330c0-40 28-70 70-78h210c46 8 72 40 72 82V520H175z"/>
-  <path fill="#f2c6aa" d="M150 300c-70-10-110-70-96-118 12-40 58-52 98-28 24 14 40 46 42 78 2 22-12 52-44 68z"/>
-  <path fill="#d89a78" d="M168 268c16 10 34 6 42-10 4-8-8-16-22-12-12 4-18 12-20 22z"/>
-  <g fill="#e8b496">
-    <rect x="468" y="78" width="34" height="150" rx="17" transform="rotate(14 485 153)"/>
-    <rect x="504" y="58" width="32" height="162" rx="16" transform="rotate(8 520 139)"/>
-    <rect x="538" y="86" width="30" height="140" rx="15" transform="rotate(2 553 156)"/>
-  </g>
-  <path fill="#f6d2bb" d="M230 300c50-18 120-22 190-8 8 2 6 14-8 14-48-8-110-6-160 8-14 4-26-6-22-14z"/>
-</svg>
+</div>
+</div>
+
 </div>
 
 <script>
