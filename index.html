@@ -28,7 +28,7 @@
 html, body { height: 100%; }
 body {
   font-family: var(--font);
-  background: #071018;
+  background: #12100e;
   color: var(--ink);
   min-height: 100dvh;
   display: grid;
@@ -43,14 +43,36 @@ body {
   pointer-events: none;
   overflow: hidden;
   background:
-    radial-gradient(ellipse 80% 50% at 50% 18%, rgba(255, 176, 92, 0.18), transparent 55%),
-    linear-gradient(180deg, #1a2744 0%, #0c1524 42%, #081018 100%);
+    radial-gradient(ellipse 55% 40% at 50% 58%, rgba(255, 176, 110, 0.08), transparent 70%),
+    linear-gradient(180deg, #1a1714 0%, #12100e 100%);
 }
-.city svg {
+.window {
   position: absolute;
-  inset: 0;
+  left: 50%;
+  top: 48%;
+  transform: translate(-50%, -52%);
+  width: min(980px, 88vw);
+  height: min(680px, 74vh);
+  padding: 22px;
+  border-radius: 6px;
+  background: #2c261f;
+  box-shadow:
+    0 0 0 14px #1a1613,
+    inset 0 0 0 1px rgba(255,255,255,0.08),
+    0 40px 90px rgba(0,0,0,0.45);
+}
+.window svg {
+  display: block;
   width: 100%;
   height: 100%;
+  border-radius: 2px;
+}
+.window::after {
+  content: '';
+  position: absolute;
+  inset: 22px;
+  background: linear-gradient(115deg, rgba(255,255,255,0.07), transparent 28%);
+  pointer-events: none;
 }
 .win { fill: #ffd7a1; }
 .win.a { animation: twinkle 3.2s ease-in-out infinite; }
@@ -61,12 +83,23 @@ body {
   0%, 100% { opacity: 0.25; }
   50% { opacity: 1; }
 }
-@keyframes phoneFloat {
-  0%, 100% { transform: translateY(0) rotate(-0.6deg); }
-  50% { transform: translateY(-16px) rotate(0.7deg); }
+.hold {
+  position: relative;
+  z-index: 3;
+  width: min(390px, calc(100vw - 24px));
+  height: min(844px, calc(100dvh - 32px));
+}
+.hand {
+  position: absolute;
+  z-index: 6;
+  left: -22%;
+  bottom: -7%;
+  width: 148%;
+  height: auto;
+  pointer-events: none;
 }
 @media (prefers-reduced-motion: reduce) {
-  .phone-shell, .win, .star { animation: none; }
+  .win, .star { animation: none; }
 }
 button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
 a { color: inherit; text-decoration: none; }
@@ -75,9 +108,8 @@ img { display: block; max-width: 100%; }
 .phone-shell {
   position: relative;
   z-index: 2;
-  animation: phoneFloat 7s ease-in-out infinite;
-  width: min(390px, calc(100vw - 24px));
-  height: min(844px, calc(100dvh - 32px));
+  width: 100%;
+  height: 100%;
   border-radius: 54px;
   padding: 11px;
   background: linear-gradient(160deg, #3a3a3e 0%, #111113 28%, #0a0a0c 70%, #222226 100%);
@@ -810,7 +842,8 @@ img { display: block; max-width: 100%; }
 </head>
 <body>
 <div class="city" aria-hidden="true">
-  <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice">
+  <div class="window">
+  <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
     <defs>
       <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="#1c3358"/>
@@ -888,7 +921,9 @@ img { display: block; max-width: 100%; }
     </g>
     <rect y="860" width="1600" height="40" fill="#070d16"/>
   </svg>
+  </div>
 </div>
+<div class="hold">
 <div class="phone-shell">
   <div class="stage is-home" id="stage">
     <div class="island" aria-hidden="true"></div>
@@ -1175,6 +1210,18 @@ img { display: block; max-width: 100%; }
     </div>
   </div>
   </div>
+</div>
+<svg class="hand" viewBox="0 0 640 520" aria-hidden="true">
+  <path fill="#e4ae90" d="M175 520V330c0-40 28-70 70-78h210c46 8 72 40 72 82V520H175z"/>
+  <path fill="#f2c6aa" d="M150 300c-70-10-110-70-96-118 12-40 58-52 98-28 24 14 40 46 42 78 2 22-12 52-44 68z"/>
+  <path fill="#d89a78" d="M168 268c16 10 34 6 42-10 4-8-8-16-22-12-12 4-18 12-20 22z"/>
+  <g fill="#e8b496">
+    <rect x="468" y="78" width="34" height="150" rx="17" transform="rotate(14 485 153)"/>
+    <rect x="504" y="58" width="32" height="162" rx="16" transform="rotate(8 520 139)"/>
+    <rect x="538" y="86" width="30" height="140" rx="15" transform="rotate(2 553 156)"/>
+  </g>
+  <path fill="#f6d2bb" d="M230 300c50-18 120-22 190-8 8 2 6 14-8 14-48-8-110-6-160 8-14 4-26-6-22-14z"/>
+</svg>
 </div>
 
 <script>
