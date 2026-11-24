@@ -1165,9 +1165,9 @@ img { display: block; max-width: 100%; }
             <h3>now</h3>
             <p class="meta">what I'm doing</p>
             <ul>
-              <li>Software Developer at LYNX</li>
-              <li>apps, websites, and Google Maps</li>
-              <li>requirements, delivery, and project leadership</li>
+              <li>building iOS & Android apps</li>
+              <li>shipping products from idea to release</li>
+              <li>full stack when the build needs a server</li>
             </ul>
           </div>
           <div class="card" id="about-education">
@@ -1232,16 +1232,6 @@ img { display: block; max-width: 100%; }
           <h1>Path</h1>
           <p class="sub">work so far</p>
           <div class="card">
-            <h3>LYNX</h3>
-            <p class="meta">Now · Software Developer</p>
-            <ul>
-              <li>building apps and websites, end to end</li>
-              <li>Google Maps — live location, routes, and places</li>
-              <li>turning a brief into a clear build</li>
-              <li>running the work like a project manager: scope, people, and delivery</li>
-            </ul>
-          </div>
-          <div class="card">
             <h3>Apple Developer Academy</h3>
             <p class="meta">Sep 2025 — Jun 2026 · graduate</p>
             <ul>
@@ -1267,6 +1257,10 @@ img { display: block; max-width: 100%; }
             <h3>Email</h3>
             <a class="mail" href="mailto:Shahad0x66@gmail.com">Shahad0x66@gmail.com</a>
             <button type="button" id="connectCopyEmail" class="copy-btn">copy</button>
+          </div>
+          <div class="card">
+            <h3>CV</h3>
+            <a class="mail" href="assets/Shahad_Alqahtani_Resume.html">Open CV</a>
           </div>
           <div class="socials">
             <a href="https://github.com/weuth02x1" target="_blank" rel="noopener noreferrer">GitHub</a>
@@ -1357,64 +1351,6 @@ img { display: block; max-width: 100%; }
 
 <script>
 const projects = [
-            {
-                id: 'keva',
-                file: 'Keva.swift',
-                title: 'KEVA',
-                desc: 'A Riyadh delivery and rides platform — two apps and two websites, one system.',
-                image: 'assets/projects/keva/driver-map.jpg',
-                appIcon: 'assets/projects/icons/keva-icon.png',
-                screens: [
-                    { src: 'assets/projects/keva/driver-map.jpg', label: 'driver · map' },
-                    { src: 'assets/projects/keva/driver-earnings.jpg', label: 'driver · earnings' }
-                ],
-                cat: 'mobile',
-                icon: 'fa-car',
-                theme: 'theme-keva',
-                subtitle: 'Customer · Driver · Provider · Admin',
-                status: 'In Development',
-                role: 'Mobile & Full Stack',
-                year: '2026',
-                overview: 'KEVA is the proof of range: a customer app, a driver app, a provider website, and an admin website. Restaurants and rides run through the same platform — orders, live maps, wallets, and operations.',
-                features: [
-                    'Customer app — order, ride, track, and pay',
-                    'Driver app — go online, navigate, and see earnings',
-                    'Provider website — stores, menus, and incoming orders',
-                    'Admin website — fleet, drivers, zones, and finance',
-                    'Built for iOS, Android, and the web'
-                ],
-                stack: ['Flutter', 'iOS', 'Android', 'Web', 'Maps'],
-                link: ''
-            },
-            {
-                id: 'khuta',
-                file: 'Khuta.swift',
-                title: 'Khuta',
-                desc: 'Walk 10,000 steps. Earn points. Redeem them for free coffee and meals.',
-                image: 'assets/projects/khuta/home.jpg',
-                appIcon: 'assets/projects/icons/khuta-icon.png',
-                screens: [
-                    { src: 'assets/projects/khuta/home.jpg', label: 'steps' },
-                    { src: 'assets/projects/khuta/rewards.jpg', label: 'rewards' }
-                ],
-                cat: 'mobile',
-                icon: 'fa-shoe-prints',
-                theme: 'theme-khuta',
-                subtitle: 'Steps · Points · Rewards · iOS & Android',
-                status: 'In Development',
-                role: 'Mobile Developer',
-                year: '2026',
-                overview: 'Khuta turns a daily walk into something you can spend. Hit 10,000 steps, collect points, and redeem them for free coffee and meals nearby.',
-                features: [
-                    'Daily goal of 10,000 steps',
-                    'Points that add up as you walk',
-                    'Free coffee and free meals with those points',
-                    'Weekly progress and nearby rewards',
-                    'Built for iOS & Android'
-                ],
-                stack: ['iOS', 'Android', 'Flutter'],
-                link: ''
-            },
             {
                 id: 'athar',
                 file: 'Athar.swift',
@@ -1791,8 +1727,6 @@ const projects = [
         ];
 
 const shortName = {
-  keva: 'KEVA',
-  khuta: 'Khuta',
   athar: 'Athar',
   sanad: 'Mr Crab',
   laylat: 'Beksela',
@@ -1900,8 +1834,6 @@ const lifePhotos = [
 
 function renderProjects() {
   const stories = {
-    keva: 'KEVA is one system for Riyadh, not four disconnected products. The customer app is where someone orders food, books a ride, follows it live, and pays. The driver app is the other side of that trip: go online, navigate, and see what the day earned. Restaurants and stores run from a provider website — menus, incoming orders, and the day as it happens. An admin website watches the fleet, the drivers, the zones, and the money. Maps hold it together, on iOS, Android, and the web. Shahad is building it across mobile and full stack in 2026.',
-    khuta: 'Khuta starts from a simple bargain: walk 10,000 steps, and the walk should be worth something you can actually spend. Points collect as the day adds up. Those points turn into free coffee and free meals nearby, so the reward is a place, not a badge. Weekly progress shows whether the habit is holding. It is in development for iOS and Android, with the daily goal, the points, and the nearby rewards treated as one loop.',
     athar: 'Athar is about leaving a mark that stays on a real place. A photo is pinned to the map, then shared with everyone nearby or kept inside a circle. Other people\'s drops become a public feed of stories you can walk toward. You can follow someone, save a favorite, and come back to a place you already unlocked. It is a community product for iOS and Android, still in development, built around maps and a place for the stories to live.',
     sanad: 'Mr Crab is money tracking that stays readable. A monthly budget shows what is left, not only what already left. Receipts can be scanned so the details do not have to be typed by hand. Spending is grouped, a weekly chart shows the shape of the month, and tips stay practical. Bills, warranties, and documents have a place to sit instead of disappearing into a camera roll. The character keeps it light. It is in development for iOS and Android.',
     laylat: 'Beksela is for the moment friends are already in the room and nobody wants to set anything up. There are no cards to deal. You pick a game and start. A letter chain keeps a word moving around the group. Who-is-lying is a bluff you have to catch. Secret missions run in voting rounds, and team modes open the night up for a bigger group. It is a party-game app in development for iOS and Android.',
