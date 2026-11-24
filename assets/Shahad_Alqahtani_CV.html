@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shahad Alqahtani — CV</title>
+<style>
+  :root {
+    --ink: #1c1916;
+    --muted: #5e584f;
+    --rule: #1c1916;
+    --paper: #f6f3ee;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: A4 portrait; margin: 11mm 13mm 10mm; }
+  html, body { background: #e6e1d8; }
+  body {
+    font-family: "Iowan Old Style", Palatino, "Palatino Linotype", Georgia, serif;
+    color: var(--ink);
+    line-height: 1.34;
+  }
+  .bar {
+    max-width: 210mm;
+    margin: 14px auto 0;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .bar button {
+    font-family: system-ui, sans-serif;
+    font-size: 13px;
+    padding: 8px 14px;
+    border: 1px solid var(--ink);
+    background: #fff;
+    cursor: pointer;
+  }
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 10px auto 24px;
+    background: var(--paper);
+    padding: 11mm 13mm 10mm;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    align-items: flex-end;
+    padding-bottom: 7px;
+    border-bottom: 1.5px solid var(--rule);
+  }
+  h1 {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+  }
+  .role {
+    margin-top: 5px;
+    font-family: system-ui, sans-serif;
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .contact {
+    text-align: right;
+    font-family: system-ui, sans-serif;
+    font-size: 11px;
+    line-height: 1.45;
+    color: var(--muted);
+  }
+  .contact a { color: inherit; text-decoration: none; }
+  h2 {
+    font-family: system-ui, sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin: 8px 0 3px;
+  }
+  .summary { font-size: 12.75px; max-width: 92ch; }
+  .job { margin-bottom: 5px; }
+  .job-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: baseline;
+  }
+  h3 { font-size: 14.5px; font-weight: 600; line-height: 1.15; }
+  .when {
+    font-family: system-ui, sans-serif;
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .where {
+    font-family: system-ui, sans-serif;
+    font-size: 11.5px;
+    color: var(--muted);
+    margin: 0 0 2px;
+  }
+  ul { padding-left: 15px; font-size: 12.25px; }
+  li { margin: 1px 0; }
+  .work {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px 18px;
+  }
+  .piece h3 { font-size: 13.25px; }
+  .piece p { font-size: 11.75px; margin-top: 1px; }
+  .span { grid-column: 1 / -1; }
+  .skills {
+    display: grid;
+    gap: 2px;
+    font-family: system-ui, sans-serif;
+    font-size: 11.25px;
+    line-height: 1.35;
+  }
+  .skills div { display: grid; grid-template-columns: 84px 1fr; gap: 8px; }
+  .skills strong {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .split {
+    display: grid;
+    grid-template-columns: 1.45fr 0.7fr;
+    gap: 18px;
+    align-items: start;
+  }
+  .edu { margin-bottom: 5px; }
+  .edu h3 { font-size: 13.25px; }
+  @media print {
+    html, body { background: #fff; }
+    .bar { display: none; }
+    .page {
+      width: auto;
+      min-height: 0;
+      margin: 0;
+      padding: 0;
+      background: #fff;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="bar">
+    <button type="button" onclick="window.print()">Save as PDF</button>
+  </div>
+  <article class="page">
+    <header>
+      <div>
+        <h1>Shahad Alqahtani</h1>
+        <p class="role">Full Stack Developer</p>
+      </div>
+      <p class="contact">
+        Abha, Saudi Arabia<br>
+        <a href="mailto:Shahad0x66@gmail.com">Shahad0x66@gmail.com</a><br>
+        056 433 8882<br>
+        <a href="https://github.com/weuth02x1">github.com/weuth02x1</a><br>
+        <a href="https://www.linkedin.com/in/shahd-al-qahtani-992693382">LinkedIn</a>
+        · <a href="https://weuth02x1.github.io/portoo0/">Portfolio</a>
+      </p>
+    </header>
+
+    <h2>Summary</h2>
+    <p class="summary">Full stack developer for iOS, Android, and the web. I design and build products across the interface and the server behind it, and I bring a server online and connect it to a domain.</p>
+
+    <h2>Experience</h2>
+    <div class="job">
+      <div class="job-top">
+        <h3>Apple Developer Academy</h3>
+        <span class="when">Sep 2025 — Jun 2026</span>
+      </div>
+      <p class="where">Graduate · iOS track, Cohort 5</p>
+      <ul>
+        <li>I spent the year on the iOS track, building in teams with SwiftUI, Git, code review, and accessibility.</li>
+        <li>Sensic, the capstone, is on the App Store. It turns music into haptic feedback, with a piano, practice, and recording.</li>
+        <li>ORBIT is a goals app for a daily check-in and challenges with friends. Moviasme is a movie app for browsing films and writing reviews. Wessal is a communication app with picture cards and recorded voice, and it works offline.</li>
+      </ul>
+    </div>
+    <div class="job">
+      <div class="job-top">
+        <h3>Asir Municipality</h3>
+        <span class="when">Jan 2024 — Mar 2024</span>
+      </div>
+      <p class="where">Developer intern</p>
+      <ul>
+        <li>I built a chatbot and the internal tools that support it.</li>
+      </ul>
+    </div>
+
+    <h2>Selected work</h2>
+    <div class="work">
+      <div class="piece">
+        <h3>Wessal <span class="when">· 2026</span></h3>
+        <p>Wessal is a communication app. A person makes picture cards, records a voice on each one, and uses them offline.</p>
+      </div>
+      <div class="piece">
+        <h3>Athar <span class="when">· 2026</span></h3>
+        <p>Athar is a photo app tied to places. A person pins a photo to where it was taken and sees what others left nearby.</p>
+      </div>
+      <div class="piece">
+        <h3>Mr Crab <span class="when">· 2026</span></h3>
+        <p>Mr Crab is a finance app for one month of spending: a budget, scanned receipts, a weekly chart, and bills.</p>
+      </div>
+      <div class="piece">
+        <h3>Sensic <span class="when">· 2025 · App Store</span></h3>
+        <p>Sensic is an accessibility app. It turns music into haptic feedback, with a piano, practice, and recording.</p>
+      </div>
+      <div class="piece">
+        <h3>Stock Market AI <span class="when">· 2024</span></h3>
+        <p>Stock Market AI is a web app that explains, in plain language, why a price rose or fell.</p>
+      </div>
+    </div>
+
+    <div class="split">
+      <section>
+        <h2>Skills</h2>
+        <div class="skills">
+          <div><strong>Mobile</strong><span>Swift, SwiftUI, UIKit, Kotlin, Jetpack Compose, Flutter, Dart</span></div>
+          <div><strong>Web</strong><span>JavaScript, HTML, C#, ASP.NET, REST, SQL, Firebase</span></div>
+          <div><strong>AI</strong><span>Stock Market AI, for plain-language explanations.</span></div>
+          <div><strong>Servers</strong><span>Set up a server, deploy a build, bring it online, connect a domain</span></div>
+          <div><strong>Practice</strong><span>Google Maps, Git, Figma, Xcode, Android Studio, accessibility</span></div>
+          <div><strong>Languages</strong><span>Arabic — native. English — professional.</span></div>
+        </div>
+      </section>
+      <section>
+        <h2>Education</h2>
+        <div class="edu">
+          <h3>King Khalid University</h3>
+          <p class="where">B.S. Computer Science<br>2020 — 2025</p>
+        </div>
+        <div class="edu">
+          <h3>Apple Developer Academy</h3>
+          <p class="where">iOS · Cohort 5<br>2025 — 2026</p>
+        </div>
+      </section>
+    </div>
+  </article>
+</body>
+</html>
